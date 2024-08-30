@@ -4,7 +4,7 @@ import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { Permission } from '../../../global/decorator/authority.decorator';
 import { User } from '../../../../application/domain/user/user';
 import { UpdateProfileUseCase } from '../../../../application/domain/user/usecase/update-profile.usecase';
-import { UpdateProfileRequest } from './dto/user.web.dto';
+import { QueryMyInfoResponse, UpdateProfileRequest } from './dto/user.web.dto';
 
 @Controller('users')
 export class UserWebAdapter {
@@ -16,5 +16,13 @@ export class UserWebAdapter {
     @Patch('/profile')
     async updateProfile(@CurrentUser() user: User, @Body() request: UpdateProfileRequest) {
         await this.udpateProfileUseCase.execute(user, request.profileImageUrl);
+    }
+
+    @Get('/my')
+    queryMyInfo(@CurrentUser() user: User): QueryMyInfoResponse {
+        return {
+            nickname: user.nickname,
+            profileImage: user.profileUrl
+        };
     }
 }
