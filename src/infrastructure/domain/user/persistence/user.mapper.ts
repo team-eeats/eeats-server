@@ -7,6 +7,7 @@ export class UserMapper {
   toDomain(entity: UserTypeormEntity): User | null {
     return entity
       ? new User(
+          entity.accountId,
           entity.password,
           entity.nickname,
           entity.profileUrl,
@@ -18,6 +19,7 @@ export class UserMapper {
 
   toEntity(domain: User): UserTypeormEntity {
     return new UserTypeormEntity(
+      domain.accountId,
       domain.password,
       domain.nickname,
       domain.profileUrl,

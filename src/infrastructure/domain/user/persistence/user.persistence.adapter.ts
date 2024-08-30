@@ -19,4 +19,16 @@ export class UserPersistenceAdapter implements UserPort {
             await this.userRepository.save(this.userMapper.toEntity(user))
         );
     }
+
+    async queryUserByNickname(nickname: string): Promise<User> {
+        return this.userMapper.toDomain(
+            await this.userRepository.findOneBy({ nickname: nickname })
+        );
+    }
+
+    async queryUserByAccountId(accountId: string): Promise<User> {
+        return this.userMapper.toDomain(
+            await this.userRepository.findOneBy({ accountId: accountId })
+        );
+    }
 }

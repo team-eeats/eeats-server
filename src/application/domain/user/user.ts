@@ -1,20 +1,16 @@
-import { Authority } from "./enum/Authority";
+import { Authority } from './enum/authority';
 
 export class User {
   id?: string;
+  accountId: string;
   password: string;
   nickname: string;
   profileUrl: string;
   authority: Authority;
 
-  constructor(
-    password: string,
-    nickname: string,
-    profileUrl,
-    authority: Authority,
-    id?: string
-  ) {
+  constructor(accountId: string, password: string, nickname: string, profileUrl: string, authority: Authority, id?: string) {
     this.id = id;
+    this.accountId = accountId;
     this.password = password;
     this.nickname = nickname;
     this.profileUrl = profileUrl;

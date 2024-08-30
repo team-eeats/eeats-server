@@ -6,6 +6,9 @@ export class UserTypeormEntity {
   @PrimaryGeneratedColumn("uuid", { name: "user_id" })
   id: string;
 
+  @Column('varchar', { nullable: false })
+  accountId: string;
+
   @Column("char", { nullable: false, length: 15 })
   password: string;
 
@@ -19,6 +22,7 @@ export class UserTypeormEntity {
   authority: Authority;
 
   constructor(
+    accountId: string,
     password: string,
     nickname: string,
     profileUrl: string,
@@ -26,6 +30,7 @@ export class UserTypeormEntity {
     id?: string
   ) {
     this.id = id;
+    this.accountId = accountId;
     this.password = password;
     this.nickname = nickname;
     this.profileUrl = profileUrl;
