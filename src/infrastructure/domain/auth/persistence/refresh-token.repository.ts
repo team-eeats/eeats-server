@@ -16,20 +16,7 @@ export class RefreshTokenRepository {
         return await this.cacheManager.get(key);
     }
 
-    // async save(refreshToken: RefreshTokenRedisEntity) {
-    //     await this.cacheManager.set(refreshToken.userId, refreshToken.token, this.configService.get<number>('REFRESH_EXP'));
-    // }
-
     async save(refreshToken: RefreshTokenRedisEntity) {
-        try {
-            const expiration = parseInt(this.configService.get<string>('REFRESH_EXP'), 10);
-            console.log('Expiration Time:', expiration);
-            console.log('User ID:', refreshToken.userId);
-            console.log('Token:', refreshToken.token);
-            
-            await this.cacheManager.set(refreshToken.userId, refreshToken.token, expiration);
-        } catch (error) {
-            console.error('Error saving token:', error);
-        }
-    }   
+        await this.cacheManager.set(refreshToken.userId, refreshToken.token, this.configService.get<number>('REFRESH_EXP'));
+    } 
 }

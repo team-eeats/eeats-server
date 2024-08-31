@@ -16,11 +16,20 @@ export class SignupUseCase {
   ) {}
 
   async execute(req: SignupRequest): Promise<TokenResponse> {
-    const existingUser = await this.userPort.queryUserByAccountId(req.accountId);
-    if (existingUser) {
-      throw new ConflictException("Nickname Already In Use");
-    }
+    await this.checkIfUserExists(req.accountId);
+    
+    const user = await this.createUser(req);
+    return this.jwtPort.generateToken(user.id);
+  }
 
+  private async checkIfUserExists(accountId: string): Promise<void> {
+    const existingUser = await this.userPort.queryUserByAccountId(accountId);
+    if (existingUser) {
+      throw new ConflictException('Nickname Already In Use');
+    }
+  }
+
+  private async createUser(req: SignupRequest): Promise<User> {
     const hashedPassword = await bcrypt.hash(req.password, 10);
 
     const user = new User(
@@ -31,8 +40,11 @@ export class SignupUseCase {
       Authority.user
     );
 
-    await this.userPort.saveUser(user);
+    const savedUser = await this.userPort.saveUser(user);
+    if (!savedUser.id) {
+      throw new Error('Failed To Save User');
+    }
 
-    return this.jwtPort.generateToken(user.id);
+    return savedUser;
   }
 }
