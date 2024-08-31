@@ -16,7 +16,7 @@ export class SignupUseCase {
   ) {}
 
   async execute(req: SignupRequest): Promise<TokenResponse> {
-    const existingUser = await this.userPort.queryUserByNickname(req.nickname);
+    const existingUser = await this.userPort.queryUserByAccountId(req.accountId);
     if (existingUser) {
       throw new ConflictException("Nickname Already In Use");
     }

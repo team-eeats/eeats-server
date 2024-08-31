@@ -1,11 +1,9 @@
-import { User } from "../user";
+import { User } from '../user';
 
 export interface UserPort {
-  saveUser(user: User): Promise<User>;
+    queryUserByAccountId(accountId: string): Promise<User | null>;
 
-  queryUserByNickname(nickname: string): Promise<User | null>;
-
-  queryUserByAccountId(accountId: string): Promise<User | null>;
+    saveUser(user: User): Promise<User>;
 }
 
 export const UserPort = Symbol('IUserPort');
