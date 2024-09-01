@@ -3,6 +3,6 @@ export class UpdateProfileRequest {
 }
 
 export class QueryMyInfoResponse {
-    nickname: string;
-    profileImage: string;
+    accountId: string;
+    profileImageUrl: string;
 }

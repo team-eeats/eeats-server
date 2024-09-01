@@ -20,7 +20,7 @@ export class UserPersistenceAdapter implements UserPort {
         );
     }
 
-    async queryUserByAccountId(accountId: string): Promise<User> {
+    async queryUserByAccountId(accountId: string): Promise<User | null> {
         return this.userMapper.toDomain(
             await this.userRepository.findOneBy({ accountId: accountId })
         );
