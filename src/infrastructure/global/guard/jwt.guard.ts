@@ -6,7 +6,6 @@ import { Repository } from 'typeorm';
 import { Reflector } from '@nestjs/core';
 import { Permission } from '../decorator/authority.decorator';
 import { User } from '../../../application/domain/user/user';
-import { CurrentUser } from '../decorator/current-user.decorator';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

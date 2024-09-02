@@ -3,7 +3,6 @@ import { UserPort } from '../../user/spi/user.spi';
 import { User } from '../../user/user';
 import { JwtPort } from '../spi/auth.spi';
 import { TokenResponse, LoginRequest } from '../dto/auth.dto';
-import { Authority } from '../../user/enum/authority';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
