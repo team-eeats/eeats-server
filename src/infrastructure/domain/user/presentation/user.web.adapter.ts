@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, Patch } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Patch } from '@nestjs/common';
 import { Permission } from '../../../global/decorator/authority.decorator';
-import { Authority } from '../../../../application/domain/user/enum/authority';
+import { Authority } from '../persistence/user.entity';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { User } from '../../../../application/domain/user/user';
 import { UpdateProfileUseCase } from '../../../../application/domain/user/usecase/update-profile.usecase';
@@ -13,11 +13,13 @@ export class UserWebAdapter {
     ) {}
 
     @HttpCode(204)
+    @Permission([Authority.USER])
     @Patch('/profile')
     async updateProfile(@CurrentUser() user: User, @Body() request: UpdateProfileRequest) {
         await this.updateProfileUseCase.execute(user, request.profileImageUrl);
     }
 
+    @Permission([Authority.USER])
     @Get('/my')
     queryMyInfo(@CurrentUser() user: User): QueryMyInfoResponse {
         return {
