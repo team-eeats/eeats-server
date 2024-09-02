@@ -1,4 +1,3 @@
-import { Authority } from '../../../../application/domain/user/enum/authority';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('tbl_user')
@@ -19,9 +18,9 @@ export class UserTypeormEntity {
     profileUrl: string;
 
     @Column('varchar', { length: 7 })
-    authority: Authority
+    authority: string;
 
-    constructor(accountId: string, password: string, nickname: string, profileUrl: string, authority: Authority, id?: string) {
+    constructor(accountId: string, password: string, nickname: string, profileUrl: string, authority: string, id?: string) {
         this.id = id;
         this.accountId = accountId;
         this.password = password;
@@ -30,3 +29,8 @@ export class UserTypeormEntity {
         this.authority = authority;
     }
 }
+
+export const Authority = {
+    USER: 'USER',
+    MANAGER: 'MANAGER'
+};

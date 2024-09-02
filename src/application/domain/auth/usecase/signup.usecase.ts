@@ -1,10 +1,10 @@
 import { ConflictException, Inject, Injectable } from "@nestjs/common";
 import { UserPort } from "../../user/spi/user.spi";
 import { User } from "../../user/user";
-import { Authority } from "../../user/enum/authority";
 import * as bcrypt from "bcrypt";
 import { SignupRequest, TokenResponse } from "../dto/auth.dto";
 import { JwtPort } from '../spi/auth.spi';
+import { Authority } from '../../../../infrastructure/domain/user/persistence/user.entity';
 
 @Injectable()
 export class SignupUseCase {
@@ -36,8 +36,8 @@ export class SignupUseCase {
       req.accountId,
       hashedPassword,
       req.nickname,
-      null,
-      Authority.user
+      req.profileUrl,
+      Authority.USER
     );
 
     const savedUser = await this.userPort.saveUser(user);
