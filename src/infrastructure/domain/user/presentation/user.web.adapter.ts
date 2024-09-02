@@ -8,9 +8,7 @@ import { QueryMyInfoResponse, UpdateProfileRequest } from './dto/user.web.dto';
 
 @Controller('users')
 export class UserWebAdapter {
-    constructor(
-        private readonly updateProfileUseCase: UpdateProfileUseCase
-    ) {}
+    constructor(private readonly updateProfileUseCase: UpdateProfileUseCase) {}
 
     @HttpCode(204)
     @Permission([Authority.USER])

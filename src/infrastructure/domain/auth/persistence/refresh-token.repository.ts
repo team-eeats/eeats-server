@@ -17,6 +17,10 @@ export class RefreshTokenRepository {
     }
 
     async save(refreshToken: RefreshTokenRedisEntity) {
-        await this.cacheManager.set(refreshToken.userId, refreshToken.token, this.configService.get<number>('REFRESH_EXP'));
-    } 
+        await this.cacheManager.set(
+            refreshToken.userId,
+            refreshToken.token,
+            this.configService.get<number>('REFRESH_EXP')
+        );
+    }
 }

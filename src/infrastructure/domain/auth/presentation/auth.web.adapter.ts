@@ -1,14 +1,17 @@
 import { Body, Controller, Get, Headers, Post, Query, HttpCode } from '@nestjs/common';
 import { LoginUseCase } from '../../../../application/domain/auth/usecase/login.usecase';
 import { SignupUseCase } from '../../../../application/domain/auth/usecase/signup.usecase';
-import { ConfigService } from '@nestjs/config';
-import { LoginRequest, TokenResponse, SignupRequest } from '../../../../application/domain/auth/dto/auth.dto';
+import {
+    LoginRequest,
+    TokenResponse,
+    SignupRequest
+} from '../../../../application/domain/auth/dto/auth.dto';
 
 @Controller('auth')
 export class AuthWebAdapter {
     constructor(
         private readonly loginUseCase: LoginUseCase,
-        private readonly signupUseCase: SignupUseCase 
+        private readonly signupUseCase: SignupUseCase
     ) {}
 
     @HttpCode(200)

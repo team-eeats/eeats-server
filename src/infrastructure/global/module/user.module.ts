@@ -12,9 +12,9 @@ const USER_REPOSITORY = TypeOrmModule.forFeature([UserTypeormEntity]);
 
 @Global()
 @Module({
-  imports: [USER_REPOSITORY],
-  controllers: [UserWebAdapter],
-  providers: [USER_PORT, UserMapper, UpdateProfileUseCase],
-  exports: [USER_PORT, USER_REPOSITORY, UserMapper],
+    imports: [USER_REPOSITORY],
+    controllers: [UserWebAdapter],
+    providers: [USER_PORT, UserMapper, UpdateProfileUseCase],
+    exports: [USER_PORT, USER_REPOSITORY, UserMapper]
 })
 export class UserModule {}

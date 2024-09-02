@@ -7,13 +7,13 @@ export class UserMapper {
     toDomain(entity: UserTypeormEntity): User | null {
         return entity
             ? new User(
-                entity.accountId,
-                entity.password,
-                entity.nickname,
-                entity.profileUrl,
-                entity.authority,
-                entity.id
-            )
+                  entity.accountId,
+                  entity.password,
+                  entity.nickname,
+                  entity.profileUrl,
+                  entity.authority,
+                  entity.id
+              )
             : null;
     }
 

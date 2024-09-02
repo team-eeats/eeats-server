@@ -23,5 +23,4 @@ import { RefreshTokenRepository } from '../../domain/auth/persistence/refresh-to
     providers: [RefreshTokenRepository],
     exports: [RefreshTokenRepository]
 })
-export class RedisCacheModule {
-}
+export class RedisCacheModule {}

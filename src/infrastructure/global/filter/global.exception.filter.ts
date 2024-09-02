@@ -1,7 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
-import { responseEncoding } from 'axios';
 import { Request, Response } from 'express';
-import { stat } from 'fs';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

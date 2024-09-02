@@ -33,9 +33,6 @@ export class JwtAdapter implements JwtPort {
     }
 
     private async signJwtToken(userId: string, exp: string, typ: string) {
-        return await this.jwtService.signAsync(
-            { sub: userId, typ },
-            { expiresIn: exp }
-        );
+        return await this.jwtService.signAsync({ sub: userId, typ }, { expiresIn: exp });
     }
 }
