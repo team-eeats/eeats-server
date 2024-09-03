@@ -1,3 +1,4 @@
+import { QueryAllSuggestionsResponse, SuggestionResponse } from '../dto/suggestion.dto';
 import { Suggestion } from '../suggestion';
 
 export interface SuggestionPort {
@@ -8,6 +9,8 @@ export interface SuggestionPort {
     querySuggestionById(id: string): Promise<Suggestion>;
 
     deleteSuggestion(suggestion: Suggestion): Promise<void>;
+
+    queryAllSuggestions(): Promise<SuggestionResponse[]>;
 }
 
 export const SuggestionPort = Symbol('ISuggestionPort');

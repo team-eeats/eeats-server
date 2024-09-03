@@ -5,7 +5,7 @@ export class Suggestion {
     userId: string;
     title: string;
     content: string;
-    createdAt?: LocalDate;
+    createdAt: LocalDate;
 
     public update(title: string, content: string) {
         this.title = title;
@@ -16,7 +16,7 @@ export class Suggestion {
         userId: string,
         title: string,
         content: string,
-        createdAt?: LocalDate,
+        createdAt: LocalDate,
         id?: string
     ) {
         this.id = id;

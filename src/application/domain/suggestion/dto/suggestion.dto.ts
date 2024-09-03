@@ -15,3 +15,7 @@ export class SuggestionRequest {
 export class QueryMySuggestionsResponse {
     suggestions: SuggestionResponse[];
 }
+
+export class QueryAllSuggestionsResponse {
+    suggestions: SuggestionResponse[];
+}

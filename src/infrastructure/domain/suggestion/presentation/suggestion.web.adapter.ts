@@ -6,9 +6,10 @@ import { QueryMySuggestionsUseCase } from '../../../../application/domain/sugges
 import { Permission } from 'src/infrastructure/global/decorator/authority.decorator';
 import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from 'src/infrastructure/global/decorator/current-user.decorator';
-import { QueryMySuggestionsResponse } from 'src/application/domain/suggestion/dto/suggestion.dto';
+import { QueryAllSuggestionsResponse, QueryMySuggestionsResponse } from 'src/application/domain/suggestion/dto/suggestion.dto';
 import { User } from '../../../../application/domain/user/user';
 import { SuggestionWebRequest } from './dto/suggestion.web.dto';
+import { QueryAllSuggestionsUseCase } from 'src/application/domain/suggestion/usecase/query-all-suggestions.usecase';
 
 @Controller('suggestions')
 export class SuggestionWebAdapter {
@@ -16,7 +17,8 @@ export class SuggestionWebAdapter {
         private readonly createSuggestionUseCase: CreateSuggestionUseCase,
         private readonly updateSuggestionUseCase: UpdateSuggestionUseCase,
         private readonly deleteSuggestionUseCase: DeleteSuggestionUseCase,
-        private readonly queryMySuggestionsUseCase: QueryMySuggestionsUseCase
+        private readonly queryMySuggestionsUseCase: QueryMySuggestionsUseCase,
+        private readonly queryAllSuggestionsUseCase: QueryAllSuggestionsUseCase
     ) {}
 
     @Permission([Authority.USER])
@@ -50,5 +52,11 @@ export class SuggestionWebAdapter {
         @CurrentUser() user: User
     ): Promise<void> {
         await this.deleteSuggestionUseCase.execute(suggestionId, user.id);
+    }
+
+    @Permission([Authority.USER, Authority.MANAGER])
+    @Get()
+    async queryAllSuggestions(): Promise<QueryAllSuggestionsResponse> {
+        return await this.queryAllSuggestionsUseCase.execute();
     }
 }

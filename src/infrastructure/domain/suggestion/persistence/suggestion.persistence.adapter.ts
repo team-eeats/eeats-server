@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SuggestionTypeormEntity } from './suggestion.entity';
 import { Repository } from 'typeorm';
 import { SuggestionMapper } from './suggestion.mapper';
+import { SuggestionResponse } from 'src/application/domain/suggestion/dto/suggestion.dto';
 
 @Injectable()
 export class SuggestionPersistenceAdapter implements SuggestionPort {
@@ -50,5 +51,17 @@ export class SuggestionPersistenceAdapter implements SuggestionPort {
 
     async deleteSuggestion(suggestion: Suggestion): Promise<void> {
         await this.suggestionRepository.remove(await this.suggestionMapper.toEntity(suggestion));
+    }
+
+    async queryAllSuggestions(): Promise<SuggestionResponse[]> {
+        const suggestions = await this.suggestionRepository.find({
+            relations: {
+                user: true
+            }
+        });
+
+        return Promise.all(
+            suggestions.map(async (suggestion) => await this.suggestionMapper.toDomain(suggestion))
+        );
     }
 }
