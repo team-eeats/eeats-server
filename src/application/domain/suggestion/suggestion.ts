@@ -12,13 +12,7 @@ export class Suggestion {
         this.content = content;
     }
 
-    constructor(
-        userId: string,
-        title: string,
-        content: string,
-        createdAt: LocalDate,
-        id?: string
-    ) {
+    constructor(userId: string, title: string, content: string, createdAt: LocalDate, id?: string) {
         this.id = id;
         this.userId = userId;
         this.title = title;

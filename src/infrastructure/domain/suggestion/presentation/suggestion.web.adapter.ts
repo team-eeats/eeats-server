@@ -6,7 +6,10 @@ import { QueryMySuggestionsUseCase } from '../../../../application/domain/sugges
 import { Permission } from 'src/infrastructure/global/decorator/authority.decorator';
 import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from 'src/infrastructure/global/decorator/current-user.decorator';
-import { QueryAllSuggestionsResponse, QueryMySuggestionsResponse } from 'src/application/domain/suggestion/dto/suggestion.dto';
+import {
+    QueryAllSuggestionsResponse,
+    QueryMySuggestionsResponse
+} from 'src/application/domain/suggestion/dto/suggestion.dto';
 import { User } from '../../../../application/domain/user/user';
 import { SuggestionWebRequest } from './dto/suggestion.web.dto';
 import { QueryAllSuggestionsUseCase } from 'src/application/domain/suggestion/usecase/query-all-suggestions.usecase';
