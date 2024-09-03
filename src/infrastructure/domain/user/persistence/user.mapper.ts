@@ -10,7 +10,6 @@ export class UserMapper {
                   entity.accountId,
                   entity.password,
                   entity.nickname,
-                  entity.profileUrl,
                   entity.authority,
                   entity.id
               )
@@ -22,7 +21,6 @@ export class UserMapper {
             domain.accountId,
             domain.password,
             domain.nickname,
-            domain.profileUrl,
             domain.authority,
             domain.id
         );

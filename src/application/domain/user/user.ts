@@ -3,14 +3,12 @@ export class User {
     accountId: string;
     password: string;
     nickname: string;
-    profileUrl: string;
     authority: string;
 
     constructor(
         accountId: string,
         password: string,
         nickname: string,
-        profileUrl: string,
         authority: string,
         id?: string
     ) {
@@ -18,11 +16,10 @@ export class User {
         this.accountId = accountId;
         this.password = password;
         this.nickname = nickname;
-        this.profileUrl = profileUrl;
         this.authority = authority;
     }
 
-    updateProfileUrl(newProfileUrl: string) {
-        this.profileUrl = newProfileUrl;
+    updateProfile(newNickname: string) {
+        this.nickname = newNickname;
     }
 }

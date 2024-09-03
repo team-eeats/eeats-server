@@ -34,7 +34,6 @@ export class JwtAuthGuard implements CanActivate {
             currentUser.accountId,
             currentUser.password,
             currentUser.nickname,
-            currentUser.profileUrl,
             currentUser.authority,
             currentUser.id
         );

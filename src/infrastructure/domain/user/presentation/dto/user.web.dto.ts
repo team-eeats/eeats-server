@@ -1,8 +1,8 @@
 export class UpdateProfileRequest {
-    profileImageUrl: string;
+    nickname: string;
 }
 
 export class QueryMyInfoResponse {
     accountId: string;
-    profileImageUrl: string;
+    nickname: string;
 }

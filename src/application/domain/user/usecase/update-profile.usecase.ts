@@ -9,8 +9,8 @@ export class UpdateProfileUseCase {
         private readonly userPort: UserPort
     ) {}
 
-    async execute(user: User, profileUrl: string) {
-        user.updateProfileUrl(profileUrl);
+    async execute(user: User, nickname: string) {
+        user.updateProfile(nickname);
         await this.userPort.saveUser(user);
     }
 }

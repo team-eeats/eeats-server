@@ -14,7 +14,7 @@ export class UserWebAdapter {
     @Permission([Authority.USER])
     @Patch('/profile')
     async updateProfile(@CurrentUser() user: User, @Body() request: UpdateProfileRequest) {
-        await this.updateProfileUseCase.execute(user, request.profileImageUrl);
+        await this.updateProfileUseCase.execute(user, request.nickname);
     }
 
     @Permission([Authority.USER])
@@ -22,7 +22,7 @@ export class UserWebAdapter {
     queryMyInfo(@CurrentUser() user: User): QueryMyInfoResponse {
         return {
             accountId: user.accountId,
-            profileImageUrl: user.profileUrl
+            nickname: user.nickname
         };
     }
 }

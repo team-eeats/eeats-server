@@ -15,9 +15,6 @@ export class UserTypeormEntity {
     @Column('varchar')
     nickname: string;
 
-    @Column('varchar', { nullable: true })
-    profileUrl: string;
-
     @Column('varchar', { length: 7 })
     authority: string;
 
@@ -30,7 +27,6 @@ export class UserTypeormEntity {
         accountId: string,
         password: string,
         nickname: string,
-        profileUrl: string,
         authority: string,
         id?: string
     ) {
@@ -38,7 +34,6 @@ export class UserTypeormEntity {
         this.accountId = accountId;
         this.password = password;
         this.nickname = nickname;
-        this.profileUrl = profileUrl;
         this.authority = authority;
     }
 }
