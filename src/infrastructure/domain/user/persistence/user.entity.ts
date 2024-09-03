@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { SuggestionTypeormEntity } from '../../suggestion/persistence/suggestion.entity';
 
 @Entity('tbl_user')
 export class UserTypeormEntity {
@@ -19,6 +20,11 @@ export class UserTypeormEntity {
 
     @Column('varchar', { length: 7 })
     authority: string;
+
+    @OneToMany(() => SuggestionTypeormEntity, (suggestion) => suggestion.user, {
+        cascade: true
+    })
+    suggestions: SuggestionTypeormEntity[];
 
     constructor(
         accountId: string,
