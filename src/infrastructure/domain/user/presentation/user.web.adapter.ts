@@ -11,13 +11,13 @@ export class UserWebAdapter {
     constructor(private readonly updateProfileUseCase: UpdateProfileUseCase) {}
 
     @HttpCode(204)
-    @Permission([Authority.USER])
+    @Permission([Authority.USER, Authority.MANAGER])
     @Patch('/profile')
     async updateProfile(@CurrentUser() user: User, @Body() request: UpdateProfileRequest) {
         await this.updateProfileUseCase.execute(user, request.nickname);
     }
 
-    @Permission([Authority.USER])
+    @Permission([Authority.USER, Authority.MANAGER])
     @Get('/my')
     queryMyInfo(@CurrentUser() user: User): QueryMyInfoResponse {
         return {
