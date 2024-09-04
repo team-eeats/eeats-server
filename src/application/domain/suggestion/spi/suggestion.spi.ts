@@ -11,6 +11,8 @@ export interface SuggestionPort {
     deleteSuggestion(suggestion: Suggestion): Promise<void>;
 
     queryAllSuggestions(): Promise<SuggestionResponse[]>;
+
+    existsSuggestionById(suggestionId: string): Promise<boolean>
 }
 
 export const SuggestionPort = Symbol('ISuggestionPort');
