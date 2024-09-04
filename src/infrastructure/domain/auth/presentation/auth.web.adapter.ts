@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Headers, Post, Query, HttpCode } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, Put, Headers } from '@nestjs/common';
 import { LoginUseCase } from '../../../../application/domain/auth/usecase/login.usecase';
 import { SignupUseCase } from '../../../../application/domain/auth/usecase/signup.usecase';
+import { TokenReissueUseCase } from '../../../../application/domain/auth/usecase/token-reissue.usecase';
 import {
     LoginRequest,
     TokenResponse,
@@ -11,7 +12,8 @@ import {
 export class AuthWebAdapter {
     constructor(
         private readonly loginUseCase: LoginUseCase,
-        private readonly signupUseCase: SignupUseCase
+        private readonly signupUseCase: SignupUseCase,
+        private readonly tokenReissueUseCase: TokenReissueUseCase
     ) {}
 
     @HttpCode(200)
@@ -26,5 +28,10 @@ export class AuthWebAdapter {
     async signup(@Body() request: SignupRequest): Promise<TokenResponse> {
         const tokenResponse = await this.signupUseCase.execute(request);
         return tokenResponse;
+    }
+
+    @Put('/reissue')
+    async reissueToken(@Headers('Refresh-Token') refreshToken: string) {
+        return await this.tokenReissueUseCase.execute(refreshToken);
     }
 }
