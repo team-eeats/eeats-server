@@ -20,23 +20,19 @@ export class CommentPersistenceAdapter implements CommentPort {
         const comment = await this.commentRepository
             .createQueryBuilder('c')
             .innerJoin('tbl_user', 'u', 'u.user_id = c.user_id')
-            .select([
-                'c.id as id',
-                'c.content as content',
-                'c.createdAt as createdAt',
-            ])
+            .select(['c.id as id', 'c.content as content', 'c.createdAt as createdAt'])
             .where('c.suggestion_id = :suggestionId', { suggestionId })
             .getRawOne();
-    
+
         if (!comment) {
             throw new NotFoundException('Comment not found');
         }
-    
+
         comment.createdAt = LocalDate.from(nativeJs(comment.createdAt));
-        
+
         return comment as CommentResponse;
     }
-    
+
     async saveComment(comment: Comment): Promise<Comment> {
         return this.commentMapper.toDomain(
             await this.commentRepository.save(await this.commentMapper.toEntity(comment))

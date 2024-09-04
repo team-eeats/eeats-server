@@ -68,6 +68,6 @@ export class SuggestionPersistenceAdapter implements SuggestionPort {
     async existsSuggestionById(suggestionId: string): Promise<boolean> {
         return await this.suggestionRepository.exists({
             where: { id: suggestionId }
-        })
+        });
     }
 }

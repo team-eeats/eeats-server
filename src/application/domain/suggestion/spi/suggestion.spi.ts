@@ -12,7 +12,7 @@ export interface SuggestionPort {
 
     queryAllSuggestions(): Promise<SuggestionResponse[]>;
 
-    existsSuggestionById(suggestionId: string): Promise<boolean>
+    existsSuggestionById(suggestionId: string): Promise<boolean>;
 }
 
 export const SuggestionPort = Symbol('ISuggestionPort');

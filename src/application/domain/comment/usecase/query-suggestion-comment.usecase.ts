@@ -14,7 +14,7 @@ export class QuerySuggestionCommentUseCase {
     ) {}
 
     async execute(suggestionId: string, userId: string): Promise<CommentResponse> {
-        if (!await this.suggestionPort.existsSuggestionById(suggestionId)) {
+        if (!(await this.suggestionPort.existsSuggestionById(suggestionId))) {
             throw new NotFoundException('Suggestion Not Found');
         }
 
