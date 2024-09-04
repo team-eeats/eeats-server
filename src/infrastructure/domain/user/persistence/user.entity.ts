@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SuggestionTypeormEntity } from '../../suggestion/persistence/suggestion.entity';
+import { NoticeTypeormEntity } from '../../notice/persistence/notice.entity';
 
 @Entity('tbl_user')
 export class UserTypeormEntity {
@@ -22,6 +23,11 @@ export class UserTypeormEntity {
         cascade: true
     })
     suggestions: SuggestionTypeormEntity[];
+
+    @OneToMany(() => NoticeTypeormEntity, (notice) => notice.user, {
+        cascade: true
+    })
+    notices: NoticeTypeormEntity[];
 
     constructor(
         accountId: string,
