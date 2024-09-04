@@ -1,7 +1,5 @@
 import { Injectable, Inject, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { SuggestionPort } from '../spi/suggestion.spi';
-import { Suggestion } from '../suggestion';
-import { User } from '../../user/user';
 
 @Injectable()
 export class DeleteSuggestionUseCase {

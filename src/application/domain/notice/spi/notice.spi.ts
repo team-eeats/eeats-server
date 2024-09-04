@@ -9,7 +9,6 @@ export interface NoticePort {
     deleteNotice(notice: Notice): Promise<void>;
 
     queryAllNotices(): Promise<NoticeResponse[]>;
-
 }
 
 export const NoticePort = Symbol('INoticePort');

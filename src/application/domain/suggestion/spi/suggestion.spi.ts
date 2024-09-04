@@ -1,4 +1,4 @@
-import { QueryAllSuggestionsResponse, SuggestionResponse } from '../dto/suggestion.dto';
+import { SuggestionResponse } from '../dto/suggestion.dto';
 import { Suggestion } from '../suggestion';
 
 export interface SuggestionPort {

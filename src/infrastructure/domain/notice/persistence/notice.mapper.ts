@@ -2,7 +2,7 @@ import { Notice } from '../../../../application/domain/notice/notice';
 import { NoticeTypeormEntity } from './notice.entity';
 import { Injectable } from '@nestjs/common';
 import { LocalDate, nativeJs } from 'js-joda';
-import { InjectRepository } from '@nestjs/typeorm'
+import { InjectRepository } from '@nestjs/typeorm';
 import { UserTypeormEntity } from '../../user/persistence/user.entity';
 import { Repository } from 'typeorm';
 

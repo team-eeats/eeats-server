@@ -45,8 +45,6 @@ export class NoticePersistenceAdapter implements NoticePort {
             }
         });
 
-        return Promise.all(
-            notices.map(async (notice) => await this.noticeMapper.toDomain(notice))
-        );
+        return Promise.all(notices.map(async (notice) => await this.noticeMapper.toDomain(notice)));
     }
 }

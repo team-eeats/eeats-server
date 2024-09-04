@@ -11,7 +11,7 @@ import { UserTypeormEntity } from '../../user/persistence/user.entity';
 @Entity('tbl_notice')
 export class NoticeTypeormEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'notice_id' })
-    id: string; 
+    id: string;
 
     @ManyToOne(() => UserTypeormEntity, (user) => user.suggestions, {
         onDelete: 'CASCADE'

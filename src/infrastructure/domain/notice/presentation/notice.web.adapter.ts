@@ -2,7 +2,10 @@ import { Body, Controller, Get, HttpCode, Param, Post, Delete, Patch } from '@ne
 import { Permission } from '../../../global/decorator/authority.decorator';
 import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
-import { NoticeResponse, QueryAllNoticesResponse } from '../../../../application/domain/notice/dto/notice.dto';
+import {
+    NoticeResponse,
+    QueryAllNoticesResponse
+} from '../../../../application/domain/notice/dto/notice.dto';
 import { User } from '../../../../application/domain/user/user';
 import { NoticeWebRequest } from './dto/notice.web.dto';
 import { QueryAllNoticesUseCase } from '../../../../application/domain/notice/usecase/query-all-notices.usecase';
@@ -31,10 +34,7 @@ export class NoticeWebAdapter {
     @Permission([Authority.MANAGER])
     @HttpCode(204)
     @Patch('/:noticeId')
-    async updateNotice(
-        @Param('noticeId') noticeId: string,
-        @Body() request: NoticeWebRequest
-    ) {
+    async updateNotice(@Param('noticeId') noticeId: string, @Body() request: NoticeWebRequest) {
         await this.updateNoticeUseCase.execute(noticeId, request);
     }
 
@@ -54,9 +54,7 @@ export class NoticeWebAdapter {
     }
 
     @Get('/details/:noticeId')
-    async queryNoticeDetails(
-        @Param('noticeId') noticeId: string
-    ): Promise<NoticeResponse> {
+    async queryNoticeDetails(@Param('noticeId') noticeId: string): Promise<NoticeResponse> {
         return this.queryNoticeDetailUseCase.execute(noticeId);
     }
 }

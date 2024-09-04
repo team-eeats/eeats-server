@@ -17,7 +17,6 @@ export class CommentWebAdapter {
         private readonly deleteCommentUseCase: DeleteCommentUseCase
     ) {}
 
-    @Permission([Authority.MANAGER, Authority.USER])
     @Get('/:suggestionId')
     async querySuggestionComment(
         @Param('suggestionId') suggestionId: string,

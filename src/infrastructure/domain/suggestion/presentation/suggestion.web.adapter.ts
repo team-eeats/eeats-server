@@ -50,14 +50,13 @@ export class SuggestionWebAdapter {
     @HttpCode(204)
     @Permission([Authority.USER])
     @Delete(':suggestionId')
-    async removeSuggestion(
+    async deleteSuggestion(
         @Param('suggestionId') suggestionId: string,
         @CurrentUser() user: User
     ): Promise<void> {
         await this.deleteSuggestionUseCase.execute(suggestionId, user.id);
     }
 
-    @Permission([Authority.USER, Authority.MANAGER])
     @Get()
     async queryAllSuggestions(): Promise<QueryAllSuggestionsResponse> {
         return await this.queryAllSuggestionsUseCase.execute();
