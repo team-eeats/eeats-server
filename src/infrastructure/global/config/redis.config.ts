@@ -3,7 +3,7 @@ import { RedisClientOptions } from 'redis';
 import { redisStore } from 'cache-manager-redis-yet';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RefreshTokenRepository } from '../../domain/auth/persistence/refresh-token.repository';
+import { RefreshTokenRepository } from '../../domain/auth/persistence/repository/refresh-token.repository';
 
 @Module({
     imports: [
