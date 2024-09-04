@@ -64,4 +64,10 @@ export class SuggestionPersistenceAdapter implements SuggestionPort {
             suggestions.map(async (suggestion) => await this.suggestionMapper.toDomain(suggestion))
         );
     }
+
+    async existsSuggestionById(suggestionId: string): Promise<boolean> {
+        return await this.suggestionRepository.exists({
+            where: { id: suggestionId }
+        })
+    }
 }
