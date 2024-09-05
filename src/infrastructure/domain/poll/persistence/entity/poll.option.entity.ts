@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+    CreateDateColumn,
+    OneToMany
+} from 'typeorm';
 import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
 import { PollTypeormEntity } from './poll.entity';
 import { VoteTypeormEntity } from '../../../../domain/vote/vote.entity';
@@ -28,7 +36,13 @@ export class PollOptionTypeormEntity {
     @OneToMany(() => VoteTypeormEntity, (vote) => vote.option)
     votes: VoteTypeormEntity[];
 
-    constructor(user: UserTypeormEntity, poll: PollTypeormEntity, description: string, imageUrl?: string, id?: string) {
+    constructor(
+        user: UserTypeormEntity,
+        poll: PollTypeormEntity,
+        description: string,
+        imageUrl?: string,
+        id?: string
+    ) {
         this.id = id;
         this.user = user;
         this.poll = poll;

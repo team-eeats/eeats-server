@@ -36,8 +36,8 @@ export class VotePersistenceAdapter implements VotePort {
         const votes = await this.voteRepository.find({
             relations: ['pollOption', 'user']
         });
-    
-        return votes.map(vote => ({
+
+        return votes.map((vote) => ({
             id: vote.id,
             userId: vote.user.id,
             pollOptionId: vote.option.id

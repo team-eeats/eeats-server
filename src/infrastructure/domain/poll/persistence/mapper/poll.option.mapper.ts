@@ -35,6 +35,5 @@ export class PollOptionMapper {
             domain.imageUrl,
             domain.id
         );
-        
     }
 }

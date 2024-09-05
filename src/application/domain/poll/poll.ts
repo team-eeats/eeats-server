@@ -13,7 +13,13 @@ export class Poll {
         this.description = description;
     }
 
-    constructor(title: string, description: string | null, options: PollOption[], createdAt: LocalDate, id?: string) {
+    constructor(
+        title: string,
+        description: string | null,
+        options: PollOption[],
+        createdAt: LocalDate,
+        id?: string
+    ) {
         this.id = id;
         this.title = title;
         this.description = description;

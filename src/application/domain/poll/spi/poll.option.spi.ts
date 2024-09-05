@@ -9,7 +9,7 @@ export interface PollOptionPort {
 
     queryAllPollOptions(): Promise<PollOptionResponse[]>;
 
-    queryPollOptionResults(pollOptionId: string): Promise<QueryPollResultsResponse>
+    queryPollOptionResults(pollOptionId: string): Promise<QueryPollResultsResponse>;
 }
 
 export const PollOptionPort = Symbol('IPollOptionPort');

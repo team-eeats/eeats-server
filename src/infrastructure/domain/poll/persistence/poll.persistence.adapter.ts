@@ -5,7 +5,10 @@ import { PollTypeormEntity } from './entity/poll.entity';
 import { PollPort } from '../../../../application/domain/poll/spi/poll.spi';
 import { Poll } from '../../../../application/domain/poll/poll';
 import { PollMapper } from './mapper/poll.mapper';
-import { PollResponse, QueryPollResultsResponse } from '../../../../application/domain/poll/dto/poll.dto';
+import {
+    PollResponse,
+    QueryPollResultsResponse
+} from '../../../../application/domain/poll/dto/poll.dto';
 
 @Injectable()
 export class PollPersistenceAdapter implements PollPort {
@@ -23,8 +26,6 @@ export class PollPersistenceAdapter implements PollPort {
 
     async queryAllPolls(): Promise<PollResponse[]> {
         const polls = await this.pollRepository.find({ relations: ['options'] });
-        return Promise.all(
-            polls.map(async (poll) => this.pollMapper.toDomain(poll))
-        );
-    } 
+        return Promise.all(polls.map(async (poll) => this.pollMapper.toDomain(poll)));
+    }
 }

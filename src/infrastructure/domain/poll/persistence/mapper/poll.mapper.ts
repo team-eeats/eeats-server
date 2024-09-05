@@ -16,21 +16,19 @@ export class PollMapper {
     ) {}
 
     async toDomain(entity: PollTypeormEntity): Promise<Poll> {
-        let options = await Promise.all(entity.pollOptions.map(option => this.pollOptionMapper.toDomain(option)));
+        let options = await Promise.all(
+            entity.pollOptions.map((option) => this.pollOptionMapper.toDomain(option))
+        );
         return new Poll(
             entity.title,
             entity.description,
             options,
             entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
-            entity.id,
+            entity.id
         );
     }
 
     async toEntity(domain: Poll): Promise<PollTypeormEntity> {
-        return new PollTypeormEntity(
-            domain.title,
-            domain.description,
-            domain.id
-        );
+        return new PollTypeormEntity(domain.title, domain.description, domain.id);
     }
 }

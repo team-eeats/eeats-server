@@ -3,9 +3,8 @@ import { Poll } from '../poll';
 
 export interface PollPort {
     savePoll(poll: Poll): Promise<Poll>;
-    
-    queryAllPolls(): Promise<PollResponse[]>;
 
+    queryAllPolls(): Promise<PollResponse[]>;
 }
 
 export const PollPort = Symbol('IPollPort');

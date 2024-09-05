@@ -43,9 +43,7 @@ export class PollOptionPersistenceAdapter implements PollOptionPort {
             relations: ['poll']
         });
 
-        return Promise.all(
-            entities.map(async (entity) => this.pollOptionMapper.toDomain(entity))
-        );
+        return Promise.all(entities.map(async (entity) => this.pollOptionMapper.toDomain(entity)));
     }
 
     async queryPollOptionResults(pollId: string): Promise<QueryPollResultsResponse> {
@@ -63,7 +61,7 @@ export class PollOptionPersistenceAdapter implements PollOptionPort {
 
         return {
             id: pollId,
-            options,
+            options
         };
     }
 
@@ -71,15 +69,18 @@ export class PollOptionPersistenceAdapter implements PollOptionPort {
         return pollOptions.reduce((sum, option) => sum + option.votes.length, 0);
     }
 
-    private mapOptions(pollOptions: PollOptionTypeormEntity[], totalVotes: number): { id: string; voteCount: number; voteRate: number }[] {
-        return pollOptions.map(option => {
+    private mapOptions(
+        pollOptions: PollOptionTypeormEntity[],
+        totalVotes: number
+    ): { id: string; voteCount: number; voteRate: number }[] {
+        return pollOptions.map((option) => {
             const voteCount = option.votes.length;
             const voteRate = totalVotes > 0 ? (voteCount / totalVotes) * 100 : 0;
 
             return {
                 id: option.id,
                 voteCount,
-                voteRate,
+                voteRate
             };
         });
     }

@@ -18,12 +18,15 @@ const GLOBAL_GUARD = { provide: APP_GUARD, useClass: JwtAuthGuard };
 
 @Global()
 @Module({
-    imports: [RedisCacheModule, JwtModule.registerAsync({
-        inject: [ConfigService],
-        useFactory: (config: ConfigService) => ({
-            secret: config.get<string>('JWT_SECRET')
+    imports: [
+        RedisCacheModule,
+        JwtModule.registerAsync({
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => ({
+                secret: config.get<string>('JWT_SECRET')
+            })
         })
-    })],
+    ],
     controllers: [AuthWebAdapter],
     providers: [
         LoginUseCase,

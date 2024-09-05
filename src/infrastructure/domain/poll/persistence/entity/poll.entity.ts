@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany,
+    ManyToOne,
+    JoinColumn,
+    CreateDateColumn
+} from 'typeorm';
 import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
 import { PollOptionTypeormEntity } from './poll.option.entity';
 import { VoteTypeormEntity } from '../../../../domain/vote/vote.entity';
@@ -13,7 +21,7 @@ export class PollTypeormEntity {
     })
     pollOptions: PollOptionTypeormEntity[];
 
-    @Column( { nullable: false })
+    @Column({ nullable: false })
     title: string;
 
     @Column({ nullable: true })
