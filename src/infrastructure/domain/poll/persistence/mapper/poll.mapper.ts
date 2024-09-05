@@ -20,7 +20,6 @@ export class PollMapper {
         return new Poll(
             entity.title,
             entity.description,
-            entity.user.id,
             options,
             entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
             entity.id,
@@ -28,10 +27,7 @@ export class PollMapper {
     }
 
     async toEntity(domain: Poll): Promise<PollTypeormEntity> {
-        let user = await this.userRepository.findOneBy({ id: domain.userId });
-
         return new PollTypeormEntity(
-            user,
             domain.title,
             domain.description,
             domain.id

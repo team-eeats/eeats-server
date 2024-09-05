@@ -31,9 +31,10 @@ export class PollOptionMapper {
         return new PollOptionTypeormEntity(
             user,
             poll,
-            domain.id,
             domain.description,
-            domain.imageUrl
+            domain.imageUrl,
+            domain.id
         );
+        
     }
 }

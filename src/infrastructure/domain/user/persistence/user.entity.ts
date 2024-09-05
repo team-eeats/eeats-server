@@ -1,6 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SuggestionTypeormEntity } from '../../suggestion/persistence/suggestion.entity';
 import { NoticeTypeormEntity } from '../../notice/persistence/notice.entity';
+import { PollOptionTypeormEntity } from '../../poll/persistence/entity/poll.option.entity';
+import { PollTypeormEntity } from '../../poll/persistence/entity/poll.entity';
+import { VoteTypeormEntity } from '../../vote/vote.entity';
 
 @Entity('tbl_user')
 export class UserTypeormEntity {
@@ -28,6 +31,14 @@ export class UserTypeormEntity {
         cascade: true
     })
     notices: NoticeTypeormEntity[];
+
+    @OneToMany(() => PollOptionTypeormEntity, (pollOption) => pollOption.user)
+    pollOptions: PollOptionTypeormEntity[];
+
+    @OneToMany(() => VoteTypeormEntity, (vote) => vote.user, {
+        cascade: true
+    })
+    votes: VoteTypeormEntity[];
 
     constructor(
         accountId: string,
