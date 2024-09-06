@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VotePort } from '../../../application/domain/vote/spi/vote.spi';
+import { VotePort } from '../../../../application/domain/vote/spi/vote.spi';
 import { VoteTypeormEntity } from './vote.entity';
 import { VoteMapper } from './vote.mapper';
-import { Vote } from '../../../application/domain/vote/vote';
-import { VoteResponse } from '../../../application/domain/vote/dto/vote.dto';
+import { Vote } from '../../../../application/domain/vote/vote';
+import { VoteResponse } from '../../../../application/domain/vote/dto/vote.dto';
 
 @Injectable()
 export class VotePersistenceAdapter implements VotePort {

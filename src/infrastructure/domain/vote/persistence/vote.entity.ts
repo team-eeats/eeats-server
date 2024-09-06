@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { PollTypeormEntity } from '../poll/persistence/entity/poll.entity';
-import { PollOptionTypeormEntity } from '../poll/persistence/entity/poll.option.entity';
-import { UserTypeormEntity } from '../user/persistence/user.entity';
+import { PollTypeormEntity } from '../../poll/persistence/entity/poll.entity';
+import { PollOptionTypeormEntity } from '../../poll/persistence/entity/poll.option.entity';
+import { UserTypeormEntity } from '../../user/persistence/user.entity';
 
 @Entity('tbl_vote')
 export class VoteTypeormEntity {

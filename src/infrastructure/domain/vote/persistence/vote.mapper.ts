@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { VoteTypeormEntity } from './vote.entity';
-import { Vote } from '../../../application/domain/vote/vote';
+import { Vote } from '../../../../application/domain/vote/vote';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PollTypeormEntity } from '../poll/persistence/entity/poll.entity';
-import { PollOptionTypeormEntity } from '../poll/persistence/entity/poll.option.entity';
-import { UserTypeormEntity } from '../user/persistence/user.entity';
+import { PollTypeormEntity } from '../../poll/persistence/entity/poll.entity';
+import { PollOptionTypeormEntity } from '../../poll/persistence/entity/poll.option.entity';
+import { UserTypeormEntity } from '../../user/persistence/user.entity';
 
 @Injectable()
 export class VoteMapper {
