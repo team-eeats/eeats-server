@@ -4,12 +4,7 @@ export class PollOption {
     description: string;
     imageUrl?: string;
 
-    constructor(
-        pollId: string,
-        description: string,
-        id?: string,
-        imageUrl?: string
-    ) {
+    constructor(pollId: string, description: string, id?: string, imageUrl?: string) {
         this.id = id;
         this.pollId = pollId;
         this.description = description;

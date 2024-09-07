@@ -13,11 +13,7 @@ const VOTE_REPOSITORY = TypeOrmModule.forFeature([VoteTypeormEntity]);
 @Global()
 @Module({
     imports: [VOTE_REPOSITORY],
-    providers: [
-        VOTE_PORT,
-        VoteMapper,
-        VoteUseCase
-    ],
+    providers: [VOTE_PORT, VoteMapper, VoteUseCase],
     exports: [VOTE_PORT, VOTE_REPOSITORY],
     controllers: [VoteWebAdapter]
 })

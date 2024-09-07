@@ -67,7 +67,9 @@ export class PollPersistenceAdapter implements PollPort {
                 id: pollEntity.id,
                 title: pollEntity.title,
                 description: pollEntity.description,
-                createdAt: pollEntity.createdAt ? LocalDate.from(nativeJs(pollEntity.createdAt)) : null,
+                createdAt: pollEntity.createdAt
+                    ? LocalDate.from(nativeJs(pollEntity.createdAt))
+                    : null,
                 options: options
             } as PollResponse;
         });

@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
-import { PollPort } from '../spi/poll.spi';
+import { PollPort } from '../../spi/poll.spi';
 
 @Injectable()
 export class DeletePollUseCase {
@@ -13,7 +13,7 @@ export class DeletePollUseCase {
         if (!poll) {
             throw new NotFoundException('Poll Not Found');
         }
-        
+
         await this.pollPort.deletePoll(poll);
     }
 }

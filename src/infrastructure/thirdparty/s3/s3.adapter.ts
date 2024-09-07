@@ -13,9 +13,7 @@ export class S3Adapter implements UploadImagePort {
         }
     });
 
-    constructor(
-        private readonly configService: ConfigService
-    ) {}
+    constructor(private readonly configService: ConfigService) {}
 
     async uploadImage(fileName: string, buffer: Buffer) {
         await this.s3Client.send(

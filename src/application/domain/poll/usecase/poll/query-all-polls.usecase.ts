@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PollPort } from '../spi/poll.spi';
-import { QueryAllPollsResponse } from '../dto/poll.dto';
+import { PollPort } from '../../spi/poll.spi';
+import { QueryAllPollsResponse } from '../../dto/poll.dto';
 
 @Injectable()
 export class QueryAllPollsUseCase {
