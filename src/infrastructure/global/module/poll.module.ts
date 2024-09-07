@@ -9,6 +9,7 @@ import { UpdatePollUseCase } from '../../../application/domain/poll/usecase/poll
 import { DeletePollUseCase } from '../../../application/domain/poll/usecase/poll/delete-poll.usecase';
 import { QueryAllPollsUseCase } from '../../../application/domain/poll/usecase/poll/query-all-polls.usecase';
 import { PollWebAdapter } from '../../domain/poll/presentation/poll.web.adapter';
+import { PollOptionMapper } from '../../../infrastructure/domain/poll/persistence/mapper/poll.option.mapper';
 
 const POLL_PORT = { provide: PollPort, useClass: PollPersistenceAdapter };
 const POLL_REPOSITORY = TypeOrmModule.forFeature([PollTypeormEntity]);
@@ -19,6 +20,7 @@ const POLL_REPOSITORY = TypeOrmModule.forFeature([PollTypeormEntity]);
     providers: [
         POLL_PORT,
         PollMapper,
+        PollOptionMapper,
         CreatePollUseCase,
         UpdatePollUseCase,
         DeletePollUseCase,
