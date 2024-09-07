@@ -5,4 +5,7 @@ export class UpdateProfileRequest {
 export class QueryMyInfoResponse {
     accountId: string;
     nickname: string;
+    allergies: {
+        type: string[];
+    }[];
 }

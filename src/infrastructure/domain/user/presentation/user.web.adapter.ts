@@ -26,10 +26,17 @@ export class UserWebAdapter {
 
     @Permission([Authority.USER, Authority.MANAGER])
     @Get('/my')
-    queryMyInfo(@CurrentUser() user: User): QueryMyInfoResponse {
+    async queryMyInfo(@CurrentUser() user: User): Promise<QueryMyInfoResponse> {
+        const allergies = await this.queryAllergyUseCase.execute(user.id);
+
         return {
             accountId: user.accountId,
-            nickname: user.nickname
+            nickname: user.nickname,
+            allergies: [
+                {
+                    type: allergies.map((allergy) => AllergyType[allergy.type])
+                }
+            ]
         };
     }
 
