@@ -3,7 +3,6 @@ import {
     PrimaryGeneratedColumn,
     Column,
     ManyToOne,
-    JoinColumn,
     CreateDateColumn,
     OneToMany
 } from 'typeorm';
@@ -15,9 +14,7 @@ export class PollOptionTypeormEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'poll_option_id' })
     id: string;
 
-    @ManyToOne(() => PollTypeormEntity, (poll) => poll.pollOptions, {
-        cascade: true
-    })
+    @ManyToOne(() => PollTypeormEntity, (poll) => poll.pollOptions)
     poll: PollTypeormEntity;
 
     @Column('varchar', { nullable: false })
