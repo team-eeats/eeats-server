@@ -7,6 +7,8 @@ export interface VotePort {
     queryVoteById(voteId: string): Promise<Vote>;
 
     queryAllVotes(): Promise<VoteResponse[]>;
+
+    queryVoteByPollOptionAndUser(pollOptionId: string, userId: string): Promise<Vote | null>;
 }
 
 export const VotePort = Symbol('IVotePort');

@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, ConflictException } from '@nestjs/common';
 import { VotePort } from '../spi/vote.spi';
 import { Vote } from '../vote';
 import { PollOptionPort } from '../../poll/spi/poll.option.spi';
@@ -17,6 +17,14 @@ export class VoteUseCase {
         const pollOption = await this.pollOptionPort.queryPollOptionById(pollOptionId);
         if (!pollOption) {
             throw new NotFoundException('Poll Option Not Found');
+        }
+
+        const existingVote = await this.votePort.queryVoteByPollOptionAndUser(
+            pollOptionId,
+            user.id
+        );
+        if (existingVote) {
+            throw new ConflictException('Already Voted');
         }
 
         const vote = new Vote(pollOptionId, user.id);

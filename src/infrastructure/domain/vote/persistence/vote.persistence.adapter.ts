@@ -40,7 +40,22 @@ export class VotePersistenceAdapter implements VotePort {
         return votes.map((vote) => ({
             id: vote.id,
             userId: vote.user.id,
-            pollOptionId: vote.option.id
+            pollOptionId: vote.pollOption.id
         }));
+    }
+
+    async queryVoteByPollOptionAndUser(pollOptionId: string, userId: string): Promise<Vote | null> {
+        const entity = await this.voteRepository.findOne({
+            where: {
+                pollOption: { id: pollOptionId},
+                user: { id: userId }
+            },
+            relations: {
+                pollOption: true,
+                user: true
+            }
+        });
+        
+        return entity ? this.voteMapper.toDomain(entity) : null;
     }
 }
