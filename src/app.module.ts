@@ -11,6 +11,8 @@ import { VoteModule } from './infrastructure/global/module/vote.module';
 import { ImageModule } from './infrastructure/global/module/image.module';
 import { AwsModule } from './infrastructure/global/module/aws.module';
 import { PollOptionModule } from './infrastructure/global/module/poll.option.module';
+import { AxiosModule } from './infrastructure/global/module/axios.module';
+import { MealModule } from './infrastructure/global/module/meal.module';
 
 @Module({
     imports: [
@@ -25,6 +27,8 @@ import { PollOptionModule } from './infrastructure/global/module/poll.option.mod
         TypeormConfigModule,
         AwsModule,
         PollOptionModule,
+        AxiosModule,
+        MealModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
 })
