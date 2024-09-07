@@ -9,6 +9,7 @@ import { TypeormConfigModule } from './infrastructure/global/config/typeorm.conf
 import { PollModule } from './infrastructure/global/module/poll.module';
 import { VoteModule } from './infrastructure/global/module/vote.module';
 import { ImageModule } from './infrastructure/global/module/image.module';
+import { AwsModule } from './infrastructure/global/module/aws.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { ImageModule } from './infrastructure/global/module/image.module';
         VoteModule,
         ImageModule,
         TypeormConfigModule,
+        AwsModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
 })
