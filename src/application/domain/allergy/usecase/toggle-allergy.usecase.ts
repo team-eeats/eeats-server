@@ -10,15 +10,17 @@ export class ToggleAllergyUseCase {
         private readonly allergyPort: AllergyPort
     ) {}
 
-    async execute(userId: string, type: AllergyType): Promise<void> {
+    async execute(userId: string, types: AllergyType[]): Promise<void> {
         const allergies = await this.allergyPort.queryAllergiesByUserId(userId);
 
-        const allergyExists = allergies.some(allergy => allergy.type === type);
+        for (const type of types) {
+            const allergyExists = allergies.some(allergy => allergy.type === type);
 
-        if (allergyExists) {
-            await this.allergyPort.removeAllergy(userId, type);
-        } else {
-            await this.allergyPort.saveAllergy(new Allergy(userId, type));
+            if (allergyExists) {
+                await this.allergyPort.removeAllergy(userId, type);
+            } else {
+                await this.allergyPort.saveAllergy(new Allergy(userId, type));
+            }
         }
     }
 }

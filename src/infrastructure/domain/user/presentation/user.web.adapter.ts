@@ -49,7 +49,7 @@ export class UserWebAdapter {
     @Patch('/allergy')
     async toggleAllergy(
         @CurrentUser() user: User,
-        @Body('type') type: AllergyType
+        @Body('type') type: AllergyType[]
     ) {
         await this.toggleAllergyUseCase.execute(user.id, type);
     }
