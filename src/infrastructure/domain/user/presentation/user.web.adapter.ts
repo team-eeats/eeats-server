@@ -46,7 +46,7 @@ export class UserWebAdapter {
     }
 
     @Permission([Authority.USER, Authority.MANAGER])
-    @Patch('/allergy/toggle')
+    @Patch('/allergy')
     async toggleAllergy(
         @CurrentUser() user: User,
         @Body('type') type: AllergyType
