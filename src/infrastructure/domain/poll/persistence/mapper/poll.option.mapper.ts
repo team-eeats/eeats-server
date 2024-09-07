@@ -19,17 +19,14 @@ export class PollOptionMapper {
         return new PollOption(
             entity.poll.id,
             entity.description,
-            entity.user.id,
             entity.id,
             entity.imageUrl
         );
     }
 
     async toEntity(domain: PollOption): Promise<PollOptionTypeormEntity> {
-        let user = await this.userRepository.findOneBy({ id: domain.userId });
         let poll = await this.pollRepository.findOneBy({ id: domain.pollId });
         return new PollOptionTypeormEntity(
-            user,
             poll,
             domain.description,
             domain.imageUrl,

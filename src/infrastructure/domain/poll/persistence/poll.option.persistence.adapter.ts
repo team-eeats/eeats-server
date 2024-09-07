@@ -7,7 +7,7 @@ import { PollOptionResponse } from '../../../../application/domain/poll/dto/poll
 import { PollOptionTypeormEntity } from './entity/poll.option.entity';
 import { PollOptionMapper } from './mapper/poll.option.mapper';
 import { QueryPollResultsResponse } from '../../../../application/domain/poll/dto/poll.dto';
-import { VoteTypeormEntity } from '../../vote/vote.entity';
+import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
 
 @Injectable()
 export class PollOptionPersistenceAdapter implements PollOptionPort {
