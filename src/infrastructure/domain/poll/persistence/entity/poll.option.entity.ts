@@ -1,13 +1,6 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    ManyToOne,
-    CreateDateColumn,
-    OneToMany
-} from 'typeorm';
-import { PollTypeormEntity } from './poll.entity';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { VoteTypeormEntity } from '../../../vote/persistence/vote.entity';
+import { PollTypeormEntity } from './poll.entity';
 
 @Entity('tbl_poll_option')
 export class PollOptionTypeormEntity {

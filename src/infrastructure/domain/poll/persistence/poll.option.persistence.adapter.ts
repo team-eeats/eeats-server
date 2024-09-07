@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
-import { PollOptionPort } from '../../../../application/domain/poll/spi/poll.option.spi';
-import { PollOption } from '../../../../application/domain/poll/poll.option';
+import { Repository } from 'typeorm';
+import { QueryPollResultsResponse } from '../../../../application/domain/poll/dto/poll.dto';
 import { PollOptionResponse } from '../../../../application/domain/poll/dto/poll.option.dto';
+import { PollOption } from '../../../../application/domain/poll/poll.option';
+import { PollOptionPort } from '../../../../application/domain/poll/spi/poll.option.spi';
+import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
 import { PollOptionTypeormEntity } from './entity/poll.option.entity';
 import { PollOptionMapper } from './mapper/poll.option.mapper';
-import { QueryPollResultsResponse } from '../../../../application/domain/poll/dto/poll.dto';
-import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
 
 @Injectable()
 export class PollOptionPersistenceAdapter implements PollOptionPort {
@@ -29,12 +29,12 @@ export class PollOptionPersistenceAdapter implements PollOptionPort {
         return await this.pollOptionMapper.toDomain(
             await this.pollOptionRepository.findOne({
                 where: {
-                    id: pollOptionId,
+                    id: pollOptionId
                 },
                 relations: {
-                    poll: true,
-                },
-            }),
+                    poll: true
+                }
+            })
         );
     }
 
