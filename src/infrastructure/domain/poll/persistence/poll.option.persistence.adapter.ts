@@ -65,6 +65,10 @@ export class PollOptionPersistenceAdapter implements PollOptionPort {
         };
     }
 
+    async deletePollOption(pollOption: PollOption): Promise<void> {
+        await this.pollOptionRepository.remove(await this.pollOptionMapper.toEntity(pollOption));
+    }
+
     private calculateTotalVotes(pollOptions: PollOptionTypeormEntity[]): number {
         return pollOptions.reduce((sum, option) => sum + option.votes.length, 0);
     }
