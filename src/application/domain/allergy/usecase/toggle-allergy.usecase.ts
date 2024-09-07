@@ -14,7 +14,7 @@ export class ToggleAllergyUseCase {
         const allergies = await this.allergyPort.queryAllergiesByUserId(userId);
 
         for (const type of types) {
-            const allergyExists = allergies.some(allergy => allergy.type === type);
+            const allergyExists = allergies.some((allergy) => allergy.type === type);
 
             if (allergyExists) {
                 await this.allergyPort.removeAllergy(userId, type);

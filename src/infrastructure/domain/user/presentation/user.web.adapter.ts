@@ -15,7 +15,7 @@ export class UserWebAdapter {
         private readonly updateProfileUseCase: UpdateProfileUseCase,
         private readonly queryAllergyUseCase: QueryAllergyUseCase,
         private readonly toggleAllergyUseCase: ToggleAllergyUseCase
-        ) {}
+    ) {}
 
     @HttpCode(204)
     @Permission([Authority.USER, Authority.MANAGER])
@@ -32,13 +32,13 @@ export class UserWebAdapter {
             nickname: user.nickname
         };
     }
-    
+
     @Permission([Authority.USER])
     @Get('/allergy')
     async queryAllergy(@CurrentUser() user: User) {
         const allergies = await this.queryAllergyUseCase.execute(user.id);
         return {
-            allergies: allergies.map(allergy => ({
+            allergies: allergies.map((allergy) => ({
                 id: allergy.id,
                 type: AllergyType[allergy.type]
             }))
@@ -47,10 +47,7 @@ export class UserWebAdapter {
 
     @Permission([Authority.USER, Authority.MANAGER])
     @Patch('/allergy')
-    async toggleAllergy(
-        @CurrentUser() user: User,
-        @Body('type') type: AllergyType[]
-    ) {
+    async toggleAllergy(@CurrentUser() user: User, @Body('type') type: AllergyType[]) {
         await this.toggleAllergyUseCase.execute(user.id, type);
     }
 }

@@ -17,7 +17,7 @@ export class AllergyPersistenceAdapter implements AllergyPort {
 
     async saveAllergy(allergy: Allergy): Promise<void> {
         const entity = await this.allergyMapper.toEntity(allergy);
-        
+
         this.allergyMapper.toDomain(await this.allergyRepository.save(entity));
     }
 

@@ -22,7 +22,22 @@ const ALLERGY_REPOSITORY = TypeOrmModule.forFeature([AllergyTypeormEntity]);
 @Module({
     imports: [USER_REPOSITORY, ALLERGY_REPOSITORY],
     controllers: [UserWebAdapter],
-    providers: [USER_PORT, UserMapper, UpdateProfileUseCase, ALLERGY_PORT, AllergyMapper, QueryAllergyUseCase, ToggleAllergyUseCase],
-    exports: [USER_PORT, USER_REPOSITORY, UserMapper, ALLERGY_PORT, ALLERGY_REPOSITORY, AllergyMapper]
+    providers: [
+        USER_PORT,
+        UserMapper,
+        UpdateProfileUseCase,
+        ALLERGY_PORT,
+        AllergyMapper,
+        QueryAllergyUseCase,
+        ToggleAllergyUseCase
+    ],
+    exports: [
+        USER_PORT,
+        USER_REPOSITORY,
+        UserMapper,
+        ALLERGY_PORT,
+        ALLERGY_REPOSITORY,
+        AllergyMapper
+    ]
 })
 export class UserModule {}

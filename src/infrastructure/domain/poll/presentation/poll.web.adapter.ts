@@ -43,5 +43,4 @@ export class PollWebAdapter {
     async queryAllPolls(): Promise<QueryAllPollsResponse> {
         return await this.queryAllPollsUseCase.execute();
     }
-
 }

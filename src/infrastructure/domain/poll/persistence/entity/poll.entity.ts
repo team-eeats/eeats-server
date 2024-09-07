@@ -1,10 +1,4 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    OneToMany,
-    CreateDateColumn
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
 import { PollOptionTypeormEntity } from './poll.option.entity';
 
 @Entity('tbl_poll')

@@ -16,7 +16,7 @@ const POLL_REPOSITORY = TypeOrmModule.forFeature([PollTypeormEntity]);
 
 @Global()
 @Module({
-    imports: [POLL_REPOSITORY], 
+    imports: [POLL_REPOSITORY],
     providers: [
         POLL_PORT,
         PollMapper,

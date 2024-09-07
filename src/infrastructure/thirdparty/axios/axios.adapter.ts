@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AxiosAdapter implements MealPort {
     constructor(private readonly configService: ConfigService) {}
-    
+
     async getMealInfo(date: string): Promise<any> {
         const NEIS_API_BASE_URL = 'https://open.neis.go.kr/hub/mealServiceDietInfo';
 
@@ -33,7 +33,7 @@ export class AxiosAdapter implements MealPort {
             dinner: []
         };
 
-        mealData.forEach(meal => {
+        mealData.forEach((meal) => {
             const mealType = this.getMealType(meal.MMEAL_SC_CODE);
 
             parsedMeals[mealType].push(
@@ -42,7 +42,7 @@ export class AxiosAdapter implements MealPort {
             );
         });
 
-        Object.keys(parsedMeals).forEach(mealType => {
+        Object.keys(parsedMeals).forEach((mealType) => {
             if (parsedMeals[mealType].length === 0) {
                 parsedMeals[mealType].push('급식이 없습니다.');
             }

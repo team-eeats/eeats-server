@@ -4,6 +4,6 @@ import { MealWebAdapter } from '../../domain/meal/presentation/meal.web.adapter'
 
 @Module({
     providers: [GetMealUseCase],
-    controllers: [MealWebAdapter],
+    controllers: [MealWebAdapter]
 })
 export class MealModule {}

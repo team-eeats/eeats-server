@@ -6,9 +6,7 @@ export class MealWebAdapter {
     constructor(private readonly getMealUseCase: GetMealUseCase) {}
 
     @Get()
-    async getMeal(
-        @Query('date') date: string
-    ): Promise<any> {
+    async getMeal(@Query('date') date: string): Promise<any> {
         return await this.getMealUseCase.execute(date);
     }
 }
