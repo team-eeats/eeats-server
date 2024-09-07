@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
 import { PollOptionTypeormEntity } from './poll.option.entity';
-import { VoteTypeormEntity } from '../../../../domain/vote/vote.entity';
+import { VoteTypeormEntity } from '../../../vote/persistence/vote.entity';
 
 @Entity('tbl_poll')
 export class PollTypeormEntity {
