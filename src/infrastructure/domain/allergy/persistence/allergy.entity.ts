@@ -4,7 +4,7 @@ import { AllergyType } from '../../../../application/domain/allergy/allergy.type
 
 @Entity('tbl_allergy')
 export class AllergyTypeormEntity {
-    @PrimaryGeneratedColumn('uuid', { name: 'allergy_id '})
+    @PrimaryGeneratedColumn('uuid', { name: 'allergy_id' })
     id: string;
 
     @Column({
