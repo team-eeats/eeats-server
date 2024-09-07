@@ -25,17 +25,17 @@ export class PollOptionPersistenceAdapter implements PollOptionPort {
         return this.pollOptionMapper.toDomain(savedEntity);
     }
 
-    async queryPollOptionById(id: string): Promise<PollOption> {
-        const entity = await this.pollOptionRepository.findOne({
-            where: { id },
-            relations: ['votes']
-        });
-
-        if (!entity) {
-            throw new NotFoundException('Poll Option Not Found');
-        }
-
-        return this.pollOptionMapper.toDomain(entity);
+    async queryPollOptionById(pollOptionId: string): Promise<PollOption> {
+        return await this.pollOptionMapper.toDomain(
+            await this.pollOptionRepository.findOne({
+                where: {
+                    id: pollOptionId,
+                },
+                relations: {
+                    poll: true,
+                },
+            }),
+        );
     }
 
     async queryAllPollOptions(): Promise<PollOptionResponse[]> {
