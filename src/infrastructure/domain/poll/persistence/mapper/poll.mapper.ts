@@ -16,9 +16,12 @@ export class PollMapper {
     ) {}
 
     async toDomain(entity: PollTypeormEntity): Promise<Poll> {
-        let options = await Promise.all(
-            entity.pollOptions.map((option) => this.pollOptionMapper.toDomain(option))
-        );
+        const options = entity.pollOptions
+            ? await Promise.all(
+                  entity.pollOptions.map((option) => this.pollOptionMapper.toDomain(option))
+              )
+            : [];
+
         return new Poll(
             entity.title,
             entity.description,
