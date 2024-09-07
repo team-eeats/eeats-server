@@ -5,11 +5,10 @@ import { GetMealUseCase } from '../../../../application/domain/meal/usecase/get-
 export class MealWebAdapter {
     constructor(private readonly getMealUseCase: GetMealUseCase) {}
 
-    @Get('/:schoolCode')
+    @Get()
     async getMeal(
-        @Param('schoolCode') schoolCode: string,
         @Query('date') date: string
     ): Promise<any> {
-        return await this.getMealUseCase.execute(schoolCode, date);
+        return await this.getMealUseCase.execute(date);
     }
 }

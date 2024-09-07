@@ -7,7 +7,7 @@ export class GetMealUseCase {
         @Inject(AxiosPort) private readonly axiosPort: AxiosPort
     ) {}
 
-    async execute(schoolCode: string, date: string) {
-        return this.axiosPort.getMealInfo(schoolCode, date);
+    async execute(date: string) {
+        return this.axiosPort.getMealInfo(date);
     }
 }
