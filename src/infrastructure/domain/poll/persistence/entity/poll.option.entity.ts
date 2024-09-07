@@ -16,7 +16,7 @@ export class PollOptionTypeormEntity {
     @Column('varchar', { length: 255, default: null })
     imageUrl: string;
 
-    @OneToMany(() => VoteTypeormEntity, (vote) => vote.option)
+    @OneToMany(() => VoteTypeormEntity, (vote) => vote.pollOption)
     votes: VoteTypeormEntity[];
 
     constructor(poll: PollTypeormEntity, description: string, imageUrl?: string, id?: string) {

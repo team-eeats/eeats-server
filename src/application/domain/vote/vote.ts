@@ -1,11 +1,11 @@
 export class Vote {
     id: string;
-    optionId: string;
+    pollOptionId: string;
     userId: string;
 
-    constructor(optionId: string, userId: string, id?: string) {
+    constructor(pollOptionId: string, userId: string, id?: string) {
         this.id = id;
-        this.optionId = optionId;
+        this.pollOptionId = pollOptionId;
         this.userId = userId;
     }
 }

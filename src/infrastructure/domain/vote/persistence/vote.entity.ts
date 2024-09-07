@@ -11,16 +11,16 @@ export class VoteTypeormEntity {
     @ManyToOne(() => PollOptionTypeormEntity, (option) => option.votes, {
         onDelete: 'CASCADE'
     })
-    option: PollOptionTypeormEntity;
+    pollOption: PollOptionTypeormEntity;
 
     @ManyToOne(() => UserTypeormEntity, (user) => user.votes, {
         onDelete: 'CASCADE'
     })
     user: UserTypeormEntity;
 
-    constructor(option: PollOptionTypeormEntity, user: UserTypeormEntity, id?: string) {
+    constructor(pollOption: PollOptionTypeormEntity, user: UserTypeormEntity, id?: string) {
         this.id = id;
-        this.option = option;
+        this.pollOption = pollOption;
         this.user = user;
     }
 }

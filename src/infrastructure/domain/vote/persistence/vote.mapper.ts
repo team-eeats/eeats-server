@@ -21,12 +21,12 @@ export class VoteMapper {
     ) {}
 
     async toDomain(entity: VoteTypeormEntity): Promise<Vote> {
-        return entity ? new Vote(entity.option.id, entity.user.id, entity.id) : null;
+        return entity ? new Vote(entity.pollOption.id, entity.user.id, entity.id) : null;
     }
 
     async toEntity(domain: Vote): Promise<VoteTypeormEntity> {
         let user = await this.userRepository.findOneBy({ id: domain.userId });
-        let option = await this.pollOptionRepository.findOneBy({ id: domain.optionId });
+        let option = await this.pollOptionRepository.findOneBy({ id: domain.pollOptionId });
 
         return new VoteTypeormEntity(option, user, domain.id);
     }
