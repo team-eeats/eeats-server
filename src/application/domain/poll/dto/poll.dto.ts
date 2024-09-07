@@ -16,6 +16,7 @@ export class PollResponse {
 export class QueryAllPollsResponse {
     polls: PollResponse[];
 }
+
 export class UpdatePollRequest {
     title: string;
     description?: string;
