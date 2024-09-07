@@ -7,6 +7,7 @@ import { NoticeModule } from './infrastructure/global/module/notice.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeormConfigModule } from './infrastructure/global/config/typeorm.config';
 import { PollModule } from './infrastructure/global/module/poll.module';
+import { VoteModule } from './infrastructure/global/module/vote.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { PollModule } from './infrastructure/global/module/poll.module';
         CommentModule,
         NoticeModule,
         PollModule,
+        VoteModule,
         TypeormConfigModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
