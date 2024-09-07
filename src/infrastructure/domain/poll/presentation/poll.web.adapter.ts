@@ -8,9 +8,6 @@ import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { CreatePollWebRequest, UpdatePollWebRequest } from './dto/poll.web.dto';
 import { QueryAllPollsResponse } from 'src/application/domain/poll/dto/poll.dto';
-import { CreatePollOptionUseCase } from '../../../../application/domain/poll/usecase/poll-option/create-poll-option.usecase';
-import { DeletePollOptionUseCase } from '../../../../application/domain/poll/usecase/poll-option/delete-poll-option.usecase';
-import { CreatePollOptionWebRequest } from './dto/poll.option.web.dto';
 
 @Controller('polls')
 export class PollWebAdapter {
@@ -18,9 +15,7 @@ export class PollWebAdapter {
         private readonly createPollUseCase: CreatePollUseCase,
         private readonly updatePollUseCase: UpdatePollUseCase,
         private readonly deletePollUseCase: DeletePollUseCase,
-        private readonly queryAllPollsUseCase: QueryAllPollsUseCase,
-        private readonly createPollOptionUseCase: CreatePollOptionUseCase,
-        private readonly deletePollOptionUseCase: DeletePollOptionUseCase
+        private readonly queryAllPollsUseCase: QueryAllPollsUseCase
     ) {}
 
     @Permission([Authority.MANAGER])
@@ -49,20 +44,4 @@ export class PollWebAdapter {
         return await this.queryAllPollsUseCase.execute();
     }
 
-    @Permission([Authority.MANAGER])
-    @HttpCode(201)
-    @Post('/options/:pollId')
-    async createPollOption(
-        @Param('pollId') pollId: string,
-        @Body() request: CreatePollOptionWebRequest
-    ) {
-        await this.createPollOptionUseCase.execute(pollId, request);
-    }
-
-    @Permission([Authority.MANAGER])
-    @HttpCode(204)
-    @Delete('/options/:optionId')
-    async deletePollOption(@Param('optionId') optionId: string): Promise<void> {
-        await this.deletePollOptionUseCase.execute(optionId);
-    }
 }

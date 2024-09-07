@@ -10,6 +10,7 @@ import { PollModule } from './infrastructure/global/module/poll.module';
 import { VoteModule } from './infrastructure/global/module/vote.module';
 import { ImageModule } from './infrastructure/global/module/image.module';
 import { AwsModule } from './infrastructure/global/module/aws.module';
+import { PollOptionModule } from './infrastructure/global/module/poll.option.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { AwsModule } from './infrastructure/global/module/aws.module';
         ImageModule,
         TypeormConfigModule,
         AwsModule,
+        PollOptionModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
 })
