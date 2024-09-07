@@ -4,18 +4,19 @@ import { PollTypeormEntity } from '../../domain/poll/persistence/entity/poll.ent
 import { PollPersistenceAdapter } from '../../domain/poll/persistence/poll.persistence.adapter';
 import { PollPort } from '../../../application/domain/poll/spi/poll.spi';
 import { PollMapper } from '../../domain/poll/persistence/mapper/poll.mapper';
-import { CreatePollUseCase } from '../../../application/domain/poll/usecase/create-poll.usecase';
-import { UpdatePollUseCase } from '../../../application/domain/poll/usecase/update-poll.usecase';
-import { DeletePollUseCase } from '../../../application/domain/poll/usecase/delete-poll.usecase';
-import { QueryAllPollsUseCase } from '../../../application/domain/poll/usecase/query-all-polls.usecase';
+import { CreatePollUseCase } from '../../../application/domain/poll/usecase/poll/create-poll.usecase';
+import { UpdatePollUseCase } from '../../../application/domain/poll/usecase/poll/update-poll.usecase';
+import { DeletePollUseCase } from '../../../application/domain/poll/usecase/poll//delete-poll.usecase';
+import { QueryAllPollsUseCase } from '../../../application/domain/poll/usecase/poll/query-all-polls.usecase';
 import { PollWebAdapter } from '../../domain/poll/presentation/poll.web.adapter';
+import { PollOptionModule } from './poll.option.module';
 
 const POLL_PORT = { provide: PollPort, useClass: PollPersistenceAdapter };
 const POLL_REPOSITORY = TypeOrmModule.forFeature([PollTypeormEntity]);
 
 @Global()
 @Module({
-    imports: [POLL_REPOSITORY],
+    imports: [POLL_REPOSITORY, PollOptionModule],
     providers: [
         POLL_PORT,
         PollMapper,

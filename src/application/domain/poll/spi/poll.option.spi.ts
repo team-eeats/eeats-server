@@ -10,6 +10,8 @@ export interface PollOptionPort {
     queryAllPollOptions(): Promise<PollOptionResponse[]>;
 
     queryPollOptionResults(pollOptionId: string): Promise<QueryPollResultsResponse>;
+
+    deletePollOption(pollOption: PollOption): Promise<void>;
 }
 
 export const PollOptionPort = Symbol('IPollOptionPort');
