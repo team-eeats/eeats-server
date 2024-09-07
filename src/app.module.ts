@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeormConfigModule } from './infrastructure/global/config/typeorm.config';
 import { PollModule } from './infrastructure/global/module/poll.module';
 import { VoteModule } from './infrastructure/global/module/vote.module';
+import { ImageModule } from './infrastructure/global/module/image.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { VoteModule } from './infrastructure/global/module/vote.module';
         NoticeModule,
         PollModule,
         VoteModule,
+        ImageModule,
         TypeormConfigModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
