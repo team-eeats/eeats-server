@@ -16,21 +16,11 @@ export class PollOptionMapper {
     ) {}
 
     async toDomain(entity: PollOptionTypeormEntity): Promise<PollOption> {
-        return new PollOption(
-            entity.poll.id,
-            entity.description,
-            entity.id,
-            entity.imageUrl
-        );
+        return new PollOption(entity.poll.id, entity.description, entity.id, entity.imageUrl);
     }
 
     async toEntity(domain: PollOption): Promise<PollOptionTypeormEntity> {
         let poll = await this.pollRepository.findOneBy({ id: domain.pollId });
-        return new PollOptionTypeormEntity(
-            poll,
-            domain.description,
-            domain.imageUrl,
-            domain.id
-        );
+        return new PollOptionTypeormEntity(poll, domain.description, domain.imageUrl, domain.id);
     }
 }

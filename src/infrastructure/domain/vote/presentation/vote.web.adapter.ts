@@ -7,17 +7,12 @@ import { User } from '../../../../application/domain/user/user';
 
 @Controller('votes')
 export class VoteWebAdapter {
-    constructor(
-        private readonly voteUseCase: VoteUseCase
-    ) {}
+    constructor(private readonly voteUseCase: VoteUseCase) {}
 
     @Permission([Authority.USER, Authority.MANAGER])
     @HttpCode(204)
     @Post('/:pollOptionId')
-    async vote(
-        @Param('pollOptionId') pollOptionId: string,
-        @CurrentUser() user: User
-    ) {
+    async vote(@Param('pollOptionId') pollOptionId: string, @CurrentUser() user: User) {
         await this.voteUseCase.execute(pollOptionId, user);
     }
 }

@@ -5,15 +5,13 @@ import { UploadImageResponse } from '../../../../application/domain/image/dto/im
 
 @Controller('/images')
 export class ImageWebAdapter {
-    constructor(
-        private readonly uploadImageUseCase: UploadImageUseCase
-    ) {}
+    constructor(private readonly uploadImageUseCase: UploadImageUseCase) {}
 
     @Post()
     @UseInterceptors(FileInterceptor('image'))
-    async uploadFile(@UploadedFile(
-        new ParseFilePipe()
-    ) image: Express.Multer.File): Promise<UploadImageResponse> {
+    async uploadFile(
+        @UploadedFile(new ParseFilePipe()) image: Express.Multer.File
+    ): Promise<UploadImageResponse> {
         return await this.uploadImageUseCase.execute(image.originalname, image.buffer);
-    } 
+    }
 }
