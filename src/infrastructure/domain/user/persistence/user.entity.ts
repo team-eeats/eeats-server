@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SuggestionTypeormEntity } from '../../suggestion/persistence/suggestion.entity';
 import { NoticeTypeormEntity } from '../../notice/persistence/notice.entity';
-import { PollTypeormEntity } from '../../poll/persistence/entity/poll.entity';
 import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
+import { AllergyTypeormEntity } from '../../allergy/persistence/allergy.entity';
 
 @Entity('tbl_user')
 export class UserTypeormEntity {
@@ -35,6 +35,11 @@ export class UserTypeormEntity {
         cascade: true
     })
     votes: VoteTypeormEntity[];
+
+    @OneToMany(() => AllergyTypeormEntity, (allergy) => allergy.user, {
+        cascade: true
+    })
+    allergies?: AllergyTypeormEntity[];
 
     constructor(
         accountId: string,
