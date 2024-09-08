@@ -35,9 +35,13 @@ export class TopicSubscriptionPersistenceAdapter implements TopicSubscriptionPor
     }
 
     async deleteTopicSubscription(deviceTokenId: string, topic: Topic): Promise<void> {
-        await this.topicSubscriptionRepository.delete({
-            deviceTokenId,
-            topic
+        const subscription = await this.topicSubscriptionRepository.findOne({
+            where: { deviceTokenId, topic },
+            relations: { deviceToken: true }
         });
+
+        if (subscription) {
+            await this.topicSubscriptionRepository.save({ ...subscription, isSubscribed: false });
+        }
     }
 }
