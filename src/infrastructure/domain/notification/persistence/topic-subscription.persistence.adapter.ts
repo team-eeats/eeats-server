@@ -33,4 +33,11 @@ export class TopicSubscriptionPersistenceAdapter implements TopicSubscriptionPor
         });
         return this.topicSubscriptionMapper.toDomain(entity);
     }
+
+    async deleteTopicSubscription(deviceTokenId: string, topic: Topic): Promise<void> {
+        await this.topicSubscriptionRepository.delete({
+            deviceTokenId,
+            topic
+        });
+    }
 }
