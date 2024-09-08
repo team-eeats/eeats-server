@@ -16,4 +16,11 @@ export class TopicSubscriptionTypeormEntity {
 
     @Column('boolean', { default: true })
     isSubscribed: boolean;
+
+    constructor(deviceTokenId: string, deviceToken: DeviceTokenTypeormEntity, topic: Topic, isSubscribed: boolean = true) {
+        this.deviceTokenId = deviceTokenId;
+        this.deviceToken = deviceToken;
+        this.topic = topic;
+        this.isSubscribed = isSubscribed;
+    }
 }
