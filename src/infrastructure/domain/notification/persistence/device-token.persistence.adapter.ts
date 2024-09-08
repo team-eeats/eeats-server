@@ -29,4 +29,11 @@ export class DeviceTokenPersistenceAdapter implements DeviceTokenPort {
         });
         return this.deviceTokenMapper.toDomain(entity);
     }
+
+    async queryDeviceTokenIdByDeviceToken(deviceToken: string): Promise<string | null> {
+        const deviceTokenEntity = await this.deviceTokenRepository.findOne({
+            where: { token: deviceToken }
+        });
+        return deviceTokenEntity ? deviceTokenEntity.id : null;
+    }
 }

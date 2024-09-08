@@ -10,6 +10,8 @@ export interface TopicSubscriptionPort {
     ): Promise<TopicSubscription | null>;
 
     deleteTopicSubscription(deviceTokenId: string, topic: Topic): Promise<void>;
+
+    queryTopicSubscriptionByDeviceTokenId(deviceTokenId: string): Promise<TopicSubscription[]>;
 }
 
 export const TopicSubscriptionPort = Symbol('ITopicSubscriptionPort');
