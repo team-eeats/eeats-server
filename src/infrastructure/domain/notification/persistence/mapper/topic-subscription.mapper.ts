@@ -14,16 +14,14 @@ export class TopicSubscriptionMapper {
 
     async toDomain(entity: TopicSubscriptionTypeormEntity): Promise<TopicSubscription> {
         return entity
-            ? new TopicSubscription(
-                entity.deviceTokenId,
-                entity.topic,
-                entity.isSubscribed
-            )
+            ? new TopicSubscription(entity.deviceTokenId, entity.topic, entity.isSubscribed)
             : null;
     }
 
     async toEntity(domain: TopicSubscription): Promise<TopicSubscriptionTypeormEntity> {
-        const deviceToken = await this.deviceTokenRepository.findOneBy({ id: domain.deviceTokenId });
+        const deviceToken = await this.deviceTokenRepository.findOneBy({
+            id: domain.deviceTokenId
+        });
         return new TopicSubscriptionTypeormEntity(
             deviceToken.id,
             deviceToken,

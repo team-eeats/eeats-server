@@ -13,9 +13,7 @@ export class DeviceTokenMapper {
     ) {}
 
     async toDomain(entity: DeviceTokenTypeormEntity): Promise<DeviceToken> {
-        return entity
-            ? new DeviceToken(entity.user.id, entity.token, entity.id)
-            : null;
+        return entity ? new DeviceToken(entity.user.id, entity.token, entity.id) : null;
     }
 
     async toEntity(domain: DeviceToken): Promise<DeviceTokenTypeormEntity> {

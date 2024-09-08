@@ -28,7 +28,16 @@ export class NotificationTypeormEntity {
     @Column('boolean', { default: false })
     isRead: boolean;
 
-    constructor(user: UserTypeormEntity, topic: Topic, title: string, content: string, linkIdentifier: string, isRead: boolean, createdAt?: Date, id?: string) {
+    constructor(
+        user: UserTypeormEntity,
+        topic: Topic,
+        title: string,
+        content: string,
+        linkIdentifier: string,
+        isRead: boolean,
+        createdAt?: Date,
+        id?: string
+    ) {
         this.id = id;
         this.user = user;
         this.topic = topic;

@@ -23,7 +23,10 @@ export class TopicSubscriptionPersistenceAdapter implements TopicSubscriptionPor
         await this.topicSubscriptionRepository.save(entity);
     }
 
-    async queryByDeviceTokenIdAndTopic(deviceTokenId: string, topic: Topic): Promise<TopicSubscription | null> {
+    async queryByDeviceTokenIdAndTopic(
+        deviceTokenId: string,
+        topic: Topic
+    ): Promise<TopicSubscription | null> {
         const entity = await this.topicSubscriptionRepository.findOne({
             where: { deviceTokenId, topic },
             relations: { deviceToken: true }

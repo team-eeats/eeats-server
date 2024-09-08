@@ -14,14 +14,16 @@ export class QueryAllSuggestionsUseCase {
 
     async execute(): Promise<QueryAllSuggestionsResponse> {
         const suggestions = await this.suggestionPort.queryAllSuggestions();
-        
-        const suggestionsWithComment = await Promise.all(suggestions.map(async (suggestion) => {
-            const comment = await this.commentPort.querySuggestionComment(suggestion.id, null);
-            return {
-                ...suggestion,
-                comment: comment
-            };
-        }));
+
+        const suggestionsWithComment = await Promise.all(
+            suggestions.map(async (suggestion) => {
+                const comment = await this.commentPort.querySuggestionComment(suggestion.id, null);
+                return {
+                    ...suggestion,
+                    comment: comment
+                };
+            })
+        );
 
         return {
             suggestions: suggestionsWithComment

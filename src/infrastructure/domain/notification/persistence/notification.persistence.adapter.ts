@@ -27,6 +27,6 @@ export class NotificationPersistenceAdapter implements NotificationPort {
             where: { user: { id: userId } },
             relations: { user: true }
         });
-        return Promise.all(entities.map(entity => this.notificationMapper.toDomain(entity)));
+        return Promise.all(entities.map((entity) => this.notificationMapper.toDomain(entity)));
     }
 }

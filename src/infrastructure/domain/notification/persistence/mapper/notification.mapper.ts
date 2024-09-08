@@ -14,22 +14,22 @@ export class NotificationMapper {
     ) {}
 
     async toDomain(entity: NotificationTypeormEntity): Promise<Notification> {
-        return entity 
-        ? new Notification(
-            entity.user.id,
-            entity.topic,
-            entity.linkIdentifier,
-            entity.title,
-            entity.content,
-            entity.isRead,
-            entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
-            entity.id
-        )
-        : null;
+        return entity
+            ? new Notification(
+                  entity.user.id,
+                  entity.topic,
+                  entity.linkIdentifier,
+                  entity.title,
+                  entity.content,
+                  entity.isRead,
+                  entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
+                  entity.id
+              )
+            : null;
     }
 
     async toEntity(domain: Notification): Promise<NotificationTypeormEntity> {
-        const user = await this.userRepository.findOneBy({ id: domain.userId })
+        const user = await this.userRepository.findOneBy({ id: domain.userId });
         return new NotificationTypeormEntity(
             user,
             domain.topic,
