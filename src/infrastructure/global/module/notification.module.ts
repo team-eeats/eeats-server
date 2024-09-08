@@ -15,6 +15,7 @@ import { NotificationPort } from '../../../application/domain/notification/spi/n
 import { NotificationPersistenceAdapter } from '../../domain/notification/persistence/notification.persistence.adapter';
 import { NotificationTypeormEntity } from '../../domain/notification/persistence/entity/notification.entity';
 import { NotificationMapper } from '../../domain/notification/persistence/mapper/notification.mapper';
+import { QueryTopicSubscriptionUseCase } from '../../../application/domain/notification/usecase/query-topic-subscription.usecase';
 
 const TOPIC_SUBSCRIPTION_PORT = { provide: TopicSubscriptionPort, useClass: TopicSubscriptionPersistenceAdapter };
 const DEVICE_TOKEN_PORT = { provide: DeviceTokenPort, useClass: DeviceTokenPersistenceAdapter };
@@ -30,11 +31,10 @@ const NOTIFICATION_REPOSITORY = TypeOrmModule.forFeature([TopicSubscriptionTypeo
         NOTIFICATION_PORT,
         TopicSubscriptionMapper,
         DeviceTokenMapper,
+        NotificationMapper,
         ToggleSubscriptionUseCase,
         SetDeviceTokenUseCase,
-        NotificationMapper,
-        DeviceTokenMapper,
-        TopicSubscriptionMapper
+        QueryTopicSubscriptionUseCase
     ],
     exports: [TOPIC_SUBSCRIPTION_PORT, DEVICE_TOKEN_PORT, NOTIFICATION_PORT, NOTIFICATION_REPOSITORY, NotificationMapper, DeviceTokenMapper, TopicSubscriptionMapper],
     controllers: [NotificationWebAdapter]
