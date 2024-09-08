@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { UserTypeormEntity } from '../user/persistence/user.entity';
+import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
 
 @Entity('tbl_device_token')
 export class DeviceTokenTypeormEntity {

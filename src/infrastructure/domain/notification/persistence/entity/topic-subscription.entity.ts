@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryColumn, Index } from 'typeorm';
 import { DeviceTokenTypeormEntity } from './device-token.entity';
-import { Topic } from '../../../application/domain/notification/model/notification';
+import { Topic } from '../../../../../application/domain/notification/model/notification';
 
 @Entity('tbl_topic_subscription')
 @Index('topic_subscription_id', ['deviceTokenId', 'topic'], { unique: true })
