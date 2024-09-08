@@ -1,4 +1,4 @@
-import { CreatePollOptionWebRequest } from './poll.option.web.dto';
+import { CreatePollOptionWebRequest } from './poll-option.web.dto';
 
 export class CreatePollWebRequest {
     title: string;

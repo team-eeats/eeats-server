@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
-import { PollOptionPort } from '../../spi/poll.option.spi';
-import { PollOption } from '../../poll.option';
-import { CreatePollOptionWebRequest } from '../../../../../infrastructure/domain/poll/presentation/dto/poll.option.web.dto';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { CreatePollOptionWebRequest } from '../../../../../infrastructure/domain/poll/presentation/dto/poll-option.web.dto';
+import { PollOption } from '../../poll-option';
+import { PollOptionPort } from '../../spi/poll-option.spi';
 import { PollPort } from '../../spi/poll.spi';
 
 @Injectable()

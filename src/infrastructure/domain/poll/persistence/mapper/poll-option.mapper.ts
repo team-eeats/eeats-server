@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PollOption } from '../../../../../application/domain/poll/poll.option';
-import { PollOptionTypeormEntity } from '../entity/poll.option.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
+import { PollOption } from '../../../../../application/domain/poll/poll-option';
+import { UserTypeormEntity } from '../../../user/persistence/user.entity';
+import { PollOptionTypeormEntity } from '../entity/poll-option.entity';
 import { PollTypeormEntity } from '../entity/poll.entity';
 
 @Injectable()

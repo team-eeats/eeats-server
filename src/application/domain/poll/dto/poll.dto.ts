@@ -1,9 +1,5 @@
 import { LocalDate } from 'js-joda';
-import {
-    PollOptionResponse,
-    PollOptionResultsResponse,
-    PollOptionWithResultsReponse
-} from './poll.option.dto';
+import { PollOptionResultsResponse, PollOptionWithResultsReponse } from './poll-option.dto';
 
 export class PollResponse {
     id: string;

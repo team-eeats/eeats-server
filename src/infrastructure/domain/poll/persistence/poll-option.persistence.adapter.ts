@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PollOptionResponse } from '../../../../application/domain/poll/dto/poll-option.dto';
 import { QueryPollResultsResponse } from '../../../../application/domain/poll/dto/poll.dto';
-import { PollOptionResponse } from '../../../../application/domain/poll/dto/poll.option.dto';
-import { PollOption } from '../../../../application/domain/poll/poll.option';
-import { PollOptionPort } from '../../../../application/domain/poll/spi/poll.option.spi';
+import { PollOption } from '../../../../application/domain/poll/poll-option';
+import { PollOptionPort } from '../../../../application/domain/poll/spi/poll-option.spi';
 import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
-import { PollOptionTypeormEntity } from './entity/poll.option.entity';
-import { PollOptionMapper } from './mapper/poll.option.mapper';
+import { PollOptionTypeormEntity } from './entity/poll-option.entity';
+import { PollOptionMapper } from './mapper/poll-option.mapper';
 
 @Injectable()
 export class PollOptionPersistenceAdapter implements PollOptionPort {

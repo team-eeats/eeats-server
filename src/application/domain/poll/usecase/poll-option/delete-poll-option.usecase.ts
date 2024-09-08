@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { PollOptionPort } from '../../spi/poll.option.spi';
+import { PollOptionPort } from '../../spi/poll-option.spi';
 
 @Injectable()
 export class DeletePollOptionUseCase {

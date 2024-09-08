@@ -1,18 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { PollTypeormEntity } from './entity/poll.entity';
-import { PollPort } from '../../../../application/domain/poll/spi/poll.spi';
-import { Poll } from '../../../../application/domain/poll/poll';
-import { PollMapper } from './mapper/poll.mapper';
-import {
-    PollResponse,
-    QueryAllPollsResponse,
-    QueryPollResultsResponse
-} from '../../../../application/domain/poll/dto/poll.dto';
-import { PollOptionWithResultsReponse } from 'src/application/domain/poll/dto/poll.option.dto';
-import { PollOptionTypeormEntity } from './entity/poll.option.entity';
 import { LocalDate, nativeJs } from 'js-joda';
+import { PollOptionWithResultsReponse } from 'src/application/domain/poll/dto/poll-option.dto';
+import { Repository } from 'typeorm';
+import { PollResponse } from '../../../../application/domain/poll/dto/poll.dto';
+import { Poll } from '../../../../application/domain/poll/poll';
+import { PollPort } from '../../../../application/domain/poll/spi/poll.spi';
+import { PollOptionTypeormEntity } from './entity/poll-option.entity';
+import { PollTypeormEntity } from './entity/poll.entity';
+import { PollMapper } from './mapper/poll.mapper';
 
 @Injectable()
 export class PollPersistenceAdapter implements PollPort {

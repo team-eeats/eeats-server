@@ -1,8 +1,8 @@
-import { Injectable, Inject, NotFoundException, ConflictException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { PollOptionPort } from '../../poll/spi/poll-option.spi';
+import { User } from '../../user/user';
 import { VotePort } from '../spi/vote.spi';
 import { Vote } from '../vote';
-import { PollOptionPort } from '../../poll/spi/poll.option.spi';
-import { User } from '../../user/user';
 
 @Injectable()
 export class VoteUseCase {

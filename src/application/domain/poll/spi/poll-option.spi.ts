@@ -1,6 +1,6 @@
-import { PollOption } from '../poll.option';
-import { PollOptionResponse } from '../dto/poll.option.dto';
+import { PollOptionResponse } from '../dto/poll-option.dto';
 import { QueryPollResultsResponse } from '../dto/poll.dto';
+import { PollOption } from '../poll-option';
 
 export interface PollOptionPort {
     savePollOption(pollOption: PollOption): Promise<PollOption>;

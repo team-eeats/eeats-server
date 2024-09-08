@@ -1,5 +1,5 @@
 import { LocalDate } from 'js-joda';
-import { PollOption } from './poll.option';
+import { PollOption } from './poll-option';
 
 export class Poll {
     id: string;
