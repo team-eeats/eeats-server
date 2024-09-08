@@ -13,6 +13,7 @@ import { AwsModule } from './infrastructure/global/module/aws.module';
 import { PollOptionModule } from './infrastructure/global/module/poll.option.module';
 import { AxiosModule } from './infrastructure/global/module/axios.module';
 import { MealModule } from './infrastructure/global/module/meal.module';
+import { NotificationModule } from './infrastructure/global/module/notification.module';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import { MealModule } from './infrastructure/global/module/meal.module';
         PollOptionModule,
         AxiosModule,
         MealModule,
+        NotificationModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
 })
