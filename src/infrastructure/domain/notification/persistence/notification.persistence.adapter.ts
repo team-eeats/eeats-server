@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { NotificationPort } from '../../../../application/domain/notification/spi/notification.spi';
-import { Notification } from '../../../../application/domain/notification/model/notification';
+import {
+    Notification,
+    Topic
+} from '../../../../application/domain/notification/model/notification';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { NotificationTypeormEntity } from './entity/notification.entity';
 import { NotificationMapper } from './mapper/notification.mapper';
-import { Repository } from 'typeorm';
-import { UserTypeormEntity } from '../../user/persistence/user.entity';
+import { FcmAdapter } from '../../../thirdparty/fcm/fcm.adapter';
 
 @Injectable()
 export class NotificationPersistenceAdapter implements NotificationPort {
@@ -13,8 +16,7 @@ export class NotificationPersistenceAdapter implements NotificationPort {
         @InjectRepository(NotificationTypeormEntity)
         private readonly notificationRepository: Repository<NotificationTypeormEntity>,
         private readonly notificationMapper: NotificationMapper,
-        @InjectRepository(UserTypeormEntity)
-        private readonly userRepository: Repository<UserTypeormEntity>
+        private readonly fcmAdapter: FcmAdapter
     ) {}
 
     async saveNotification(notification: Notification): Promise<void> {
@@ -22,11 +24,35 @@ export class NotificationPersistenceAdapter implements NotificationPort {
         await this.notificationRepository.save(entity);
     }
 
+    async queryNotificationById(notificationId: string): Promise<Notification | null> {
+        const entity = await this.notificationRepository.findOne({ where: { id: notificationId } });
+        return entity ? this.notificationMapper.toDomain(entity) : null;
+    }
+
+    async queryNotificationByCondition(
+        userId: string,
+        isRead: boolean | null
+    ): Promise<Notification[]> {
+        const queryBuilder = this.notificationRepository
+            .createQueryBuilder('notification')
+            .where('notification.userId = :userId', { userId });
+
+        if (isRead !== null) {
+            queryBuilder.andWhere('notification.isRead = :isRead', { isRead });
+        }
+
+        const notifications = await queryBuilder
+            .orderBy('notification.createdAt', 'DESC')
+            .getMany();
+
+        return Promise.all(notifications.map(this.notificationMapper.toDomain));
+    }
+
     async queryNotificationByUserId(userId: string): Promise<Notification[]> {
-        const entities = await this.notificationRepository.find({
-            where: { user: { id: userId } },
-            relations: { user: true }
+        const notifications = await this.notificationRepository.find({
+            where: { user: {id: userId} },
+            order: { createdAt: 'DESC' }
         });
-        return Promise.all(entities.map((entity) => this.notificationMapper.toDomain(entity)));
+        return Promise.all(notifications.map(this.notificationMapper.toDomain));
     }
 }

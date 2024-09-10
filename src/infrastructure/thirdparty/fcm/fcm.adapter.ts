@@ -54,29 +54,4 @@ export class FcmAdapter {
             throw new Error('Failed to send message to topic');
         }
     }
-
-    async sendMessages(tokens: string[], notification: Notification) {
-        const messages = tokens.map((token) => ({
-            notification: {
-                title: notification.title,
-                body: notification.content
-            },
-            token: token
-        }));
-
-        try {
-            const response = await this.firebaseInstance.sendAll(messages);
-            if (response.failureCount > 0) {
-                const failedTokens: string[] = [];
-                response.responses.forEach((resp, idx) => {
-                    if (!resp.success) {
-                        failedTokens.push(tokens[idx]);
-                    }
-                });
-                console.log('Some tokens caused failures : ' + failedTokens);
-            }
-        } catch (error) {
-            throw new Error('Failed to send messages to multiple devices');
-        }
-    }
 }
