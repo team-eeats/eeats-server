@@ -1,57 +1,90 @@
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import { Topic } from '../../../application/domain/notification/model/notification';
+import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
+import { Topic } from '../../../application/domain/notification/model/notification';
 
 @Injectable()
-export class FcmAdapter {
-    private firebaseInstance = admin.messaging();
-
-    async subscribeTopic(token: string, topic: Topic) {
-        try {
-            await this.firebaseInstance.subscribeToTopic(token, topic);
-        } catch (error) {
-            throw new Error('Failed to subscribe to topic');
-        }
-    }
-
-    async unsubscribeTopic(token: string, topic: Topic) {
-        try {
-            await this.firebaseInstance.unsubscribeFromTopic(token, topic);
-        } catch (error) {
-            throw new Error('Failed to unsubscribe from topic');
-        }
-    }
-
-    async sendMessageToDevice(token: string, notification: Notification) {
+export class FCMAdapter implements FCMPort {
+    async sendMessageToDevice(token: string, notification: Notification): Promise<void> {
         const message = {
+            token,
             notification: {
                 title: notification.title,
-                body: notification.content
+                body: notification.content,
             },
-            token: token
+            android: {
+                data: {
+                    detail_id: notification.linkIdentifier.toString(),
+                    topic: notification.topic.toString(),
+                },
+            },
+            apns: {
+                payload: {
+                    aps: {
+                        sound: 'default',
+                        'custom-data': {
+                            detail_id: notification.linkIdentifier.toString(),
+                            topic: notification.topic.toString(),
+                        },
+                    },
+                },
+            },
         };
 
         try {
-            await this.firebaseInstance.send(message);
+            await admin.messaging().send(message);
         } catch (error) {
-            throw new Error('Failed to send message');
+            throw new Error('Failed To Send To Device')
         }
     }
 
-    async sendMessageToTopic(topic: Topic, notification: Notification) {
+    async sendMessageToTopic(topic: string, notification: Notification): Promise<void> {
         const message = {
+            topic,
             notification: {
                 title: notification.title,
-                body: notification.content
+                body: notification.content,
             },
-            topic: topic
+            android: {
+                data: {
+                    detail_id: notification.linkIdentifier.toString(),
+                    topic: notification.topic.toString(),
+                },
+            },
+            apns: {
+                payload: {
+                    aps: {
+                        sound: 'default',
+                        'custom-data': {
+                            detail_id: notification.linkIdentifier.toString(),
+                            topic: notification.topic.toString(),
+                        },
+                    },
+                },
+            },
         };
 
         try {
-            await this.firebaseInstance.send(message);
+            await admin.messaging().send(message);
         } catch (error) {
-            throw new Error('Failed to send message to topic');
+            throw new Error('Failed To Send Message')
+        }
+    }
+
+    async subscribeTopic(token: string, topic: Topic): Promise<void> {
+        try {
+            await admin.messaging().subscribeToTopic([token], topic.toString());
+        } catch (error) {
+            throw new Error('Failed To Subscribe')
+        }
+    }
+
+    async unsubscribeTopic(token: string, topic: Topic): Promise<void> {
+        try {
+            await admin.messaging().unsubscribeFromTopic([token], topic.toString());
+        } catch (error) {
+            throw new Error('Failed To Unsubscribe')
         }
     }
 }

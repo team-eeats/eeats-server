@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { NotificationPort } from '../../../../application/domain/notification/spi/notification.spi';
 import {
     Notification,
@@ -8,7 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NotificationTypeormEntity } from './entity/notification.entity';
 import { NotificationMapper } from './mapper/notification.mapper';
-import { FcmAdapter } from '../../../thirdparty/fcm/fcm.adapter';
+import { FCMAdapter } from '../../../thirdparty/fcm/fcm.adapter';
+import { FCMPort } from 'src/application/common/spi/fcm.spi';
 
 @Injectable()
 export class NotificationPersistenceAdapter implements NotificationPort {
@@ -16,7 +17,9 @@ export class NotificationPersistenceAdapter implements NotificationPort {
         @InjectRepository(NotificationTypeormEntity)
         private readonly notificationRepository: Repository<NotificationTypeormEntity>,
         private readonly notificationMapper: NotificationMapper,
-        private readonly fcmAdapter: FcmAdapter
+        @Inject(FCMPort)
+        private readonly fcmPort: FCMPort
+        
     ) {}
 
     async saveNotification(notification: Notification): Promise<void> {
