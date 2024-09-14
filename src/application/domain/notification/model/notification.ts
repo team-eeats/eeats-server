@@ -32,7 +32,7 @@ export class Notification {
 }
 
 export enum Topic {
-    NOTICE = '공지',
-    ALLERGY = '알레르기',
-    COMMENT = '답변'
+    NOTICE = 'notice',
+    ALLERGY = 'allergy',
+    COMMENT = 'comment'
 }
