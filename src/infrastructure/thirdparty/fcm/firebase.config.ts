@@ -11,7 +11,7 @@ export class FirebaseConfig implements OnModuleInit {
     }
 
     initialize() {
-        if (!admin.apps.length) {
+        if (admin.apps.length === 0) {
             const firebaseConfigPath = this.configService.get<string>('FCM_PATH');
             const serviceAccount = require(firebaseConfigPath);
 
