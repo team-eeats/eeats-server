@@ -13,13 +13,15 @@ export class QueryTopicSubscriptionUseCase {
     ) {}
 
     async execute(deviceToken: string): Promise<QueryMySubscriptionsResponse> {
-        const deviceTokenId = await this.deviceTokenPort.queryDeviceTokenIdByDeviceToken(deviceToken);
-        
+        const deviceTokenId =
+            await this.deviceTokenPort.queryDeviceTokenIdByDeviceToken(deviceToken);
+
         if (!deviceTokenId) {
             return { subscriptions: [] };
         }
 
-        const subscriptions = await this.topicSubscriptionPort.queryTopicSubscriptionByDeviceTokenId(deviceTokenId);
+        const subscriptions =
+            await this.topicSubscriptionPort.queryTopicSubscriptionByDeviceTokenId(deviceTokenId);
 
         return {
             subscriptions: subscriptions.map(({ topic, isSubscribed }) => ({

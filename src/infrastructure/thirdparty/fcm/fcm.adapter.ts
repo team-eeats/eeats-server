@@ -11,13 +11,13 @@ export class FCMAdapter implements FCMPort {
             token,
             notification: {
                 title: notification.title,
-                body: notification.content,
+                body: notification.content
             },
             android: {
                 data: {
                     detail_id: notification.linkIdentifier.toString(),
-                    topic: notification.topic.toString(),
-                },
+                    topic: notification.topic.toString()
+                }
             },
             apns: {
                 payload: {
@@ -25,17 +25,17 @@ export class FCMAdapter implements FCMPort {
                         sound: 'default',
                         'custom-data': {
                             detail_id: notification.linkIdentifier.toString(),
-                            topic: notification.topic.toString(),
-                        },
-                    },
-                },
-            },
+                            topic: notification.topic.toString()
+                        }
+                    }
+                }
+            }
         };
 
         try {
             await admin.messaging().send(message);
         } catch (error) {
-            throw new Error('Failed To Send To Device')
+            throw new Error('Failed To Send To Device');
         }
     }
 
@@ -44,13 +44,13 @@ export class FCMAdapter implements FCMPort {
             topic,
             notification: {
                 title: notification.title,
-                body: notification.content,
+                body: notification.content
             },
             android: {
                 data: {
                     detail_id: notification.linkIdentifier.toString(),
-                    topic: notification.topic.toString(),
-                },
+                    topic: notification.topic.toString()
+                }
             },
             apns: {
                 payload: {
@@ -58,17 +58,17 @@ export class FCMAdapter implements FCMPort {
                         sound: 'default',
                         'custom-data': {
                             detail_id: notification.linkIdentifier.toString(),
-                            topic: notification.topic.toString(),
-                        },
-                    },
-                },
-            },
+                            topic: notification.topic.toString()
+                        }
+                    }
+                }
+            }
         };
 
         try {
             await admin.messaging().send(message);
         } catch (error) {
-            throw new Error('Failed To Send Message')
+            throw new Error('Failed To Send Message');
         }
     }
 
@@ -76,7 +76,7 @@ export class FCMAdapter implements FCMPort {
         try {
             await admin.messaging().subscribeToTopic([token], topic.toString());
         } catch (error) {
-            throw new Error('Failed To Subscribe')
+            throw new Error('Failed To Subscribe');
         }
     }
 
@@ -84,7 +84,7 @@ export class FCMAdapter implements FCMPort {
         try {
             await admin.messaging().unsubscribeFromTopic([token], topic.toString());
         } catch (error) {
-            throw new Error('Failed To Unsubscribe')
+            throw new Error('Failed To Unsubscribe');
         }
     }
 }

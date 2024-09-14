@@ -24,7 +24,10 @@ export class ToggleAllSubscriptionsUseCase {
 
         const isSubscribed = await Promise.all(
             Object.values(Topic).map(async (topic) => {
-                const subscription = await this.topicSubscriptionPort.queryByDeviceTokenIdAndTopic(deviceToken.id, topic);
+                const subscription = await this.topicSubscriptionPort.queryByDeviceTokenIdAndTopic(
+                    deviceToken.id,
+                    topic
+                );
                 return !!subscription;
             })
         ).then((results) => results.some((subscribed) => subscribed));
@@ -36,7 +39,7 @@ export class ToggleAllSubscriptionsUseCase {
                     await this.topicSubscriptionPort.saveTopicSubscription({
                         deviceTokenId: deviceToken.id,
                         topic: topic,
-                        isSubscribed: false,
+                        isSubscribed: false
                     });
                 })
             );
@@ -47,7 +50,7 @@ export class ToggleAllSubscriptionsUseCase {
                     await this.topicSubscriptionPort.saveTopicSubscription({
                         deviceTokenId: deviceToken.id,
                         topic: topic,
-                        isSubscribed: true,
+                        isSubscribed: true
                     });
                 })
             );

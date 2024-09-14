@@ -19,7 +19,6 @@ export class NotificationPersistenceAdapter implements NotificationPort {
         private readonly notificationMapper: NotificationMapper,
         @Inject(FCMPort)
         private readonly fcmPort: FCMPort
-        
     ) {}
 
     async saveNotification(notification: Notification): Promise<void> {
@@ -53,7 +52,7 @@ export class NotificationPersistenceAdapter implements NotificationPort {
 
     async queryNotificationByUserId(userId: string): Promise<Notification[]> {
         const notifications = await this.notificationRepository.find({
-            where: { user: {id: userId} },
+            where: { user: { id: userId } },
             order: { createdAt: 'DESC' }
         });
         return Promise.all(notifications.map(this.notificationMapper.toDomain));

@@ -20,14 +20,21 @@ import { NotificationMapper } from '../../domain/notification/persistence/mapper
 import { FirebaseConfig } from '../../thirdparty/fcm/firebase.config';
 import { FCMModule } from './fcm.module';
 
-const TOPIC_SUBSCRIPTION_PORT = { provide: TopicSubscriptionPort, useClass: TopicSubscriptionPersistenceAdapter };
+const TOPIC_SUBSCRIPTION_PORT = {
+    provide: TopicSubscriptionPort,
+    useClass: TopicSubscriptionPersistenceAdapter
+};
 const DEVICE_TOKEN_PORT = { provide: DeviceTokenPort, useClass: DeviceTokenPersistenceAdapter };
 const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPersistenceAdapter };
 
 @Global()
 @Module({
     imports: [
-        TypeOrmModule.forFeature([TopicSubscriptionTypeormEntity, DeviceTokenTypeormEntity, NotificationTypeormEntity]),
+        TypeOrmModule.forFeature([
+            TopicSubscriptionTypeormEntity,
+            DeviceTokenTypeormEntity,
+            NotificationTypeormEntity
+        ]),
         FCMModule
     ],
     providers: [

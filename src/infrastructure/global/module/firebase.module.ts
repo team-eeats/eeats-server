@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { FirebaseConfig } from '../../thirdparty/fcm/firebase.config';
 import * as admin from 'firebase-admin';
 
-
 @Global()
 @Module({
     imports: [ConfigModule],
