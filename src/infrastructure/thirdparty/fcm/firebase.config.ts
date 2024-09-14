@@ -4,14 +4,20 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FirebaseConfig implements OnModuleInit {
-  constructor(private configService: ConfigService) {}
+    constructor(private readonly configService: ConfigService) {}
 
-  onModuleInit() {
-    const firebaseConfigPath = this.configService.get<string>('FCM_PATH');
-    if (admin.apps.length === 0) {
-      admin.initializeApp({
-        credential: admin.credential.cert(firebaseConfigPath),
-      });
+    onModuleInit() {
+        this.initialize();
     }
-  }
+
+    initialize() {
+        if (!admin.apps.length) {
+            const firebaseConfigPath = this.configService.get<string>('FCM_PATH');
+            const serviceAccount = require(firebaseConfigPath);
+
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+            });
+        }
+    }
 }
