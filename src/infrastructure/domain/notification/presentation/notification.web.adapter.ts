@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Get, HttpCode, Patch, Query } from '@nestjs/common';
-import { SetDeviceTokenWebRequest, SubscriptionWebRequest } from './dto/notification.web.dto';
+import { SetDeviceTokenWebRequest } from './dto/notification.web.dto';
 import { Permission } from '../../../global/decorator/authority.decorator';
 import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
@@ -8,13 +8,16 @@ import { SetDeviceTokenUseCase } from '../../../../application/domain/notificati
 import { ToggleSubscriptionUseCase } from '../../../../application/domain/notification/usecase/toggle-subscription.usecase';
 import { QueryMySubscriptionsResponse } from '../../../../application/domain/notification/dto/notification.dto';
 import { QueryTopicSubscriptionUseCase } from '../../../../application/domain/notification/usecase/query-topic-subscription.usecase';
+import { Topic } from '../../../../application/domain/notification/model/notification';
+import { ToggleAllSubscriptionsUseCase } from '../../../../application/domain/notification/usecase/toggle-all-subscriptions.usecase';
 
 @Controller('notifications')
 export class NotificationWebAdapter {
     constructor(
         private readonly setDeviceTokenUseCase: SetDeviceTokenUseCase,
         private readonly toggleSubscriptionUseCase: ToggleSubscriptionUseCase,
-        private readonly queryTopicSubscriptionUseCase: QueryTopicSubscriptionUseCase
+        private readonly queryTopicSubscriptionUseCase: QueryTopicSubscriptionUseCase,
+        private readonly toggleAllSubscriptionsUseCase: ToggleAllSubscriptionsUseCase
     ) {}
 
     @Permission([Authority.USER, Authority.MANAGER])
@@ -27,14 +30,22 @@ export class NotificationWebAdapter {
     }
 
     @Permission([Authority.USER, Authority.MANAGER])
-    @Patch('/topic')
     @HttpCode(204)
+    @Patch('/topic')
     async toggleSubscription(
-        @Body() request: SubscriptionWebRequest,
+        @Body() topic: Topic,
         @CurrentUser() user: User
     ): Promise<void> {
-        await this.toggleSubscriptionUseCase.execute(request, user.id);
+        await this.toggleSubscriptionUseCase.execute(topic, user.id);
     }
+
+    @Permission([Authority.USER, Authority.MANAGER])
+    @HttpCode(204)
+    @Patch('/topics')
+    async toggleAllSubscriptions(@CurrentUser() user: User): Promise<void> {
+        await this.toggleAllSubscriptionsUseCase.execute(user.id);
+    }
+
 
     @Permission([Authority.USER, Authority.MANAGER])
     @Get('/topic')

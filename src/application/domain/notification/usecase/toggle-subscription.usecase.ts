@@ -1,8 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { TopicSubscriptionPort } from '../spi/topic-subscription.spi';
 import { DeviceTokenPort } from '../spi/device-token.spi';
-import { SubscriptionWebRequest } from '../../../../infrastructure/domain/notification/presentation/dto/notification.web.dto';
-import { TopicSubscription } from '../model/topic-subscription';
+import { Topic } from '../model/notification';
+import { FCMPort } from '../../../common/spi/fcm.spi';
 
 @Injectable()
 export class ToggleSubscriptionUseCase {
@@ -10,26 +10,37 @@ export class ToggleSubscriptionUseCase {
         @Inject(TopicSubscriptionPort)
         private readonly topicSubscriptionPort: TopicSubscriptionPort,
         @Inject(DeviceTokenPort)
-        private readonly deviceTokenPort: DeviceTokenPort
+        private readonly deviceTokenPort: DeviceTokenPort,
+        @Inject(FCMPort)
+        private readonly fcmPort: FCMPort
     ) {}
 
-    async execute(request: SubscriptionWebRequest, userId: string) {
+    async execute(topic: Topic, userId: string): Promise<void> {
         const deviceToken = await this.deviceTokenPort.queryDeviceTokenByUserId(userId);
-        
+
         if (!deviceToken) {
             throw new NotFoundException('Device Token Not Found');
         }
 
         const subscription = await this.topicSubscriptionPort.queryByDeviceTokenIdAndTopic(
             deviceToken.id,
-            request.topic
+            topic
         );
 
         if (subscription) {
-            await this.topicSubscriptionPort.deleteTopicSubscription(deviceToken.id, request.topic);
+            await this.fcmPort.unsubscribeTopic(deviceToken.token, topic);
+            await this.topicSubscriptionPort.saveTopicSubscription({
+                deviceTokenId: deviceToken.id,
+                topic: topic,
+                isSubscribed: false
+            });
         } else {
-            const newSubscription = new TopicSubscription(deviceToken.id, request.topic, true);
-            await this.topicSubscriptionPort.saveTopicSubscription(newSubscription);
+            await this.fcmPort.subscribeTopic(deviceToken.token, topic);
+            await this.topicSubscriptionPort.saveTopicSubscription({
+                deviceTokenId: deviceToken.id,
+                topic: topic,
+                isSubscribed: true
+            });
         }
     }
 }
