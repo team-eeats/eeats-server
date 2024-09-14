@@ -8,7 +8,7 @@ import { SetDeviceTokenUseCase } from '../../../../application/domain/notificati
 import { ToggleSubscriptionUseCase } from '../../../../application/domain/notification/usecase/toggle-subscription.usecase';
 import { QueryMySubscriptionsResponse } from '../../../../application/domain/notification/dto/notification.dto';
 import { QueryTopicSubscriptionUseCase } from '../../../../application/domain/notification/usecase/query-topic-subscription.usecase';
-import { Topic } from '../../../../application/domain/notification/model/notification';
+import { Topic } from 'src/application/domain/notification/model/notification';
 import { ToggleAllSubscriptionsUseCase } from '../../../../application/domain/notification/usecase/toggle-all-subscriptions.usecase';
 
 @Controller('notifications')
@@ -26,17 +26,17 @@ export class NotificationWebAdapter {
         @Body() request: SetDeviceTokenWebRequest,
         @CurrentUser() user: User
     ): Promise<void> {
-        await this.setDeviceTokenUseCase.execute(request, user)
+        await this.setDeviceTokenUseCase.execute(request, user);
     }
 
     @Permission([Authority.USER, Authority.MANAGER])
     @HttpCode(204)
     @Patch('/topic')
     async toggleSubscription(
-        @Body() topic: Topic,
+        @Body() body: { topic: Topic },
         @CurrentUser() user: User
     ): Promise<void> {
-        await this.toggleSubscriptionUseCase.execute(topic, user.id);
+        await this.toggleSubscriptionUseCase.execute(body.topic, user.id);
     }
 
     @Permission([Authority.USER, Authority.MANAGER])
@@ -45,7 +45,6 @@ export class NotificationWebAdapter {
     async toggleAllSubscriptions(@CurrentUser() user: User): Promise<void> {
         await this.toggleAllSubscriptionsUseCase.execute(user.id);
     }
-
 
     @Permission([Authority.USER, Authority.MANAGER])
     @Get('/topic')

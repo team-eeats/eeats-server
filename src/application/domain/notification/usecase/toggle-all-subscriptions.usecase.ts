@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { TopicSubscriptionPort } from '../spi/topic-subscription.spi';
 import { DeviceTokenPort } from '../spi/device-token.spi';
-import { FCMPort } from '../.../../../../common/spi/fcm.spi';
+import { FCMPort } from '../../../common/spi/fcm.spi';
 import { Topic } from '../model/notification';
 
 @Injectable()
