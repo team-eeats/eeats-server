@@ -27,7 +27,7 @@ export class ToggleSubscriptionUseCase {
             topic
         );
 
-        if (subscription) {
+        if (subscription && subscription.isSubscribed) {
             await this.fcmPort.unsubscribeTopic(deviceToken.token, topic);
             await this.topicSubscriptionPort.saveTopicSubscription({
                 deviceTokenId: deviceToken.id,

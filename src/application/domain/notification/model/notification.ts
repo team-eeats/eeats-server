@@ -32,7 +32,7 @@ export class Notification {
 }
 
 export enum Topic {
-    NOTICE = 'notice',
-    ALLERGY = 'allergy',
-    COMMENT = 'comment'
+    NOTICE = 'NOTICE',
+    ALLERGY = 'ALLERGY',
+    COMMENT = 'COMMENT'
 }

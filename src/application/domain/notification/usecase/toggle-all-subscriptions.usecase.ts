@@ -28,7 +28,7 @@ export class ToggleAllSubscriptionsUseCase {
                     deviceToken.id,
                     topic
                 );
-                return !!subscription;
+                return subscription ? subscription.isSubscribed : false;
             })
         ).then((results) => results.some((subscribed) => subscribed));
 
