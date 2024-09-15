@@ -7,8 +7,9 @@ import { Permission } from 'src/infrastructure/global/decorator/authority.decora
 import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from 'src/infrastructure/global/decorator/current-user.decorator';
 import {
+    CreateSuggestionResponse,
     QueryAllSuggestionsResponse,
-    QueryMySuggestionsResponse
+    QueryMySuggestionsResponse,
 } from 'src/application/domain/suggestion/dto/suggestion.dto';
 import { User } from '../../../../application/domain/user/user';
 import { SuggestionWebRequest } from './dto/suggestion.web.dto';
@@ -33,8 +34,8 @@ export class SuggestionWebAdapter {
     @Permission([Authority.USER])
     @HttpCode(201)
     @Post()
-    async createSuggestion(@Body() request: SuggestionWebRequest, @CurrentUser() user: User) {
-        await this.createSuggestionUseCase.execute(request, user);
+    async createSuggestion(@Body() request: SuggestionWebRequest, @CurrentUser() user: User): Promise<CreateSuggestionResponse> {
+        return await this.createSuggestionUseCase.execute(request, user);
     }
 
     @Permission([Authority.USER])

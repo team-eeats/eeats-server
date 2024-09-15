@@ -19,3 +19,9 @@ export class QueryMySuggestionsResponse {
 export class QueryAllSuggestionsResponse {
     suggestions: SuggestionResponse[];
 }
+
+export class CreateSuggestionResponse {
+    constructor(
+        private readonly id: string
+    ) {}
+}
