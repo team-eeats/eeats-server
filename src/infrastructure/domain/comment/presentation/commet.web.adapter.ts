@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { CommentResponse } from '../../../../application/domain/comment/dto/comment.dto';
+import { CommentResponse, CreateCommentResponse } from '../../../../application/domain/comment/dto/comment.dto';
 import { Permission } from '../../../global/decorator/authority.decorator';
 import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
@@ -42,7 +42,7 @@ export class CommentWebAdapter {
         @Param('suggestionId') suggestionId: string,
         @Body() request: CreateCommentWebRequest,
         @CurrentUser() user: User
-    ) {
+    ): Promise<CreateCommentResponse> {
         return await this.createCommentUseCase.execute(suggestionId, request, user.id);
     }
 }
