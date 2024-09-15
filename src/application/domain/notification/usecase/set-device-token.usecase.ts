@@ -12,6 +12,18 @@ export class SetDeviceTokenUseCase {
     ) {}
 
     async execute(request: SetDeviceTokenWebRequest, user: User): Promise<void> {
-        await this.deviceTokenPort.saveDeviceToken(new DeviceToken(user.id, request.deviceToken));
+        const existToken = await this.deviceTokenPort.queryDeviceTokenByUserId(user.id);
+
+        if (existToken) {
+            existToken.token = request.deviceToken
+            await this.deviceTokenPort.saveDeviceToken(existToken);
+        } else {
+            await this.deviceTokenPort.saveDeviceToken(
+                new DeviceToken(
+                    user.id,
+                    request.deviceToken
+                )
+            );
+        }
     }
 }

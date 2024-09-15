@@ -21,7 +21,7 @@ export class NotificationWebAdapter {
     ) {}
 
     @Permission([Authority.USER, Authority.MANAGER])
-    @Post('/token')
+    @Patch('/token')
     async setDeviceToken(
         @Body() request: SetDeviceTokenWebRequest,
         @CurrentUser() user: User
