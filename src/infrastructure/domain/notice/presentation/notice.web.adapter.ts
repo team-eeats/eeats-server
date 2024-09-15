@@ -4,7 +4,8 @@ import { Authority } from '../../user/persistence/user.entity';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import {
     NoticeResponse,
-    QueryAllNoticesResponse
+    QueryAllNoticesResponse,
+    CreateNoticeResponse
 } from '../../../../application/domain/notice/dto/notice.dto';
 import { User } from '../../../../application/domain/user/user';
 import { NoticeWebRequest } from './dto/notice.web.dto';
@@ -27,8 +28,8 @@ export class NoticeWebAdapter {
     @Permission([Authority.MANAGER])
     @HttpCode(201)
     @Post()
-    async createNotice(@Body() request: NoticeWebRequest, @CurrentUser() user: User) {
-        await this.createNoticeUseCase.execute(request, user);
+    async createNotice(@Body() request: NoticeWebRequest, @CurrentUser() user: User): Promise<CreateNoticeResponse> {
+        return await this.createNoticeUseCase.execute(request, user);
     }
 
     @Permission([Authority.MANAGER])

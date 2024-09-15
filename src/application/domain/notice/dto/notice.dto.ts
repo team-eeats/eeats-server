@@ -15,3 +15,9 @@ export class UpdateNoticeRequest {
 export class QueryAllNoticesResponse {
     notices: NoticeResponse[];
 }
+
+export class CreateNoticeResponse {
+    constructor(
+        public readonly id: string
+    ) {}
+}
