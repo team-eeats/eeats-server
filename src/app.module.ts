@@ -12,7 +12,6 @@ import { ImageModule } from './infrastructure/global/module/image.module';
 import { AwsModule } from './infrastructure/global/module/aws.module';
 import { PollOptionModule } from './infrastructure/global/module/poll.option.module';
 import { AxiosModule } from './infrastructure/global/module/axios.module';
-import { MealModule } from './infrastructure/global/module/meal.module';
 import { NotificationModule } from './infrastructure/global/module/notification.module';
 import { FCMModule } from './infrastructure/global/module/fcm.module';
 
@@ -30,7 +29,6 @@ import { FCMModule } from './infrastructure/global/module/fcm.module';
         AwsModule,
         PollOptionModule,
         AxiosModule,
-        MealModule,
         NotificationModule,
         FCMModule,
         ConfigModule.forRoot({ isGlobal: true })

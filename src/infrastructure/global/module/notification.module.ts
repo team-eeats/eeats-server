@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TopicSubscriptionTypeormEntity } from '../../domain/notification/persistence/entity/topic-subscription.entity';
 import { DeviceTokenTypeormEntity } from '../../domain/notification/persistence/entity/device-token.entity';
 import { NotificationTypeormEntity } from '../../domain/notification/persistence/entity/notification.entity';
@@ -19,6 +20,15 @@ import { DeviceTokenMapper } from '../../domain/notification/persistence/mapper/
 import { NotificationMapper } from '../../domain/notification/persistence/mapper/notification.mapper';
 import { FirebaseConfig } from '../../thirdparty/fcm/firebase.config';
 import { FCMModule } from './fcm.module';
+import { PublishEventPort } from '../../../application/common/spi/event.spi';
+import { EventPublisher } from '../../event/event.publisher';
+import { NoticeEventHandler } from '../../event/notice/notice.event.handler';
+import { AllergyMealEventHandler } from '../../event/allergy/allergy-meal.event.handler';
+import { CommentEventHandler } from '../../event/comment/comment.event.handler';
+import { FCMPort } from '../../../application/common/spi/fcm.spi';
+import { FCMAdapter } from '../../thirdparty/fcm/fcm.adapter';
+import { UserModule } from './user.module';
+import { AxiosModule } from './axios.module';
 
 const TOPIC_SUBSCRIPTION_PORT = {
     provide: TopicSubscriptionPort,
@@ -35,7 +45,10 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
             DeviceTokenTypeormEntity,
             NotificationTypeormEntity
         ]),
-        FCMModule
+        FCMModule,
+        EventEmitterModule.forRoot(),
+        UserModule,
+        AxiosModule
     ],
     providers: [
         TOPIC_SUBSCRIPTION_PORT,
@@ -48,7 +61,18 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
         SetDeviceTokenUseCase,
         QueryTopicSubscriptionUseCase,
         ToggleAllSubscriptionsUseCase,
-        FirebaseConfig
+        FirebaseConfig,
+        {
+            provide: PublishEventPort,
+            useClass: EventPublisher
+        },
+        {
+            provide: FCMPort,
+            useClass: FCMAdapter
+        },
+        NoticeEventHandler,
+        AllergyMealEventHandler,
+        CommentEventHandler
     ],
     exports: [
         TOPIC_SUBSCRIPTION_PORT,
@@ -56,7 +80,9 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
         NOTIFICATION_PORT,
         TopicSubscriptionMapper,
         DeviceTokenMapper,
-        NotificationMapper
+        NotificationMapper,
+        PublishEventPort,
+        FCMPort
     ],
     controllers: [NotificationWebAdapter]
 })
