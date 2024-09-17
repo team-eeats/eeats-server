@@ -19,7 +19,7 @@ export class NoticeEventHandler {
     @OnEvent('NoticePostedEvent')
     async onNoticePosted(event: NoticePostedEvent) {
         const { notice } = event;
-        
+
         const notification: Notification = {
             id: null,
             userId: '',

@@ -28,7 +28,10 @@ export class NoticeWebAdapter {
     @Permission([Authority.MANAGER])
     @HttpCode(201)
     @Post()
-    async createNotice(@Body() request: NoticeWebRequest, @CurrentUser() user: User): Promise<CreateNoticeResponse> {
+    async createNotice(
+        @Body() request: NoticeWebRequest,
+        @CurrentUser() user: User
+    ): Promise<CreateNoticeResponse> {
         return await this.createNoticeUseCase.execute(request, user);
     }
 

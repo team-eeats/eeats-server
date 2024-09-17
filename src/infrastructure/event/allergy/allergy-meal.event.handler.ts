@@ -31,8 +31,8 @@ export class AllergyMealEventHandler {
         const usersWithAllergies = await this.userPort.queryUsersWithAllergies();
 
         for (const user of usersWithAllergies) {
-            const matchingAllergies = user.allergies.filter((userAllergy) => 
-            allergyTypesInMeal.includes(userAllergy.type)
+            const matchingAllergies = user.allergies.filter((userAllergy) =>
+                allergyTypesInMeal.includes(userAllergy.type)
             );
 
             if (matchingAllergies.length > 0) {
@@ -42,7 +42,7 @@ export class AllergyMealEventHandler {
                     topic: Topic.ALLERGY,
                     linkIdentifier: event.date,
                     title: '알레르기 조심 ㅎㅎ',
-                    content: `오늘 급식에 ${matchingAllergies.map(a => AllergyType[a.type]).join(', ')} 성분이 포함되어 있습니다.`,
+                    content: `오늘 급식에 ${matchingAllergies.map((a) => AllergyType[a.type]).join(', ')} 성분이 포함되어 있습니다.`,
                     createdAt: LocalDate.now(),
                     isRead: false
                 };

@@ -1,5 +1,4 @@
 export interface PublishEventPort {
-
     publishEvent(event: any): Promise<void>;
 }
 

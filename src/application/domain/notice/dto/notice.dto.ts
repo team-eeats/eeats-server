@@ -17,7 +17,5 @@ export class QueryAllNoticesResponse {
 }
 
 export class CreateNoticeResponse {
-    constructor(
-        public readonly id: string
-    ) {}
+    constructor(public readonly id: string) {}
 }

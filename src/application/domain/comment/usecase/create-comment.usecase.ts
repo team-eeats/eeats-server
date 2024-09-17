@@ -18,14 +18,20 @@ export class CreateCommentUseCase {
         private readonly publishEventPort: PublishEventPort
     ) {}
 
-    async execute(suggestionId: string, request: CreateCommentWebRequest, userId: string): Promise<CreateCommentResponse> {
+    async execute(
+        suggestionId: string,
+        request: CreateCommentWebRequest,
+        userId: string
+    ): Promise<CreateCommentResponse> {
         const suggestion = await this.suggestionPort.querySuggestionById(suggestionId);
-        
+
         if (!suggestion) {
             throw new NotFoundException('Suggestion Not Found');
         }
 
-        const comment = await this.commentPort.saveComment(new Comment(request.content, userId, suggestion.id));
+        const comment = await this.commentPort.saveComment(
+            new Comment(request.content, userId, suggestion.id)
+        );
 
         await this.publishEventPort.publishEvent(new CommentAddedEvent(suggestion));
 

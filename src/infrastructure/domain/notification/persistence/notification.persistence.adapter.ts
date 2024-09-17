@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NotificationTypeormEntity } from './entity/notification.entity';
 import { NotificationMapper } from './mapper/notification.mapper';
-import { FCMAdapter } from '../../../thirdparty/fcm/fcm.adapter';
 import { FCMPort } from 'src/application/common/spi/fcm.spi';
 
 @Injectable()

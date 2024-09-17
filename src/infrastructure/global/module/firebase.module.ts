@@ -10,7 +10,7 @@ import * as admin from 'firebase-admin';
         FirebaseConfig,
         {
             provide: 'FIREBASE_ADMIN',
-            //useFactory로 동적 객체 생성, 비동기 함수 정의 
+            //useFactory로 동적 객체 생성, 비동기 함수 정의
             useFactory: async (firebaseConfig: FirebaseConfig) => {
                 firebaseConfig.initialize(); //의존성 주입 가능
                 return admin;
@@ -21,7 +21,6 @@ import * as admin from 'firebase-admin';
     exports: ['FIREBASE_ADMIN']
 })
 export class FirebaseModule {}
-
 
 // useFactory 없이 단순화
 

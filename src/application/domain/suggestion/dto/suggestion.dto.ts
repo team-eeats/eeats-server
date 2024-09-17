@@ -21,7 +21,5 @@ export class QueryAllSuggestionsResponse {
 }
 
 export class CreateSuggestionResponse {
-    constructor(
-        private readonly id: string
-    ) {}
+    constructor(private readonly id: string) {}
 }

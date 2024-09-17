@@ -1,5 +1,3 @@
 export class AllergyMealEvent {
-    constructor(
-        public readonly date: string
-    ) {}
+    constructor(public readonly date: string) {}
 }
