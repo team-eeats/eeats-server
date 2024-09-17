@@ -5,12 +5,15 @@ import { Notification } from '../../../application/domain/notification/model/not
 import { Topic } from '../../../application/domain/notification/model/notification';
 import { LocalDate } from 'js-joda';
 import { OnEvent } from '@nestjs/event-emitter';
+import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
 
 @Injectable()
 export class CommentEventHandler {
     constructor(
         @Inject(FCMPort)
-        private readonly fcmPort: FCMPort
+        private readonly fcmPort: FCMPort,
+        @Inject(NotificationPort)
+        private readonly notificationPort: NotificationPort
     ) {}
 
     @OnEvent('CommentAddedEvent')
@@ -27,6 +30,8 @@ export class CommentEventHandler {
             createdAt: LocalDate.now(),
             isRead: false
         };
+
+        await this.notificationPort.saveNotification(notification);
 
         await this.fcmPort.sendMessageToDevice(notification.userId, notification);
     }

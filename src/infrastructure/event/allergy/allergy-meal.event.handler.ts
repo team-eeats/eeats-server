@@ -8,20 +8,25 @@ import { LocalDate } from 'js-joda';
 import { AllergyType } from '../../../application/domain/allergy/allergy.type';
 import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
 import { UserPort } from '../../../application/domain/user/spi/user.spi';
+import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
+import { AxiosPort } from 'src/application/common/spi/axios.spi';
 
 @Injectable()
-export class AlleryMealEventHandler {
+export class AllergyMealEventHandler {
     constructor(
-        private readonly mealPort: MealPort,
+        @Inject(AxiosPort)
+        private readonly axiosPort: AxiosPort,
         @Inject(FCMPort)
         private readonly fcmPort: FCMPort,
         @Inject(UserPort)
-        private readonly userPort: UserPort
+        private readonly userPort: UserPort,
+        @Inject(NotificationPort)
+        private readonly notificationPort: NotificationPort
     ) {}
 
     @OnEvent('AllergyMealEvent')
     async onAllergyMeal(event: AllergyMealEvent) {
-        const mealInfo = await this.mealPort.getMealInfo(event.date);
+        const mealInfo = await this.axiosPort.getMealInfo(event.date);
         const allergyTypesInMeal = this.getAllergyFromMeal(mealInfo);
         const usersWithAllergies = await this.userPort.queryUsersWithAllergies();
 
@@ -41,6 +46,8 @@ export class AlleryMealEventHandler {
                     createdAt: LocalDate.now(),
                     isRead: false
                 };
+
+                await this.notificationPort.saveNotification(notification);
 
                 await this.fcmPort.sendMessageToDevice(notification.userId, notification);
             }

@@ -5,12 +5,15 @@ import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
 import { Topic } from '../../../application/domain/notification/model/notification';
 import { LocalDate } from 'js-joda';
+import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
 
 @Injectable()
 export class NoticeEventHandler {
     constructor(
         @Inject(FCMPort)
-        private readonly fcmPort: FCMPort
+        private readonly fcmPort: FCMPort,
+        @Inject(NotificationPort)
+        private readonly notificationPort: NotificationPort
     ) {}
 
     @OnEvent('NoticePostedEvent')
@@ -27,6 +30,8 @@ export class NoticeEventHandler {
             createdAt: LocalDate.now(),
             isRead: false
         };
+
+        await this.notificationPort.saveNotification(notification);
 
         await this.fcmPort.sendMessageToTopic(notification.topic, notification);
     }
