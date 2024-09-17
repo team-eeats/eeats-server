@@ -25,4 +25,16 @@ export class UserPersistenceAdapter implements UserPort {
             await this.userRepository.findOneBy({ accountId: accountId })
         );
     }
+
+    async queryUsersWithAllergies(): Promise<User[]> {
+        const usersWithAllergies = await this.userRepository
+            .createQueryBuilder('user')
+            .innerJoinAndSelect('user.allergies', 'allergy')
+            .where('allergy.type IS NOT NULL')
+            .getMany();
+
+        return usersWithAllergies.map((UserTypeormEntity) =>
+            this.userMapper.toDomain(UserTypeormEntity)
+        );
+    }
 }
