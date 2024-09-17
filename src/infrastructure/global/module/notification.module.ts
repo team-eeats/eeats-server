@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { TopicSubscriptionTypeormEntity } from '../../domain/notification/persistence/entity/topic-subscription.entity';
 import { DeviceTokenTypeormEntity } from '../../domain/notification/persistence/entity/device-token.entity';
 import { NotificationTypeormEntity } from '../../domain/notification/persistence/entity/notification.entity';
@@ -19,6 +20,8 @@ import { DeviceTokenMapper } from '../../domain/notification/persistence/mapper/
 import { NotificationMapper } from '../../domain/notification/persistence/mapper/notification.mapper';
 import { FirebaseConfig } from '../../thirdparty/fcm/firebase.config';
 import { FCMModule } from './fcm.module';
+import { PublishEventPort } from '../../../application/common/spi/event.spi';
+import { EventPublisher } from '../../event/event.publisher';
 
 const TOPIC_SUBSCRIPTION_PORT = {
     provide: TopicSubscriptionPort,
@@ -35,7 +38,8 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
             DeviceTokenTypeormEntity,
             NotificationTypeormEntity
         ]),
-        FCMModule
+        FCMModule,
+        EventEmitterModule.forRoot()
     ],
     providers: [
         TOPIC_SUBSCRIPTION_PORT,
@@ -48,7 +52,11 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
         SetDeviceTokenUseCase,
         QueryTopicSubscriptionUseCase,
         ToggleAllSubscriptionsUseCase,
-        FirebaseConfig
+        FirebaseConfig,
+        {
+            provide: PublishEventPort,
+            useClass: EventPublisher
+        }
     ],
     exports: [
         TOPIC_SUBSCRIPTION_PORT,
@@ -56,7 +64,8 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
         NOTIFICATION_PORT,
         TopicSubscriptionMapper,
         DeviceTokenMapper,
-        NotificationMapper
+        NotificationMapper,
+        PublishEventPort
     ],
     controllers: [NotificationWebAdapter]
 })
