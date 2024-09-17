@@ -4,7 +4,7 @@ import { Topic } from '../../../../../application/domain/notification/model/noti
 
 @Entity('tbl_notification')
 export class NotificationTypeormEntity {
-    @PrimaryGeneratedColumn('uuid', { name: 'device_token_id' })
+    @PrimaryGeneratedColumn('uuid', { name: 'notification_id' })
     id: string;
 
     @ManyToOne(() => UserTypeormEntity, { nullable: false })
