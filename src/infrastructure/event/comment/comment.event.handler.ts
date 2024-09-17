@@ -6,6 +6,7 @@ import { Topic } from '../../../application/domain/notification/model/notificati
 import { LocalDate } from 'js-joda';
 import { OnEvent } from '@nestjs/event-emitter';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
+import { DeviceTokenPort } from 'src/application/domain/notification/spi/device-token.spi';
 
 @Injectable()
 export class CommentEventHandler {
@@ -13,12 +14,16 @@ export class CommentEventHandler {
         @Inject(FCMPort)
         private readonly fcmPort: FCMPort,
         @Inject(NotificationPort)
-        private readonly notificationPort: NotificationPort
+        private readonly notificationPort: NotificationPort,
+        @Inject(DeviceTokenPort)
+        private readonly deviceTokenPort: DeviceTokenPort
     ) {}
 
     @OnEvent('CommentAddedEvent')
     async onCommentAdded(event: CommentAddedEvent) {
         const { suggestion } = event;
+        
+        const deviceToken = await this.deviceTokenPort.queryDeviceTokenByUserId(suggestion.userId);
 
         const notification: Notification = {
             id: null,
@@ -33,6 +38,6 @@ export class CommentEventHandler {
 
         await this.notificationPort.saveNotification(notification);
 
-        await this.fcmPort.sendMessageToDevice(notification.userId, notification);
+        await this.fcmPort.sendMessageToDevice(deviceToken.token, notification);
     }
 }
