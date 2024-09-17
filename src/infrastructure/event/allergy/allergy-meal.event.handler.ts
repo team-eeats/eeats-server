@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { MealPort } from 'src/application/domain/meal/spi/meal.spi';
-import { FCMPort } from 'src/application/common/spi/fcm.spi';
-import { Notification } from 'src/application/domain/notification/model/notification';
-import { Topic } from 'src/application/domain/notification/model/notification';
+import { MealPort } from '../../../application/domain/meal/spi/meal.spi';
+import { FCMPort } from '../../../application/common/spi/fcm.spi';
+import { Notification } from '../../../application/domain/notification/model/notification';
+import { Topic } from '../../../application/domain/notification/model/notification';
 import { LocalDate } from 'js-joda';
 import { AllergyType } from '../../../application/domain/allergy/allergy.type';
 import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
