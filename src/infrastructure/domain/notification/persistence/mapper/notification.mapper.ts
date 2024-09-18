@@ -37,7 +37,8 @@ export class NotificationMapper {
             domain.content,
             domain.linkIdentifier,
             domain.isRead,
-            domain.createdAt ? convert(domain.createdAt).toDate() : null
+            domain.createdAt ? convert(domain.createdAt).toDate() : null,
+            domain.id
         );
     }
 }
