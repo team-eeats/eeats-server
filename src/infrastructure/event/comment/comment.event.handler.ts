@@ -26,14 +26,14 @@ export class CommentEventHandler {
         const deviceToken = await this.deviceTokenPort.queryDeviceTokenByUserId(suggestion.userId);
 
         const notification: Notification = {
-            id: null,
             userId: suggestion.userId,
             topic: Topic.COMMENT,
             linkIdentifier: suggestion.id,
             title: '새로운 댓글이 달렸습니다.',
             content: `${suggestion.title}에 새로운 댓글이 달렸습니다.`,
             createdAt: LocalDate.now(),
-            isRead: false
+            isRead: false,
+            id: undefined
         };
 
         await this.notificationPort.saveNotification(notification);

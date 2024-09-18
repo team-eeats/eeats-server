@@ -30,14 +30,14 @@ export class NoticeEventHandler {
 
         for (const user of users) {
             const notification: Notification = {
-                id: null,
                 userId: user.id,
                 topic: Topic.NOTICE,
                 linkIdentifier: notice.id,
                 title: '공지사항이 등록되었습니다.',
                 content: `${notice.title}`,
                 createdAt: LocalDate.now(),
-                isRead: false
+                isRead: false,
+                id: undefined
             };
 
             await this.notificationPort.saveNotification(notification);
