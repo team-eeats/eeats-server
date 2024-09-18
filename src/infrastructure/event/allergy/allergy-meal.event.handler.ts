@@ -57,11 +57,13 @@ export class AllergyMealEventHandler {
     private getAllergyFromMeal(mealInfo: any): AllergyType[] {
         const allergyTypesInMeal: AllergyType[] = [];
 
-        mealInfo.lunch.forEach((mealItem: string) => {
-            Object.values(AllergyType).forEach((type) => {
-                if (mealItem.includes(AllergyType[type])) {
-                    allergyTypesInMeal.push(type as AllergyType);
-                }
+        ['breakfast', 'lunch', 'dinner'].forEach((mealTime) => {
+            mealInfo[mealTime].forEach((mealItem: string) => {
+                Object.values(AllergyType).forEach((type) => {
+                    if (mealItem.includes(AllergyType[type])) {
+                        allergyTypesInMeal.push(type as AllergyType);
+                    }
+                });
             });
         });
 
