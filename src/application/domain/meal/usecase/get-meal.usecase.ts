@@ -13,8 +13,10 @@ export class GetMealUseCase {
     ) {}
 
     async execute(date: string) {
-        return this.axiosPort.getMealInfo(date);
+        const mealInfo = await this.axiosPort.getMealInfo(date);
 
         await this.publishEventPort.publishEvent(new AllergyMealEvent(date));
+
+        return mealInfo;
     }
 }
