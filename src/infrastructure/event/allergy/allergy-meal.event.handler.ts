@@ -41,7 +41,7 @@ export class AllergyMealEventHandler {
                     userId: user.id,
                     topic: Topic.ALLERGY,
                     linkIdentifier: event.date,
-                    title: '알레르기 조심 ㅎㅎ',
+                    title: '알레르기 조심하세요!',
                     content: `오늘 급식에 ${matchingAllergies.map((a) => AllergyType[a.type]).join(', ')} 성분이 포함되어 있습니다.`,
                     createdAt: LocalDate.now(),
                     isRead: false

@@ -9,7 +9,7 @@ import { UpdateNoticeUseCase } from '../../../application/domain/notice/usecase/
 import { QueryAllNoticesUseCase } from '../../../application/domain/notice/usecase/query-all-notices.usecase';
 import { DeleteNoticeUseCase } from '../../../application/domain/notice/usecase/delete-notice.usecase';
 import { QueryNoticeDetailUseCase } from '../../../application/domain/notice/usecase/query-notice-detail.usecase';
-import { NoticeWebAdapter } from 'src/infrastructure/domain/notice/presentation/notice.web.adapter';
+import { NoticeWebAdapter } from '../../domain/notice/presentation/notice.web.adapter';
 
 const NOTICE_PORT = { provide: NoticePort, useClass: NoticePersistenceAdapter };
 const NOTICE_REPOSITORY = TypeOrmModule.forFeature([NoticeTypeormEntity]);
