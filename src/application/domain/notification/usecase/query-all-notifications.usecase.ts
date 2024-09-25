@@ -4,7 +4,7 @@ import { QueryNotificationsResponse, NotificationResponse } from '../dto/notific
 import { User } from '../../user/user';
 
 @Injectable()
-export class QueryNotificationsUseCase {
+export class QueryAllNotificationsUseCase {
     constructor(
         @Inject(NotificationPort)
         private readonly notificationPort: NotificationPort
