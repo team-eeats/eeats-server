@@ -3,6 +3,7 @@ import { SuggestionTypeormEntity } from '../../suggestion/persistence/suggestion
 import { NoticeTypeormEntity } from '../../notice/persistence/notice.entity';
 import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
 import { AllergyTypeormEntity } from '../../allergy/persistence/allergy.entity';
+import { Authority } from 'src/application/domain/user/authority';
 
 @Entity('tbl_user')
 export class UserTypeormEntity {
@@ -18,7 +19,7 @@ export class UserTypeormEntity {
     @Column('varchar')
     nickname: string;
 
-    @Column('varchar', { length: 7 })
+    @Column('varchar', { length: 7, default: Authority.USER })
     authority: string;
 
     @OneToMany(() => SuggestionTypeormEntity, (suggestion) => suggestion.user, {
@@ -55,8 +56,3 @@ export class UserTypeormEntity {
         this.authority = authority;
     }
 }
-
-export const Authority = {
-    USER: 'USER',
-    MANAGER: 'MANAGER'
-};

@@ -1,7 +1,7 @@
 import { Controller, HttpCode, Param, Post } from '@nestjs/common';
 import { VoteUseCase } from '../../../../application/domain/vote/usecase/vote.usecase';
 import { Permission } from '../../../global/decorator/authority.decorator';
-import { Authority } from '../../user/persistence/user.entity';
+import { Authority } from '../../../../application/domain/user/authority';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { User } from '../../../../application/domain/user/user';
 

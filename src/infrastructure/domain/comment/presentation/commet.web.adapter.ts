@@ -4,7 +4,7 @@ import {
     CreateCommentResponse
 } from '../../../../application/domain/comment/dto/comment.dto';
 import { Permission } from '../../../global/decorator/authority.decorator';
-import { Authority } from '../../user/persistence/user.entity';
+import { Authority } from '../../../../application/domain/user/authority';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { User } from '../../../../application/domain/user/user';
 import { QuerySuggestionCommentUseCase } from '../../../../application/domain/comment/usecase/query-suggestion-comment.usecase';

@@ -4,8 +4,7 @@ import { UpdatePollUseCase } from '../../../../application/domain/poll/usecase/p
 import { DeletePollUseCase } from '../../../../application/domain/poll/usecase/poll/delete-poll.usecase';
 import { QueryAllPollsUseCase } from '../../../../application/domain/poll/usecase/poll/query-all-polls.usecase';
 import { Permission } from '../../../global/decorator/authority.decorator';
-import { Authority } from '../../user/persistence/user.entity';
-import { CurrentUser } from '../../../global/decorator/current-user.decorator';
+import { Authority } from '../../../../application/domain/user/authority';
 import { CreatePollWebRequest, UpdatePollWebRequest } from './dto/poll.web.dto';
 import { QueryAllPollsResponse } from 'src/application/domain/poll/dto/poll.dto';
 

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, Patch } from '@nestjs/common';
 import { Permission } from '../../../global/decorator/authority.decorator';
-import { Authority } from '../persistence/user.entity';
+import { Authority } from '../../../../application/domain/user/authority';
 import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { User } from '../../../../application/domain/user/user';
 import { UpdateProfileUseCase } from '../../../../application/domain/user/usecase/update-profile.usecase';

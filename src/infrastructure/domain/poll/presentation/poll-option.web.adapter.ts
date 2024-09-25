@@ -2,7 +2,7 @@ import { Body, Controller, Delete, HttpCode, Param, Post } from '@nestjs/common'
 import { CreatePollOptionUseCase } from '../../../../application/domain/poll/usecase/poll-option/create-poll-option.usecase';
 import { DeletePollOptionUseCase } from '../../../../application/domain/poll/usecase/poll-option/delete-poll-option.usecase';
 import { Permission } from '../../../global/decorator/authority.decorator';
-import { Authority } from '../../user/persistence/user.entity';
+import { Authority } from '../../../../application/domain/user/authority';
 import { CreatePollOptionWebRequest } from './dto/poll-option.web.dto';
 
 @Controller('options')
