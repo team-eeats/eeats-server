@@ -55,8 +55,3 @@ export class UserTypeormEntity {
         this.authority = authority;
     }
 }
-
-export const Authority = {
-    USER: 'USER',
-    MANAGER: 'MANAGER'
-};
