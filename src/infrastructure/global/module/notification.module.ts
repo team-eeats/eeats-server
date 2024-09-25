@@ -29,7 +29,7 @@ import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { FCMAdapter } from '../../thirdparty/fcm/fcm.adapter';
 import { UserModule } from './user.module';
 import { AxiosModule } from './axios.module';
-import { QueryNotificationsUseCase } from '../../../application/domain/notification/usecase/query-notifications.usecase';
+import { QueryAllNotificationsUseCase } from '../../../application/domain/notification/usecase/query-all-notifications.usecase';
 import { ReadNotificationUseCase } from '../../../application/domain/notification/usecase/read-notification.usecase';
 
 const TOPIC_SUBSCRIPTION_PORT = {
@@ -63,7 +63,7 @@ const NOTIFICATION_PORT = { provide: NotificationPort, useClass: NotificationPer
         SetDeviceTokenUseCase,
         QueryTopicSubscriptionUseCase,
         ToggleAllSubscriptionsUseCase,
-        QueryNotificationsUseCase,
+        QueryAllNotificationsUseCase,
         ReadNotificationUseCase,
         FirebaseConfig,
         {

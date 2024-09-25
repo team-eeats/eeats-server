@@ -13,7 +13,7 @@ import {
 import { QueryTopicSubscriptionUseCase } from '../../../../application/domain/notification/usecase/query-topic-subscription.usecase';
 import { Topic } from '../../../../application/domain/notification/model/notification';
 import { ToggleAllSubscriptionsUseCase } from '../../../../application/domain/notification/usecase/toggle-all-subscriptions.usecase';
-import { QueryNotificationsUseCase } from '../../../../application/domain/notification/usecase/query-notifications.usecase';
+import { QueryAllNotificationsUseCase } from '../../../../application/domain/notification/usecase/query-all-notifications.usecase';
 import { ReadNotificationUseCase } from '../../../../application/domain/notification/usecase/read-notification.usecase';
 
 @Controller('notifications')
@@ -23,7 +23,7 @@ export class NotificationWebAdapter {
         private readonly toggleSubscriptionUseCase: ToggleSubscriptionUseCase,
         private readonly queryTopicSubscriptionUseCase: QueryTopicSubscriptionUseCase,
         private readonly toggleAllSubscriptionsUseCase: ToggleAllSubscriptionsUseCase,
-        private readonly queryNotificationsUseCase: QueryNotificationsUseCase,
+        private readonly queryAllNotificationsUseCase: QueryAllNotificationsUseCase,
         private readonly readNotificationUseCase: ReadNotificationUseCase
     ) {}
 
@@ -64,7 +64,7 @@ export class NotificationWebAdapter {
     @Permission([Authority.USER])
     @Get()
     async queryNotifications(@CurrentUser() user: User): Promise<QueryNotificationsResponse> {
-        return this.queryNotificationsUseCase.execute(user);
+        return this.queryAllNotificationsUseCase.execute(user);
     }
 
     @Permission([Authority.USER])
