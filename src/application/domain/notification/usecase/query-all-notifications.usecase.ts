@@ -23,8 +23,8 @@ export class QueryAllNotificationsUseCase {
                     topic: notification.topic,
                     linkIdentifier: notification.linkIdentifier,
                     createdAt: notification.createdAt
-                }
+                };
             })
-        }
+        };
     }
 }

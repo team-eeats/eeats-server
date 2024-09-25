@@ -70,9 +70,7 @@ export class NotificationWebAdapter {
     @Permission([Authority.USER])
     @Patch('/:notificationId')
     @HttpCode(204)
-    async readNotification(
-        @Param('notificationId') notificationId: string
-    ): Promise<void> {
+    async readNotification(@Param('notificationId') notificationId: string): Promise<void> {
         await this.readNotificationUseCase.execute(notificationId);
     }
 }

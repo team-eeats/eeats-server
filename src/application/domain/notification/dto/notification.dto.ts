@@ -17,7 +17,7 @@ export class NotificationResponse {
     isRead: boolean;
     topic: Topic;
     linkIdentifier: string | null;
-    createdAt: LocalDate
+    createdAt: LocalDate;
 }
 
 export class QueryNotificationsResponse {

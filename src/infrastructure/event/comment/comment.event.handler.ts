@@ -22,7 +22,7 @@ export class CommentEventHandler {
     @OnEvent('CommentAddedEvent')
     async onCommentAdded(event: CommentAddedEvent) {
         const { suggestion } = event;
-        
+
         const deviceToken = await this.deviceTokenPort.queryDeviceTokenByUserId(suggestion.userId);
 
         const notification: Notification = {

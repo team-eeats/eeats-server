@@ -26,7 +26,10 @@ export class NotificationPersistenceAdapter implements NotificationPort {
     }
 
     async queryNotificationById(notificationId: string): Promise<Notification | null> {
-        const entity = await this.notificationRepository.findOne({ where: { id: notificationId }, relations: ['user'] });
+        const entity = await this.notificationRepository.findOne({
+            where: { id: notificationId },
+            relations: ['user']
+        });
         return entity ? this.notificationMapper.toDomain(entity) : null;
     }
 
