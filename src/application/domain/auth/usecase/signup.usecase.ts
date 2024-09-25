@@ -4,7 +4,7 @@ import { User } from '../../user/user';
 import * as bcrypt from 'bcrypt';
 import { SignupRequest, TokenResponse } from '../dto/auth.dto';
 import { JwtPort } from '../spi/auth.spi';
-import { Authority } from '../../../../infrastructure/domain/user/persistence/user.entity';
+import { Authority } from '../../user/authority';
 
 @Injectable()
 export class SignupUseCase {
