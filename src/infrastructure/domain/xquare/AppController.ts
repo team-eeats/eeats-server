@@ -7,6 +7,6 @@ export class AppController {
 
     @Post()
     async validateOwner(@Body() body) {
-        return await this.appService.validateOwner({ body: body });
+        return await this.appService.validateOwner(body);
     }
 }

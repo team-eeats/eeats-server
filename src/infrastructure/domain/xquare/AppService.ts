@@ -7,9 +7,9 @@ import { catchError, firstValueFrom } from 'rxjs';
 export class AppService {
     constructor(private readonly httpService: HttpService) {}
 
-    async validateOwner(body) {
+    async validateOwner(body : Body) {
         const url =
-            'http://api.odcloud.kr/api/nts-businessman/v1/validate?returnType=JSON';
+            'https://prod-server.xquare.app/dsm-login/user/user-data';
         const config: AxiosRequestConfig = {
             headers: {
                 Authorization: `Infuser ${process.env.API_KEY}`,
