@@ -13,15 +13,22 @@ import { AllergyPort } from '../../../application/domain/allergy/spi/allergy.spi
 import { AllergyPersistenceAdapter } from '../../domain/allergy/persistence/allergy.persistence.adapter';
 import { AllergyTypeormEntity } from '../../domain/allergy/persistence/allergy.entity';
 
+import { AppController } from '../../domain/xquare/AppController';
+import { AppService} from '../../domain/xquare/AppService';
+import { TestPort } from '../../domain/xquare/TestPort';
+import { HttpModule, HttpService } from '@nestjs/axios';
+
 const USER_PORT = { provide: UserPort, useClass: UserPersistenceAdapter };
 const USER_REPOSITORY = TypeOrmModule.forFeature([UserTypeormEntity]);
 const ALLERGY_PORT = { provide: AllergyPort, useClass: AllergyPersistenceAdapter };
 const ALLERGY_REPOSITORY = TypeOrmModule.forFeature([AllergyTypeormEntity]);
 
+const TEST_PORT = { provide: TestPort, useClass: AppController };
+
 @Global()
 @Module({
-    imports: [USER_REPOSITORY, ALLERGY_REPOSITORY],
-    controllers: [UserWebAdapter],
+    imports: [USER_REPOSITORY, ALLERGY_REPOSITORY, HttpModule],
+    controllers: [UserWebAdapter, AppController],
     providers: [
         USER_PORT,
         UserMapper,
@@ -29,7 +36,10 @@ const ALLERGY_REPOSITORY = TypeOrmModule.forFeature([AllergyTypeormEntity]);
         ALLERGY_PORT,
         AllergyMapper,
         QueryAllergyUseCase,
-        ToggleAllergyUseCase
+        ToggleAllergyUseCase,
+
+        TEST_PORT,
+        AppService,
     ],
     exports: [
         USER_PORT,
@@ -37,7 +47,10 @@ const ALLERGY_REPOSITORY = TypeOrmModule.forFeature([AllergyTypeormEntity]);
         UserMapper,
         ALLERGY_PORT,
         ALLERGY_REPOSITORY,
-        AllergyMapper
+        AllergyMapper,
+
+        TEST_PORT,
+        AppService
     ]
 })
 export class UserModule {}
