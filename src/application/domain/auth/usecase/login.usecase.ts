@@ -80,8 +80,8 @@ export class LoginUseCase {
             xquareUserResponse.account_id,
             xquareUserResponse.password,
             xquareUserResponse.name,
-            xquareUserResponse.profileImg_url,
-            Authority.USER
+            Authority.USER,
+            xquareUserResponse.id
         );
 
         return this.userPort.saveUser(newStudent);
