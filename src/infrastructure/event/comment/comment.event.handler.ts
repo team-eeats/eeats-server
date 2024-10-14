@@ -6,7 +6,7 @@ import { Topic } from '../../../application/domain/notification/model/notificati
 import { LocalDate } from 'js-joda';
 import { OnEvent } from '@nestjs/event-emitter';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
-import { DeviceTokenPort } from 'src/application/domain/notification/spi/device-token.spi';
+import { DeviceTokenPort } from '../../../application/domain/notification/spi/device-token.spi';
 
 @Injectable()
 export class CommentEventHandler {

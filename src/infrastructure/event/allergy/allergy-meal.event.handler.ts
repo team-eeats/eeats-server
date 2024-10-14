@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { MealPort } from '../../../application/domain/meal/spi/meal.spi';
 import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
 import { Topic } from '../../../application/domain/notification/model/notification';
@@ -9,7 +8,7 @@ import { AllergyType } from '../../../application/domain/allergy/allergy.type';
 import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
 import { UserPort } from '../../../application/domain/user/spi/user.spi';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
-import { AxiosPort } from 'src/application/common/spi/axios.spi';
+import { AxiosPort } from '../../../application/common/spi/axios.spi';
 
 @Injectable()
 export class AllergyMealEventHandler {

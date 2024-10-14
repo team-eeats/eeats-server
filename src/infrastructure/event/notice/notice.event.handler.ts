@@ -6,9 +6,8 @@ import { Notification } from '../../../application/domain/notification/model/not
 import { Topic } from '../../../application/domain/notification/model/notification';
 import { LocalDate } from 'js-joda';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
-import { DeviceTokenPort } from 'src/application/domain/notification/spi/device-token.spi';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserTypeormEntity } from 'src/infrastructure/domain/user/persistence/user.entity';
+import { UserTypeormEntity } from '../../domain/user/persistence/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

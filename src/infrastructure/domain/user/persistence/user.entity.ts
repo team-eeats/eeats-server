@@ -3,7 +3,7 @@ import { SuggestionTypeormEntity } from '../../suggestion/persistence/suggestion
 import { NoticeTypeormEntity } from '../../notice/persistence/notice.entity';
 import { VoteTypeormEntity } from '../../vote/persistence/vote.entity';
 import { AllergyTypeormEntity } from '../../allergy/persistence/allergy.entity';
-import { Authority } from 'src/application/domain/user/authority';
+import { Authority } from '../../../../application/domain/user/authority';
 
 @Entity('tbl_user')
 export class UserTypeormEntity {

@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NotificationTypeormEntity } from './entity/notification.entity';
 import { NotificationMapper } from './mapper/notification.mapper';
-import { FCMPort } from 'src/application/common/spi/fcm.spi';
+import { FCMPort } from '../../../../application/common/spi/fcm.spi';
 
 @Injectable()
 export class NotificationPersistenceAdapter implements NotificationPort {
