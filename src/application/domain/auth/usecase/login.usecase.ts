@@ -51,8 +51,7 @@ export class LoginUseCase {
             const response = await firstValueFrom(
                 this.httpService.post(url, req).pipe(
                     catchError((error: AxiosError) => {
-                        console.log('error', error);
-                        throw 'An error happened!';
+                        throw new Error("Axios HttpService Exception");
                     })
                 )
             );
