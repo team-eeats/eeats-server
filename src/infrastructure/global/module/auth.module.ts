@@ -11,6 +11,7 @@ import { TokenReissueUseCase } from '../../../application/domain/auth/usecase/to
 import { RefreshTokenPersistenceAdapter } from '../../domain/auth/persistence/refresh-token.persistence.adapter';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '../guard/jwt.guard';
+import { HttpModule } from '@nestjs/axios';
 
 const JWT_PORT = { provide: JwtPort, useClass: JwtAdapter };
 const REFRESH_TOKEN_PORT = { provide: RefreshTokenPort, useClass: RefreshTokenPersistenceAdapter };
@@ -20,6 +21,7 @@ const GLOBAL_GUARD = { provide: APP_GUARD, useClass: JwtAuthGuard };
 @Module({
     imports: [
         RedisCacheModule,
+        HttpModule,
         JwtModule.registerAsync({
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
@@ -34,7 +36,7 @@ const GLOBAL_GUARD = { provide: APP_GUARD, useClass: JwtAuthGuard };
         SignupUseCase,
         JWT_PORT,
         REFRESH_TOKEN_PORT,
-        GLOBAL_GUARD
+        GLOBAL_GUARD,
     ]
 })
 export class AuthModule {}

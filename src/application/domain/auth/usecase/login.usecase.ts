@@ -1,8 +1,13 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException, Inject } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 import { UserPort } from '../../user/spi/user.spi';
-import { JwtPort } from '../spi/auth.spi';
-import { TokenResponse, LoginRequest } from '../dto/auth.dto';
 import * as bcrypt from 'bcrypt';
+import { User } from '../../user/user';
+import { Authority } from '../../user/authority';
+import { LoginRequest, TokenResponse, XquareUserResponse } from '../dto/auth.dto';
+import { JwtPort } from '../spi/auth.spi';
+import { catchError, firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
 
 @Injectable()
 export class LoginUseCase {
@@ -10,16 +15,74 @@ export class LoginUseCase {
         @Inject(UserPort)
         private readonly userPort: UserPort,
         @Inject(JwtPort)
-        private readonly jwtPort: JwtPort
+        private readonly jwtPort: JwtPort,
+        @Inject(HttpService)
+        private readonly httpService: HttpService
     ) {}
 
     async execute(req: LoginRequest): Promise<TokenResponse> {
-        const user = await this.userPort.queryUserByAccountId(req.accountId);
-        if (!user) throw new NotFoundException('User Not Found');
+        const accountId = req.account_id.trim();
+        const studentExists = await this.userPort.checkUserByAccountId(accountId);
 
-        const isMatch = await bcrypt.compare(req.password, user.password);
-        if (!isMatch) throw new UnauthorizedException('Invalid Password');
+        return studentExists
+            ? this.loginExistingStudent(req)
+            : this.registerAndLoginNewStudent(req);
+    }
 
-        return this.jwtPort.generateToken(user.id);
+    private async loginExistingStudent(req: LoginRequest): Promise<TokenResponse> {
+        const student = await this.userPort.queryUserByAccountId(req.account_id);
+        if (!student) {
+            throw new NotFoundException('Student not found');
+        }
+
+        const validatePassword = await bcrypt.compare(req.password, student.password);
+        if (!validatePassword) {
+            throw new UnauthorizedException('Password mismatch');
+        }
+
+        return this.getTokenResponse(student.id);
+    }
+
+    private async registerAndLoginNewStudent(req: LoginRequest): Promise<TokenResponse> {
+        let xquareUserResponse: XquareUserResponse;
+        const url = 'https://prod-server.xquare.app/dsm-login/user/user-data';
+
+        try {
+            const response = await firstValueFrom(
+                this.httpService.post(url, req).pipe(
+                    catchError((error: AxiosError) => {
+                        throw new Error("Axios HttpService Exception");
+                    })
+                )
+            );
+
+            xquareUserResponse = response.data as XquareUserResponse;
+        } catch (e) {
+            throw new UnauthorizedException();
+        }
+
+        if (xquareUserResponse.user_role !== 'STU') {
+            throw new Error(`Invalid User`);
+        }
+
+        const newStudent = await this.createAndSaveNewStudent(xquareUserResponse);
+
+        return this.getTokenResponse(newStudent.id);
+    }
+
+    private getTokenResponse(studentId: string): Promise<TokenResponse> {
+        return this.jwtPort.generateToken(studentId);
+    }
+
+    private async createAndSaveNewStudent(xquareUserResponse: XquareUserResponse): Promise<User> {
+        const newStudent = new User(
+            xquareUserResponse.account_id,
+            xquareUserResponse.password,
+            xquareUserResponse.name,
+            Authority.USER,
+            xquareUserResponse.id
+        );
+
+        return this.userPort.saveUser(newStudent);
     }
 }

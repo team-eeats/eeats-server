@@ -4,8 +4,21 @@ export class TokenResponse {
 }
 
 export class LoginRequest {
-    accountId: string;
+    account_id: string;
     password: string;
+}
+
+export class XquareUserResponse {
+    id: string;
+    account_id: string;
+    password: string;
+    name: string;
+    grade: number;
+    class_num: number;
+    num: number;
+    user_role: string;
+    profileImg_url: string;
+    clubName: string;
 }
 
 export class SignupRequest {

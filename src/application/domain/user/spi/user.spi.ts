@@ -6,6 +6,8 @@ export interface UserPort {
     saveUser(user: User): Promise<User>;
 
     queryUsersWithAllergies(): Promise<User[]>;
+
+    checkUserByAccountId(accountId: string): Promise<Boolean>
 }
 
 export const UserPort = Symbol('IUserPort');

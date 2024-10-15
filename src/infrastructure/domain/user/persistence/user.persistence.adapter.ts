@@ -37,4 +37,8 @@ export class UserPersistenceAdapter implements UserPort {
             this.userMapper.toDomain(UserTypeormEntity)
         );
     }
+
+    async checkUserByAccountId(accountId: string): Promise<Boolean> {
+        return this.userRepository.existsBy({ accountId: accountId})
+    }
 }
