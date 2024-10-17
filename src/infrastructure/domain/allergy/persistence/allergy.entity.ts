@@ -7,11 +7,7 @@ export class AllergyTypeormEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'allergy_id' })
     id: string;
 
-    @Column({
-        type: 'enum',
-        enum: AllergyType,
-        nullable: false
-    })
+    @Column('int', { nullable: false })
     type: AllergyType;
 
     @ManyToOne(() => UserTypeormEntity, (user) => user.allergies)
