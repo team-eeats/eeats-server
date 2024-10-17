@@ -1,12 +1,9 @@
-import { MealItem } from '../../../application/domain/meal/meal-item';
-import { Allergy } from '../../../application/domain/allergy/allergy';
-import { LocalDateTime } from 'js-joda';
-import { Notification, Topic } from '../../../application/domain/notification/model/notification';
 import { Injectable, Inject } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
 import { Topic } from '../../../application/domain/notification/model/notification';
+import { LocalDate } from 'js-joda';
 import { AllergyType } from '../../../application/domain/allergy/allergy.type';
 import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
 import { UserPort } from '../../../application/domain/user/spi/user.spi';
@@ -29,28 +26,29 @@ export class AllergyMealEventHandler {
     @OnEvent('AllergyMealEvent')
     async onAllergyMeal(event: AllergyMealEvent) {
         const mealInfo = await this.axiosPort.getMealInfo(event.date);
-        const allergyTypesInMeal = this.getAllergyFromMeal(mealInfo);
+        const allergyTypeInMeal = this.getAllergyFromMeal(mealInfo);
         const usersWithAllergies = await this.userPort.queryUsersWithAllergies();
 
         for (const user of usersWithAllergies) {
-            const matchingAllergies = user.allergies.filter((userAllergy) =>
-                allergyTypesInMeal.includes(userAllergy.type)
+            const matchedAllergies = user.allergies.filter((userAllergy) =>
+                allergyTypeInMeal.includes(userAllergy.type)
             );
 
-            if (matchingAllergies.length > 0) {
+            if (matchedAllergies.length > 0) {
                 const notification: Notification = {
-                    id: null,
+                    id: undefined,
                     userId: user.id,
                     topic: Topic.ALLERGY,
                     linkIdentifier: event.date,
                     title: '알레르기 조심하세요!',
-                    content: `오늘 급식에 ${matchingAllergies.map((a) => AllergyType[a.type]).join(', ')} 성분이 포함되어 있습니다.`,
+                    content: `오늘 급식에 ${matchedAllergies
+                        .map((a) => AllergyType[a.type])
+                        .join(', ')} 성분이 포함되어 있습니다.`,
                     createdAt: LocalDate.now(),
                     isRead: false
                 };
 
                 await this.notificationPort.saveNotification(notification);
-
                 await this.fcmPort.sendMessageToDevice(notification.userId, notification);
             }
         }
@@ -60,13 +58,15 @@ export class AllergyMealEventHandler {
         const allergyTypesInMeal: AllergyType[] = [];
 
         ['breakfast', 'lunch', 'dinner'].forEach((mealTime) => {
-            mealInfo[mealTime].forEach((mealItem: string) => {
-                Object.values(AllergyType).forEach((type) => {
-                    if (mealItem.includes(AllergyType[type])) {
-                        allergyTypesInMeal.push(type as AllergyType);
-                    }
+            if (mealInfo[mealTime]) {
+                mealInfo[mealTime].forEach((mealItem: string) => {
+                    Object.values(AllergyType).forEach((type) => {
+                        if (mealItem.includes(AllergyType[type])) {
+                            allergyTypesInMeal.push(type as AllergyType);
+                        }
+                    });
                 });
-            });
+            }
         });
 
         return allergyTypesInMeal;
