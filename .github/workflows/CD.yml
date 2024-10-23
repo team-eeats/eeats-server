@@ -35,9 +35,9 @@ jobs:
           environment: prod
           access_key: ${{ secrets.XQUARE_ACCESS_KEY }}
           buildargs: |
-            MYSQL_HOST=${{ secrets.MYSQL_HOST }}
-            MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}
-            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+            MYSQL_HOST=${{ secrets.DB_HOST }}
+            MYSQL_USERNAME=${{ secrets.DB_USERNAME }}
+            MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
             REDIS_HOST=${{ secrets.REDIS_HOST }}
           yarn_docker_build: true
           yarn_workspace: '@service/eeats'
