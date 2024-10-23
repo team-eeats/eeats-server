@@ -21,11 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -47,9 +42,3 @@ jobs:
           yarn_docker_build: true
           yarn_workspace: '@service/eeats'
           base_path: .
-          config_file_path: .xquare/config.yaml
-          base_url: .
-          build_path: .
-          language: null
-          critical_service: false
-          private_service: false
