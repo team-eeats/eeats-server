@@ -41,3 +41,4 @@ jobs:
             REDIS_HOST=${{ secrets.REDIS_HOST }}
           yarn_docker_build: true
           yarn_workspace: '@service/eeats'
+          base_path: .
