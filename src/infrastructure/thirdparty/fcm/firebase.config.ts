@@ -22,7 +22,7 @@ export class FirebaseConfig implements OnModuleInit {
                 secretAccessKey: this.configService.get<string>('AWS_SECRET'),
             },
         });
-        this.localFilePath = path.join(__dirname, 'firebase-adminsdk.json'); // 임시 파일 경로
+        this.localFilePath = path.join(__dirname, 'firebase-adminsdk.json');
     }
 
     async onModuleInit() {
@@ -31,8 +31,8 @@ export class FirebaseConfig implements OnModuleInit {
 
     async initialize() {
         if (admin.apps.length === 0) {
-            await this.downloadFirebaseConfig(); // S3에서 Firebase 설정 파일 다운로드
-            const serviceAccount = require(this.localFilePath); // 로컬에 저장된 설정 파일 로드
+            await this.downloadFirebaseConfig();
+            const serviceAccount = require(this.localFilePath);
 
             admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount),
@@ -55,12 +55,12 @@ export class FirebaseConfig implements OnModuleInit {
 
             if (response.Body) {
                 await streamPipeline(response.Body as NodeJS.ReadableStream, writeStream);
-                console.log('Firebase config downloaded successfully from S3.');
+                console.log('download successfully');
             } else {
-                throw new Error('S3 download failed: No data received');
+                throw new Error('download failed');
             }
         } catch (error) {
-            console.error('Error downloading Firebase config from S3:', error);
+            console.error('error downloading', error);
             throw error;
         }
     }
