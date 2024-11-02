@@ -49,19 +49,13 @@ export class FirebaseConfig implements OnModuleInit {
             Key: s3Key,
         });
 
-        try {
-            const response = await this.s3Client.send(command);
-            const writeStream = fs.createWriteStream(this.localFilePath);
+        const response = await this.s3Client.send(command);
+        const writeStream = fs.createWriteStream(this.localFilePath);
 
-            if (response.Body) {
-                await streamPipeline(response.Body as NodeJS.ReadableStream, writeStream);
-                console.log('download successfully');
-            } else {
-                throw new Error('download failed');
-            }
-        } catch (error) {
-            console.error('error downloading', error);
-            throw error;
+        if (response.Body) {
+            await streamPipeline(response.Body as NodeJS.ReadableStream, writeStream);
+        } else {
+            throw new Error('download failed');
         }
     }
 }
