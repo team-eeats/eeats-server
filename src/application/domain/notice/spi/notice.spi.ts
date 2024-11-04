@@ -1,4 +1,4 @@
-import { NoticeResponse } from '../dto/notice.dto';
+import { NoticeListResponse } from '../dto/notice.dto';
 import { Notice } from '../notice';
 
 export interface NoticePort {
@@ -8,7 +8,7 @@ export interface NoticePort {
 
     deleteNotice(notice: Notice): Promise<void>;
 
-    queryAllNotices(): Promise<NoticeResponse[]>;
+    queryAllNotices(): Promise<NoticeListResponse[]>;
 }
 
 export const NoticePort = Symbol('INoticePort');
