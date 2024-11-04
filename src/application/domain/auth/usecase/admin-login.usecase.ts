@@ -18,11 +18,12 @@ export class AdminLoginUseCase {
         const admin = await this.userPort.queryUserByAuthority(Authority.MANAGER);
 
         if (req.account_id != admin.accountId)
-            throw new UnauthorizedException('Account id mismatch');
+            throw new UnauthorizedException('AccountId MMismatch');
 
         const validatePassword = await bcrypt.compare(req.password, admin.password);
+
         if (!validatePassword) {
-            throw new UnauthorizedException('Password mismatch');
+            throw new UnauthorizedException('Password Mismatch');
         }
 
         return this.getTokenResponse(admin.id);

@@ -31,13 +31,14 @@ export class UserLoginUseCase {
 
     private async loginExistingStudent(req: LoginRequest): Promise<TokenResponse> {
         const student = await this.userPort.queryUserByAccountId(req.account_id);
+        const validatePassword = await bcrypt.compare(req.password, student.password);
+
         if (!student) {
-            throw new NotFoundException('Student not found');
+            throw new NotFoundException('Student Not Found');
         }
 
-        const validatePassword = await bcrypt.compare(req.password, student.password);
         if (!validatePassword) {
-            throw new UnauthorizedException('Password mismatch');
+            throw new UnauthorizedException('Password Mismatch');
         }
 
         return this.getTokenResponse(student.id);
@@ -55,7 +56,6 @@ export class UserLoginUseCase {
                     })
                 )
             );
-
             xquareUserResponse = response.data as XquareUserResponse;
         } catch (e) {
             throw new UnauthorizedException();
