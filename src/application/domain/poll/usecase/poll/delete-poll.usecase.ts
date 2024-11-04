@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PollPort } from '../../spi/poll.spi';
 
 @Injectable()

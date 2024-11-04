@@ -7,7 +7,7 @@ export class PollOptionTypeormEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'poll_option_id' })
     id: string;
 
-    @ManyToOne(() => PollTypeormEntity, (poll) => poll.pollOptions)
+    @ManyToOne(() => PollTypeormEntity, (poll) => poll.pollOptions, { onDelete: 'CASCADE' })
     poll: PollTypeormEntity;
 
     @Column('varchar', { nullable: false })
