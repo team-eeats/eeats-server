@@ -41,4 +41,10 @@ export class UserPersistenceAdapter implements UserPort {
     async checkUserByAccountId(accountId: string): Promise<Boolean> {
         return this.userRepository.existsBy({ accountId: accountId})
     }
+
+    async queryUserByAuthority(authority: string): Promise<User | null> {
+        return this.userMapper.toDomain(
+            await this.userRepository.findOneBy({ authority: authority })
+        );
+    }
 }

@@ -7,7 +7,9 @@ export interface UserPort {
 
     queryUsersWithAllergies(): Promise<User[]>;
 
-    checkUserByAccountId(accountId: string): Promise<Boolean>
+    checkUserByAccountId(accountId: string): Promise<Boolean>;
+
+    queryUserByAuthority(authority: string): Promise<User | null>;
 }
 
 export const UserPort = Symbol('IUserPort');
