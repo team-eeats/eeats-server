@@ -61,7 +61,13 @@ export class SuggestionPersistenceAdapter implements SuggestionPort {
         });
 
         return Promise.all(
-            suggestions.map(async (suggestion) => await this.suggestionMapper.toDomain(suggestion))
+            suggestions.map(async (suggestion) => {
+                const suggestionResponse = await this.suggestionMapper.toDomain(suggestion);
+                return {
+                    ...suggestionResponse,
+                    accountId: suggestion.user.accountId
+                };
+            })
         );
     }
 

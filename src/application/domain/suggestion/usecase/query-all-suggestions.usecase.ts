@@ -17,10 +17,10 @@ export class QueryAllSuggestionsUseCase {
 
         const suggestionsWithComment = await Promise.all(
             suggestions.map(async (suggestion) => {
-                const comment = await this.commentPort.querySuggestionComment(suggestion.id, null);
+                const comment = await this.commentPort.querySuggestionComment(suggestion.id);
                 return {
                     ...suggestion,
-                    comment: comment
+                    comment: comment ?? null
                 };
             })
         );
