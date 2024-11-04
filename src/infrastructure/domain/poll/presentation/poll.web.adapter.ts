@@ -6,7 +6,7 @@ import { QueryAllPollsUseCase } from '../../../../application/domain/poll/usecas
 import { Permission } from '../../../global/decorator/authority.decorator';
 import { Authority } from '../../../../application/domain/user/authority';
 import { CreatePollWebRequest, UpdatePollWebRequest } from './dto/poll.web.dto';
-import { QueryAllPollsResponse } from 'src/application/domain/poll/dto/poll.dto';
+import { QueryAllPollsResponse } from '../../../../application/domain/poll/dto/poll.dto';
 
 @Controller('polls')
 export class PollWebAdapter {

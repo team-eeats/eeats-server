@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { DeviceTokenPort } from '../spi/device-token.spi';
 import { DeviceToken } from '../model/device-token';
 import { User } from '../../user/user';
-import { SetDeviceTokenWebRequest } from 'src/infrastructure/domain/notification/presentation/dto/notification.web.dto';
+import { SetDeviceTokenWebRequest } from '../../../../infrastructure/domain/notification/presentation/dto/notification.web.dto';
 
 @Injectable()
 export class SetDeviceTokenUseCase {

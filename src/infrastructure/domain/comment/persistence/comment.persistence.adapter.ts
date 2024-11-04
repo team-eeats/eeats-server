@@ -1,10 +1,9 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CommentPort } from '../../../../application/domain/comment/spi/comment.spi';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentTypeormEntity } from './comment.entity';
 import { Repository } from 'typeorm';
-import { CommentResponse } from 'src/application/domain/comment/dto/comment.dto';
-import { LocalDate, nativeJs } from 'js-joda';
+import { CommentResponse } from '../../../../application/domain/comment/dto/comment.dto';
 import { Comment } from '../../../../application/domain/comment/comment';
 import { CommentMapper } from './comment.mapper';
 

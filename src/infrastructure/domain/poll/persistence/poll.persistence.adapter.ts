@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LocalDate, nativeJs } from 'js-joda';
-import { PollOptionWithResultsReponse } from 'src/application/domain/poll/dto/poll-option.dto';
+import { PollOptionWithResultsReponse } from '../../../../application/domain/poll/dto/poll-option.dto';
 import { Repository } from 'typeorm';
 import { PollResponse } from '../../../../application/domain/poll/dto/poll.dto';
 import { Poll } from '../../../../application/domain/poll/poll';

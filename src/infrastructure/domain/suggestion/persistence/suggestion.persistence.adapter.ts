@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SuggestionTypeormEntity } from './suggestion.entity';
 import { Repository } from 'typeorm';
 import { SuggestionMapper } from './suggestion.mapper';
-import { SuggestionResponse } from 'src/application/domain/suggestion/dto/suggestion.dto';
+import { SuggestionResponse } from '../../../../application/domain/suggestion/dto/suggestion.dto';
 
 @Injectable()
 export class SuggestionPersistenceAdapter implements SuggestionPort {

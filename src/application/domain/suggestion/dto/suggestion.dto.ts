@@ -1,5 +1,5 @@
 import { LocalDate } from 'js-joda';
-import { CommentResponse } from 'src/application/domain/comment/dto/comment.dto';
+import { CommentResponse } from '../../comment/dto/comment.dto';
 
 export class SuggestionResponse {
     id: string;
