@@ -1,10 +1,13 @@
 import { LocalDate } from 'js-joda';
+import { CommentResponse } from 'src/application/domain/comment/dto/comment.dto';
 
 export class SuggestionResponse {
     id: string;
     title: string;
     content: string;
     createdAt: LocalDate;
+    accountId: string;
+    comment?: CommentResponse | null;
 }
 
 export class SuggestionRequest {
@@ -17,8 +20,9 @@ export class QueryMySuggestionsResponse {
 }
 
 export class QueryAllSuggestionsResponse {
-    suggestions: SuggestionResponse[];
+    suggestions: SuggestionResponse[]; // SuggestionResponse 자체에 comment 포함
 }
+
 
 export class CreateSuggestionResponse {
     constructor(private readonly id: string) {}
