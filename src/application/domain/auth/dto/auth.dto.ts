@@ -13,17 +13,5 @@ export class XquareUserResponse {
     account_id: string;
     password: string;
     name: string;
-    grade: number;
-    class_num: number;
-    num: number;
     user_role: string;
-    profileImg_url: string;
-    clubName: string;
-}
-
-export class SignupRequest {
-    accountId: string;
-    password: string;
-    nickname?: string;
-    profileUrl?: string;
 }

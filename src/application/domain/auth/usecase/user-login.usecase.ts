@@ -10,7 +10,7 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 
 @Injectable()
-export class LoginUseCase {
+export class UserLoginUseCase {
     constructor(
         @Inject(UserPort)
         private readonly userPort: UserPort,

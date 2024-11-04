@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { AuthWebAdapter } from '../../domain/auth/presentation/auth.web.adapter';
-import { LoginUseCase } from '../../../application/domain/auth/usecase/login.usecase';
-import { SignupUseCase } from '../../../application/domain/auth/usecase/signup.usecase';
+import { AdminLoginUseCase } from '../../../application/domain/auth/usecase/admin-login.usecase';
+import { UserLoginUseCase } from '../../../application/domain/auth/usecase/user-login.usecase';
 import { RedisCacheModule } from '../config/redis.config';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtPort, RefreshTokenPort } from '../../../application/domain/auth/spi/auth.spi';
@@ -31,9 +31,9 @@ const GLOBAL_GUARD = { provide: APP_GUARD, useClass: JwtAuthGuard };
     ],
     controllers: [AuthWebAdapter],
     providers: [
-        LoginUseCase,
+        UserLoginUseCase,
+        AdminLoginUseCase,
         TokenReissueUseCase,
-        SignupUseCase,
         JWT_PORT,
         REFRESH_TOKEN_PORT,
         GLOBAL_GUARD,

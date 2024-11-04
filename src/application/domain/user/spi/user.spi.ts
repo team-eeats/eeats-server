@@ -1,4 +1,5 @@
 import { User } from '../user';
+import { Authority } from '../../../../application/domain/user/authority';
 
 export interface UserPort {
     queryUserByAccountId(accountId: string): Promise<User | null>;
@@ -7,7 +8,9 @@ export interface UserPort {
 
     queryUsersWithAllergies(): Promise<User[]>;
 
-    checkUserByAccountId(accountId: string): Promise<Boolean>
+    checkUserByAccountId(accountId: string): Promise<Boolean>;
+
+    queryUserByAuthority(authority: Authority): Promise<User | null>;
 }
 
 export const UserPort = Symbol('IUserPort');

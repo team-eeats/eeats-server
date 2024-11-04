@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserTypeormEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { UserMapper } from './user.mapper';
+import { Authority } from '../../../../application/domain/user/authority';
 
 @Injectable()
 export class UserPersistenceAdapter implements UserPort {
@@ -40,5 +41,11 @@ export class UserPersistenceAdapter implements UserPort {
 
     async checkUserByAccountId(accountId: string): Promise<Boolean> {
         return this.userRepository.existsBy({ accountId: accountId})
+    }
+
+    async queryUserByAuthority(authority: Authority): Promise<User | null> {
+        return this.userMapper.toDomain(
+            await this.userRepository.findOneBy({ authority: authority })
+        );
     }
 }
