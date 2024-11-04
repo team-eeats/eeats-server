@@ -13,9 +13,15 @@ export class UpdateNoticeRequest {
 }
 
 export class QueryAllNoticesResponse {
-    notices: NoticeResponse[];
+    notices: NoticeListResponse[];
 }
 
 export class CreateNoticeResponse {
     constructor(public readonly id: string) {}
+}
+
+export class NoticeListResponse {
+    id: string;
+    title: string;
+    createdAt: LocalDate;
 }

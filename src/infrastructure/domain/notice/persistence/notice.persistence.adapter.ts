@@ -5,7 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NoticeTypeormEntity } from './notice.entity';
 import { Repository } from 'typeorm';
 import { NoticeMapper } from './notice.mapper';
-import { NoticeResponse } from '../../../../application/domain/notice/dto/notice.dto';
+import { NoticeListResponse } from '../../../../application/domain/notice/dto/notice.dto';
+import { LocalDate, nativeJs } from 'js-joda';
 
 @Injectable()
 export class NoticePersistenceAdapter implements NoticePort {
@@ -38,13 +39,12 @@ export class NoticePersistenceAdapter implements NoticePort {
         await this.noticeRepository.remove(await this.noticeMapper.toEntity(notice));
     }
 
-    async queryAllNotices(): Promise<NoticeResponse[]> {
-        const notices = await this.noticeRepository.find({
-            relations: {
-                user: true
-            }
-        });
-
-        return Promise.all(notices.map(async (notice) => await this.noticeMapper.toDomain(notice)));
+    async queryAllNotices(): Promise<NoticeListResponse[]> {
+        const notices = await this.noticeRepository.find();
+        return notices.map(notice => ({
+            id: notice.id,
+            title: notice.title,
+            createdAt: notice.createdAt ? LocalDate.from(nativeJs(notice.createdAt)) : null
+        }));
     }
 }
