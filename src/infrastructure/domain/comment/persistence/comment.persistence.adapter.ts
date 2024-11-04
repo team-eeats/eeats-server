@@ -16,21 +16,18 @@ export class CommentPersistenceAdapter implements CommentPort {
         private readonly commentMapper: CommentMapper
     ) {}
 
-    async querySuggestionComment(suggestionId: string, userId: string): Promise<CommentResponse> {
+    async querySuggestionComment(suggestionId: string): Promise<CommentResponse | null> {
         const comment = await this.commentRepository
             .createQueryBuilder('c')
             .innerJoin('tbl_user', 'u', 'u.user_id = c.user_id')
-            .select(['c.id as id', 'c.content as content', 'c.createdAt as createdAt'])
+            .select(['c.comment_id as id', 'c.content as content'])
             .where('c.suggestion_id = :suggestionId', { suggestionId })
             .getRawOne();
 
-        if (!comment) {
-            throw new NotFoundException('Comment not found');
-        }
-
-        comment.createdAt = LocalDate.from(nativeJs(comment.createdAt));
-
-        return comment as CommentResponse;
+        return comment ? {
+            id: comment.id,
+            content: comment.content
+        } : null;
     }
 
     async saveComment(comment: Comment): Promise<Comment> {
