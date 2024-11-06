@@ -5,8 +5,9 @@ import { MealWebAdapter } from '../../domain/meal/presentation/meal.web.adapter'
 import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { FCMAdapter } from '../../thirdparty/fcm/fcm.adapter';
 import { UserPersistenceAdapter } from '../../domain/user/persistence/user.persistence.adapter';
+import { AxiosPort } from '../../../application/common/spi/axios.spi';
 
-const MEAL_PORT = { provide: 'MealPort', useClass: AxiosAdapter };
+const MEAL_PORT = { provide: AxiosPort, useClass: AxiosAdapter };
 const PUBLISH_EVENT_PORT = { provide: 'PublishEventPort', useClass: FCMAdapter };
 const USER_PORT = { provide: 'UserPort', useClass: UserPersistenceAdapter };
 const FCM_PORT = { provide: FCMPort, useClass: FCMAdapter };
