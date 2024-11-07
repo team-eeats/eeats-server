@@ -1,15 +1,14 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { MealItem } from '../../../application/domain/meal/meal-item';
+import { Allergy } from '../../../application/domain/allergy/allergy';
+import { LocalDate, LocalDateTime } from 'js-joda';
+import { Notification, Topic } from '../../../application/domain/notification/model/notification';
+import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
 import { OnEvent } from '@nestjs/event-emitter';
-import { FCMPort } from '../../../application/common/spi/fcm.spi';
-import { Notification } from '../../../application/domain/notification/model/notification';
-import { Topic } from '../../../application/domain/notification/model/notification';
-import { LocalDate } from 'js-joda';
+import { Inject, Injectable } from '@nestjs/common';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
+import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { DeviceTokenPort } from '../../../application/domain/notification/spi/device-token.spi';
 import { AllergyPort } from '../../../application/domain/allergy/spi/allergy.spi';
-import { AllergyType } from '../../../application/domain/allergy/allergy.type';
-import { Allergy } from '../../../application/domain/allergy/allergy';
-import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
 
 @Injectable()
 export class AllergyMealEventHandler {
@@ -24,41 +23,38 @@ export class AllergyMealEventHandler {
         private readonly allergyPort: AllergyPort
     ) {}
 
-    @OnEvent('MealCheckedEvent')
+    @OnEvent('AllergyMealEvent')
     async onMealChecked(event: AllergyMealEvent) {
         const { userId, mealDate, mealItems } = event;
-
         const userAllergies = await this.allergyPort.queryAllergiesByUserId(userId);
         const deviceToken = await this.deviceTokenPort.queryDeviceTokenByUserId(userId);
+        const allergyWarnings = this.checkAllergies(mealItems, userAllergies);
 
-        for (const mealItem of mealItems) {
-            const allergyIntersection = this.getAllergyIntersection(mealItem.allergies, userAllergies);
+        if (allergyWarnings.length > 0) {
+            const notification: Notification = {
+                userId: userId,
+                topic: Topic.ALLERGY,
+                linkIdentifier: mealDate.toString(),
+                title: '알러지 조심',
+                content: `오늘 급식에 ${allergyWarnings.join(', ')}이 포함되어 있습니다.`,
+                createdAt: LocalDateTime.now(),
+                isRead: false,
+                id: undefined
+        };
 
-            if (allergyIntersection.length > 0) {
-                const notification: Notification = {
-                    userId: userId,
-                    topic: Topic.ALLERGY,
-                    linkIdentifier: mealDate.toString(),
-                    title: '알러지 주의 안내',
-                    content: `오늘 급식 ${mealItem.name}에 ${this.getAllergyNames(allergyIntersection)}가 포함되어 있습니다.`,
-                    createdAt: LocalDate.now(),
-                    isRead: false,
-                    id: undefined
-                };
+            await this.notificationPort.saveNotification(notification);
 
-                await this.notificationPort.saveNotification(notification);
-                await this.fcmPort.sendMessageToDevice(deviceToken.token, notification);
-            }
+            await this.fcmPort.sendMessageToDevice(deviceToken.token, notification);
         }
     }
 
-    private getAllergyIntersection(mealAllergies: AllergyType[], userAllergies: Allergy[]): AllergyType[] {
-        return mealAllergies.filter(allergyType =>
-            userAllergies.some(userAllergy => userAllergy.type === allergyType)
-        );
-    }
-
-    private getAllergyNames(allergyTypes: AllergyType[]): string {
-        return allergyTypes.map(type => AllergyType[type]).join(', ');
+    private checkAllergies(mealItems: MealItem[], userAllergies: Allergy[]): string[] {
+        return mealItems
+            .filter((item) =>
+                item.allergies.some((allergy) =>
+                    userAllergies.some((userAllergy) => userAllergy.type === allergy)
+                )
+            )
+            .map((item) => item.name);
     }
 }
