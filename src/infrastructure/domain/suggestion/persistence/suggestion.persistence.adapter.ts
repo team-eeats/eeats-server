@@ -57,6 +57,9 @@ export class SuggestionPersistenceAdapter implements SuggestionPort {
         const suggestions = await this.suggestionRepository.find({
             relations: {
                 user: true
+            },
+            order: {
+                createdAt: 'DESC'
             }
         });
 
