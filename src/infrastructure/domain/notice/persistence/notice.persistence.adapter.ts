@@ -6,7 +6,7 @@ import { NoticeTypeormEntity } from './notice.entity';
 import { Repository } from 'typeorm';
 import { NoticeMapper } from './notice.mapper';
 import { NoticeListResponse } from '../../../../application/domain/notice/dto/notice.dto';
-import { LocalDate, nativeJs } from 'js-joda';
+import { LocalDateTime, nativeJs } from 'js-joda';
 
 @Injectable()
 export class NoticePersistenceAdapter implements NoticePort {
@@ -44,7 +44,7 @@ export class NoticePersistenceAdapter implements NoticePort {
         return notices.map(notice => ({
             id: notice.id,
             title: notice.title,
-            createdAt: notice.createdAt ? LocalDate.from(nativeJs(notice.createdAt)) : null
+            createdAt: notice.createdAt ? LocalDateTime.from(nativeJs(notice.createdAt)) : null
         }));
     }
 }

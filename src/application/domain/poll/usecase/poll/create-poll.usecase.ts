@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { CreatePollWebRequest } from '../../../../../infrastructure/domain/poll/presentation/dto/poll.web.dto';
 import { Poll } from '../../poll';
 import { PollOption } from '../../poll-option';
@@ -16,7 +16,7 @@ export class CreatePollUseCase {
     ) {}
 
     async execute(request: CreatePollWebRequest) {
-        const poll = new Poll(request.title, request.description || null, [], LocalDate.now());
+        const poll = new Poll(request.title, request.description || null, [], LocalDateTime.now());
 
         const savedPoll = await this.pollPort.savePoll(poll);
 

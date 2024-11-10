@@ -1,18 +1,18 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 
 export class Comment {
     id: string;
     content: string;
     userId: string;
     suggestionId: string;
-    createdAt?: LocalDate;
+    createdAt?: LocalDateTime;
 
     constructor(
         content: string,
         userId: string,
         suggestionId: string,
         id?: string,
-        createdAt?: LocalDate
+        createdAt?: LocalDateTime
     ) {
         this.id = id;
         this.content = content;

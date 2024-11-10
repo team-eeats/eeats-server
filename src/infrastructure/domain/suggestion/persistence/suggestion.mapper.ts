@@ -3,7 +3,7 @@ import { SuggestionTypeormEntity } from './suggestion.entity';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { convert, LocalDate, nativeJs } from 'js-joda';
+import { LocalDateTime, nativeJs } from 'js-joda';
 import { UserTypeormEntity } from '../../user/persistence/user.entity';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class SuggestionMapper {
                   entity.user.id,
                   entity.title,
                   entity.content,
-                  entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
+                  entity.createdAt ? LocalDateTime.from(nativeJs(entity.createdAt)) : null,
                   entity.id
               )
             : null;

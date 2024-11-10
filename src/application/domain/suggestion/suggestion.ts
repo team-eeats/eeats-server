@@ -1,4 +1,4 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { Comment } from '../comment/comment';
 
 export class Suggestion {
@@ -6,7 +6,7 @@ export class Suggestion {
     userId: string;
     title: string;
     content: string;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
     comment?: Comment;
 
     public update(title: string, content: string) {
@@ -18,7 +18,7 @@ export class Suggestion {
         userId: string,
         title: string,
         content: string,
-        createdAt: LocalDate,
+        createdAt: LocalDateTime,
         id?: string,
         comment?: Comment
     ) {
