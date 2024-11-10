@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LocalDate, nativeJs } from 'js-joda';
+import { LocalDateTime, nativeJs } from 'js-joda';
 import { PollOptionWithResultsReponse } from '../../../../application/domain/poll/dto/poll-option.dto';
 import { Repository } from 'typeorm';
 import { PollResponse } from '../../../../application/domain/poll/dto/poll.dto';
@@ -64,7 +64,7 @@ export class PollPersistenceAdapter implements PollPort {
                 title: pollEntity.title,
                 description: pollEntity.description,
                 createdAt: pollEntity.createdAt
-                    ? LocalDate.from(nativeJs(pollEntity.createdAt))
+                    ? LocalDateTime.from(nativeJs(pollEntity.createdAt))
                     : null,
                 options: options
             } as PollResponse;

@@ -1,11 +1,11 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { CommentResponse } from '../../comment/dto/comment.dto';
 
 export class SuggestionResponse {
     id: string;
     title: string;
     content: string;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
     accountId: string;
     comment?: CommentResponse | null;
 }

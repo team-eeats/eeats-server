@@ -1,9 +1,12 @@
+import { MealItem } from '../../../application/domain/meal/meal-item';
+import { Allergy } from '../../../application/domain/allergy/allergy';
+import { LocalDateTime } from 'js-joda';
+import { Notification, Topic } from '../../../application/domain/notification/model/notification';
 import { Injectable, Inject } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
 import { Topic } from '../../../application/domain/notification/model/notification';
-import { LocalDate } from 'js-joda';
 import { AllergyType } from '../../../application/domain/allergy/allergy.type';
 import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
 import { UserPort } from '../../../application/domain/user/spi/user.spi';

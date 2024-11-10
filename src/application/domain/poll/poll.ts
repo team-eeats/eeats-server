@@ -1,4 +1,4 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { PollOption } from './poll-option';
 
 export class Poll {
@@ -6,7 +6,7 @@ export class Poll {
     title: string;
     description?: string;
     options: PollOption[];
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
 
     public update(title: string, description: string) {
         this.title = title;
@@ -17,7 +17,7 @@ export class Poll {
         title: string,
         description: string | null,
         options: PollOption[],
-        createdAt: LocalDate,
+        createdAt: LocalDateTime,
         id?: string
     ) {
         this.id = id;

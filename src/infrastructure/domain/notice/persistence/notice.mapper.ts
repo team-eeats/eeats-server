@@ -1,7 +1,7 @@
 import { Notice } from '../../../../application/domain/notice/notice';
 import { NoticeTypeormEntity } from './notice.entity';
 import { Injectable } from '@nestjs/common';
-import { LocalDate, nativeJs } from 'js-joda';
+import { LocalDateTime, nativeJs } from 'js-joda';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserTypeormEntity } from '../../user/persistence/user.entity';
 import { Repository } from 'typeorm';
@@ -19,7 +19,7 @@ export class NoticeMapper {
                   entity.user.id,
                   entity.title,
                   entity.content,
-                  entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
+                  entity.createdAt ? LocalDateTime.from(nativeJs(entity.createdAt)) : null,
                   entity.id
               )
             : null;

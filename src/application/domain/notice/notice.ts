@@ -1,18 +1,18 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 
 export class Notice {
     id: string;
     userId: string;
     title: string;
     content: string;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
 
     public update(title: string, content: string) {
         this.title = title;
         this.content = content;
     }
 
-    constructor(userId: string, title: string, content: string, createdAt: LocalDate, id?: string) {
+    constructor(userId: string, title: string, content: string, createdAt: LocalDateTime, id?: string) {
         this.id = id;
         this.userId = userId;
         this.title = title;

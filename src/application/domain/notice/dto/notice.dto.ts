@@ -1,10 +1,10 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 
 export class NoticeResponse {
     id: string;
     title: string;
     content: string;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
 }
 
 export class UpdateNoticeRequest {
@@ -23,5 +23,5 @@ export class CreateNoticeResponse {
 export class NoticeListResponse {
     id: string;
     title: string;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
 }
