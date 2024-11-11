@@ -12,7 +12,7 @@ export class UpdatePollUseCase {
     async execute(pollId: string, request: UpdatePollRequest): Promise<void> {
         const poll = await this.pollPort.queryPollById(pollId);
 
-        poll.update(request.title, request.description);
+        poll.update(request.title, request.description, request.startDate, request.endDate);
         await this.pollPort.savePoll(poll);
     }
 }

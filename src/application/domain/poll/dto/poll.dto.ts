@@ -16,6 +16,8 @@ export class QueryAllPollsResponse {
 export class UpdatePollRequest {
     title: string;
     description?: string;
+    startDate: LocalDateTime;
+    endDate: LocalDateTime;
 }
 
 export class QueryPollResultsResponse {
