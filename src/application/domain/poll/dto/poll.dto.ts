@@ -6,6 +6,8 @@ export class PollResponse {
     title: string;
     description?: string;
     createdAt: LocalDateTime;
+    startDate: LocalDateTime;
+    endDate: LocalDateTime;
     options: PollOptionWithResultsReponse[];
 }
 
