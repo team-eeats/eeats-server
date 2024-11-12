@@ -1,4 +1,4 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { Topic } from '../model/notification';
 
 export class TopicSubscriptionResponse {
@@ -17,7 +17,7 @@ export class NotificationResponse {
     isRead: boolean;
     topic: Topic;
     linkIdentifier: string | null;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
 }
 
 export class QueryNotificationsResponse {

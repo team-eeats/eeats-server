@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Notification } from '../../../../../application/domain/notification/model/notification';
 import { NotificationTypeormEntity } from '../entity/notification.entity';
 import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
-import { convert, LocalDate, nativeJs } from 'js-joda';
+import { convert, LocalDateTime, nativeJs } from 'js-joda';
 
 @Injectable()
 export class NotificationMapper {
@@ -22,7 +22,7 @@ export class NotificationMapper {
                   entity.title,
                   entity.content,
                   entity.isRead,
-                  entity.createdAt ? LocalDate.from(nativeJs(entity.createdAt)) : null,
+                  entity.createdAt ? LocalDateTime.from(nativeJs(entity.createdAt)) : null,
                   entity.id
               )
             : null;

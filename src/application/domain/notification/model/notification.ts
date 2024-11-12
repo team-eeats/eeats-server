@@ -1,4 +1,4 @@
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 
 export class Notification {
     id: string;
@@ -7,7 +7,7 @@ export class Notification {
     linkIdentifier: string | null;
     title: string;
     content: string;
-    createdAt: LocalDate;
+    createdAt: LocalDateTime;
     isRead: boolean;
 
     constructor(
@@ -17,7 +17,7 @@ export class Notification {
         title: string,
         content: string,
         isRead: boolean,
-        createdAt?: LocalDate,
+        createdAt?: LocalDateTime,
         id?: string
     ) {
         this.id = id;

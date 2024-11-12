@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LocalDateTime, nativeJs } from 'js-joda';
-import { Repository } from 'typeorm';
 import { Poll } from '../../../../../application/domain/poll/poll';
 import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
 import { PollTypeormEntity } from '../entity/poll.entity';
@@ -11,7 +10,6 @@ import { PollOptionMapper } from './poll-option.mapper';
 export class PollMapper {
     constructor(
         @InjectRepository(UserTypeormEntity)
-        private readonly userRepository: Repository<UserTypeormEntity>,
         private readonly pollOptionMapper: PollOptionMapper
     ) {}
 
@@ -25,6 +23,8 @@ export class PollMapper {
         return new Poll(
             entity.title,
             entity.description,
+            entity.startDate,
+            entity.endDate,
             options,
             entity.createdAt ? LocalDateTime.from(nativeJs(entity.createdAt)) : null,
             entity.id
@@ -32,6 +32,6 @@ export class PollMapper {
     }
 
     async toEntity(domain: Poll): Promise<PollTypeormEntity> {
-        return new PollTypeormEntity(domain.title, domain.description, domain.id);
+        return new PollTypeormEntity(domain.title, domain.description, domain.startDate, domain.endDate, domain.id);
     }
 }

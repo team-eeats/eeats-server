@@ -3,7 +3,7 @@ import { CommentAddedEvent } from '../../../application/domain/comment/event/com
 import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
 import { Topic } from '../../../application/domain/notification/model/notification';
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { OnEvent } from '@nestjs/event-emitter';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
 import { DeviceTokenPort } from '../../../application/domain/notification/spi/device-token.spi';
@@ -31,7 +31,7 @@ export class CommentEventHandler {
             linkIdentifier: suggestion.id,
             title: '새로운 댓글이 달렸습니다.',
             content: `${suggestion.title}에 새로운 댓글이 달렸습니다.`,
-            createdAt: LocalDate.now(),
+            createdAt: LocalDateTime.now(),
             isRead: false,
             id: undefined
         };

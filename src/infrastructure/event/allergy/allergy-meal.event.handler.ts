@@ -1,72 +1,60 @@
 import { MealItem } from '../../../application/domain/meal/meal-item';
 import { Allergy } from '../../../application/domain/allergy/allergy';
-import { LocalDateTime } from 'js-joda';
+import { LocalDate, LocalDateTime } from 'js-joda';
 import { Notification, Topic } from '../../../application/domain/notification/model/notification';
-import { Injectable, Inject } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
-import { FCMPort } from '../../../application/common/spi/fcm.spi';
-import { Notification } from '../../../application/domain/notification/model/notification';
-import { Topic } from '../../../application/domain/notification/model/notification';
-import { AllergyType } from '../../../application/domain/allergy/allergy.type';
 import { AllergyMealEvent } from '../../../application/domain/allergy/event/allergy.meal.event';
-import { UserPort } from '../../../application/domain/user/spi/user.spi';
+import { OnEvent } from '@nestjs/event-emitter';
+import { Inject, Injectable } from '@nestjs/common';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
-import { AxiosPort } from '../../../application/common/spi/axios.spi';
+import { FCMPort } from '../../../application/common/spi/fcm.spi';
+import { DeviceTokenPort } from '../../../application/domain/notification/spi/device-token.spi';
+import { AllergyPort } from '../../../application/domain/allergy/spi/allergy.spi';
 
 @Injectable()
 export class AllergyMealEventHandler {
     constructor(
-        @Inject(AxiosPort)
-        private readonly axiosPort: AxiosPort,
         @Inject(FCMPort)
         private readonly fcmPort: FCMPort,
-        @Inject(UserPort)
-        private readonly userPort: UserPort,
         @Inject(NotificationPort)
-        private readonly notificationPort: NotificationPort
+        private readonly notificationPort: NotificationPort,
+        @Inject(DeviceTokenPort)
+        private readonly deviceTokenPort: DeviceTokenPort,
+        @Inject(AllergyPort)
+        private readonly allergyPort: AllergyPort
     ) {}
 
     @OnEvent('AllergyMealEvent')
-    async onAllergyMeal(event: AllergyMealEvent) {
-        const mealInfo = await this.axiosPort.getMealInfo(event.date);
-        const allergyTypesInMeal = this.getAllergyFromMeal(mealInfo);
-        const usersWithAllergies = await this.userPort.queryUsersWithAllergies();
+    async onMealChecked(event: AllergyMealEvent) {
+        const { userId, mealDate, mealItems } = event;
+        const userAllergies = await this.allergyPort.queryAllergiesByUserId(userId);
+        const deviceToken = await this.deviceTokenPort.queryDeviceTokenByUserId(userId);
+        const allergyWarnings = this.checkAllergies(mealItems, userAllergies);
 
-        for (const user of usersWithAllergies) {
-            const matchingAllergies = user.allergies.filter((userAllergy) =>
-                allergyTypesInMeal.includes(userAllergy.type)
-            );
+        if (allergyWarnings.length > 0) {
+            const notification: Notification = {
+                userId: userId,
+                topic: Topic.ALLERGY,
+                linkIdentifier: mealDate.toString(),
+                title: '알러지 조심',
+                content: `오늘 급식에 ${allergyWarnings.join(', ')}이 포함되어 있습니다.`,
+                createdAt: LocalDateTime.now(),
+                isRead: false,
+                id: undefined
+        };
 
-            if (matchingAllergies.length > 0) {
-                const notification: Notification = {
-                    id: null,
-                    userId: user.id,
-                    topic: Topic.ALLERGY,
-                    linkIdentifier: event.date,
-                    title: '알레르기 조심 ㅎㅎ',
-                    content: `오늘 급식에 ${matchingAllergies.map((a) => AllergyType[a.type]).join(', ')} 성분이 포함되어 있습니다.`,
-                    createdAt: LocalDate.now(),
-                    isRead: false
-                };
+            await this.notificationPort.saveNotification(notification);
 
-                await this.notificationPort.saveNotification(notification);
-
-                await this.fcmPort.sendMessageToDevice(notification.userId, notification);
-            }
+            await this.fcmPort.sendMessageToDevice(deviceToken.token, notification);
         }
     }
 
-    private getAllergyFromMeal(mealInfo: any): AllergyType[] {
-        const allergyTypesInMeal: AllergyType[] = [];
-
-        mealInfo.lunch.forEach((mealItem: string) => {
-            Object.values(AllergyType).forEach((type) => {
-                if (mealItem.includes(AllergyType[type])) {
-                    allergyTypesInMeal.push(type as AllergyType);
-                }
-            });
-        });
-
-        return allergyTypesInMeal;
+    private checkAllergies(mealItems: MealItem[], userAllergies: Allergy[]): string[] {
+        return mealItems
+            .filter((item) =>
+                item.allergies.some((allergy) =>
+                    userAllergies.some((userAllergy) => userAllergy.type === allergy)
+                )
+            )
+            .map((item) => item.name);
     }
 }

@@ -20,7 +20,7 @@ export class QueryMySuggestionsResponse {
 }
 
 export class QueryAllSuggestionsResponse {
-    suggestions: SuggestionResponse[]; // SuggestionResponse 자체에 comment 포함
+    suggestions: SuggestionResponse[];
 }
 
 

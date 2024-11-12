@@ -6,6 +6,8 @@ export class PollResponse {
     title: string;
     description?: string;
     createdAt: LocalDateTime;
+    startDate: LocalDateTime;
+    endDate: LocalDateTime;
     options: PollOptionWithResultsReponse[];
 }
 
@@ -16,6 +18,8 @@ export class QueryAllPollsResponse {
 export class UpdatePollRequest {
     title: string;
     description?: string;
+    startDate: LocalDateTime;
+    endDate: LocalDateTime;
 }
 
 export class QueryPollResultsResponse {

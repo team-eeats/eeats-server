@@ -22,7 +22,7 @@ export class NoticeWebAdapter {
         private readonly updateNoticeUseCase: UpdateNoticeUseCase,
         private readonly deleteNoticeUseCase: DeleteNoticeUseCase,
         private readonly QueryAllNoticesUseCase: QueryAllNoticesUseCase,
-        private readonly queryNoticeDetailUseCase: QueryNoticeDetailUseCase
+        private readonly queryNoticeDetailUseCase: QueryNoticeDetailUseCase,
     ) {}
 
     @Permission([Authority.MANAGER])
@@ -38,7 +38,10 @@ export class NoticeWebAdapter {
     @Permission([Authority.MANAGER])
     @HttpCode(204)
     @Patch('/:noticeId')
-    async updateNotice(@Param('noticeId') noticeId: string, @Body() request: NoticeWebRequest) {
+    async updateNotice(
+        @Param('noticeId') noticeId: string,
+        @Body() request: NoticeWebRequest
+    ) {
         await this.updateNoticeUseCase.execute(noticeId, request);
     }
 

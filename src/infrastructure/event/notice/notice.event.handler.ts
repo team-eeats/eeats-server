@@ -4,7 +4,7 @@ import { NoticePostedEvent } from '../../../application/domain/notice/event/noti
 import { FCMPort } from '../../../application/common/spi/fcm.spi';
 import { Notification } from '../../../application/domain/notification/model/notification';
 import { Topic } from '../../../application/domain/notification/model/notification';
-import { LocalDate } from 'js-joda';
+import { LocalDateTime } from 'js-joda';
 import { NotificationPort } from '../../../application/domain/notification/spi/notification.spi';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserTypeormEntity } from '../../domain/user/persistence/user.entity';
@@ -34,7 +34,7 @@ export class NoticeEventHandler {
                 linkIdentifier: notice.id,
                 title: '공지사항이 등록되었습니다.',
                 content: `${notice.title}`,
-                createdAt: LocalDate.now(),
+                createdAt: LocalDateTime.now(),
                 isRead: false,
                 id: undefined
             };

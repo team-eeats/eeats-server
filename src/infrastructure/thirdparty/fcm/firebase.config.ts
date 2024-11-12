@@ -54,8 +54,6 @@ export class FirebaseConfig implements OnModuleInit {
 
         if (response.Body) {
             await streamPipeline(response.Body as NodeJS.ReadableStream, writeStream);
-        } else {
-            throw new Error('download failed');
         }
     }
 }
