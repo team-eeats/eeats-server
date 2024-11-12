@@ -14,7 +14,7 @@ export class PollWebAdapter {
         private readonly createPollUseCase: CreatePollUseCase,
         private readonly updatePollUseCase: UpdatePollUseCase,
         private readonly deletePollUseCase: DeletePollUseCase,
-        private readonly queryAllPollsUseCase: QueryAllPollsUseCase
+        private readonly queryAllPollsUseCase: QueryAllPollsUseCase,
     ) {}
 
     @Permission([Authority.MANAGER])

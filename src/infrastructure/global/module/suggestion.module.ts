@@ -13,6 +13,9 @@ import { QueryAllSuggestionsUseCase } from '../../../application/domain/suggesti
 import { CommentTypeormEntity } from '../../domain/comment/persistence/comment.entity';
 import { CommentPersistenceAdapter } from '../../domain/comment/persistence/comment.persistence.adapter';
 import { CommentPort } from '../../../application/domain/comment/spi/comment.spi';
+import {
+    QuerySuggestionDetailUseCase
+} from '../../../application/domain/suggestion/usecase/query-suggestion-detail.usecase';
 
 const SUGGESTION_PORT = { provide: SuggestionPort, useClass: SuggestionPersistenceAdapter };
 const SUGGESTION_REPOSITORY = TypeOrmModule.forFeature([SuggestionTypeormEntity]);
@@ -30,7 +33,8 @@ const COMMENT_REPOSITORY = TypeOrmModule.forFeature([CommentTypeormEntity]);
         UpdateSuggestionUseCase,
         QueryMySuggestionsUseCase,
         DeleteSuggestionUseCase,
-        QueryAllSuggestionsUseCase
+        QueryAllSuggestionsUseCase,
+        QuerySuggestionDetailUseCase
     ],
     exports: [SUGGESTION_PORT, COMMENT_PORT, SUGGESTION_REPOSITORY, COMMENT_REPOSITORY],
     controllers: [SuggestionWebAdapter]

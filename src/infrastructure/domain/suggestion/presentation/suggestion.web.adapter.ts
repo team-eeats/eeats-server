@@ -9,11 +9,15 @@ import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import {
     CreateSuggestionResponse,
     QueryAllSuggestionsResponse,
-    QueryMySuggestionsResponse
+    QueryMySuggestionsResponse, SuggestionDetailResponse
 } from '../../../../application/domain/suggestion/dto/suggestion.dto';
 import { User } from '../../../../application/domain/user/user';
 import { SuggestionWebRequest } from './dto/suggestion.web.dto';
 import { QueryAllSuggestionsUseCase } from '../../../../application/domain/suggestion/usecase/query-all-suggestions.usecase';
+import {
+    QuerySuggestionDetailUseCase
+} from '../../../../application/domain/suggestion/usecase/query-suggestion-detail.usecase';
+import { NoticeResponse } from 'src/application/domain/notice/dto/notice.dto';
 
 @Controller('suggestions')
 export class SuggestionWebAdapter {
@@ -22,7 +26,8 @@ export class SuggestionWebAdapter {
         private readonly updateSuggestionUseCase: UpdateSuggestionUseCase,
         private readonly deleteSuggestionUseCase: DeleteSuggestionUseCase,
         private readonly queryMySuggestionsUseCase: QueryMySuggestionsUseCase,
-        private readonly queryAllSuggestionsUseCase: QueryAllSuggestionsUseCase
+        private readonly queryAllSuggestionsUseCase: QueryAllSuggestionsUseCase,
+        private readonly querySuggestionDetailUseCase: QuerySuggestionDetailUseCase
     ) {}
 
     @Permission([Authority.USER])
@@ -64,5 +69,11 @@ export class SuggestionWebAdapter {
     @Get()
     async queryAllSuggestions(): Promise<QueryAllSuggestionsResponse> {
         return await this.queryAllSuggestionsUseCase.execute();
+    }
+
+    @Permission([Authority.USER])
+    @Get('/:suggestionId')
+    async querySuggestionDetails(@Param('suggestionId') suggestionId: string): Promise<SuggestionDetailResponse> {
+        return this.querySuggestionDetailUseCase.execute(suggestionId);
     }
 }

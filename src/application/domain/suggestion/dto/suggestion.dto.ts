@@ -27,3 +27,9 @@ export class QueryAllSuggestionsResponse {
 export class CreateSuggestionResponse {
     constructor(private readonly id: string) {}
 }
+
+export class SuggestionDetailResponse {
+    id: string;
+    title: string;
+    content: string;
+}
