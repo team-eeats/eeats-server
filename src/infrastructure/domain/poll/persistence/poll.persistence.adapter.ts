@@ -40,7 +40,10 @@ export class PollPersistenceAdapter implements PollPort {
 
     async queryAllPolls(): Promise<PollResponse[]> {
         const pollEntities = await this.pollRepository.find({
-            relations: ['pollOptions', 'pollOptions.votes']
+            relations: ['pollOptions', 'pollOptions.votes'],
+            order: {
+                createdAt: 'desc'
+            }
         });
 
         return pollEntities.map((pollEntity) => {
