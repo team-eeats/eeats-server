@@ -16,7 +16,7 @@ export class CreatePollUseCase {
     ) {}
 
     async execute(request: CreatePollWebRequest) {
-        const poll = new Poll(request.title, request.description || null, request.startDate, request.endDate, [], LocalDateTime.now());
+        const poll = new Poll(request.title, request.description || null, request.startDate, request.endDate, [], LocalDateTime.now(), false);
 
         const savedPoll = await this.pollPort.savePoll(poll);
 

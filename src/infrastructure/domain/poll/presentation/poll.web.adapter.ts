@@ -7,6 +7,7 @@ import { Permission } from '../../../global/decorator/authority.decorator';
 import { Authority } from '../../../../application/domain/user/authority';
 import { CreatePollWebRequest, UpdatePollWebRequest } from './dto/poll.web.dto';
 import { QueryAllPollsResponse } from '../../../../application/domain/poll/dto/poll.dto';
+import { ToggleHiddenUseCase } from '../../../../application/domain/poll/usecase/poll/toggle-hidden.usecase';
 
 @Controller('polls')
 export class PollWebAdapter {
@@ -15,6 +16,7 @@ export class PollWebAdapter {
         private readonly updatePollUseCase: UpdatePollUseCase,
         private readonly deletePollUseCase: DeletePollUseCase,
         private readonly queryAllPollsUseCase: QueryAllPollsUseCase,
+        private readonly toggleHiddenUseCase: ToggleHiddenUseCase
     ) {}
 
     @Permission([Authority.MANAGER])
@@ -41,5 +43,11 @@ export class PollWebAdapter {
     @Get()
     async queryAllPolls(): Promise<QueryAllPollsResponse> {
         return await this.queryAllPollsUseCase.execute();
+    }
+
+    @Permission([Authority.MANAGER])
+    @Patch('/hide/:pollId')
+    async toggleHidden(@Param('pollId') pollId: string) {
+        await this.toggleHiddenUseCase.execute(pollId);
     }
 }
