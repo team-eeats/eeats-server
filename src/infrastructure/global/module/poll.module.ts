@@ -5,6 +5,7 @@ import { CreatePollUseCase } from '../../../application/domain/poll/usecase/poll
 import { DeletePollUseCase } from '../../../application/domain/poll/usecase/poll/delete-poll.usecase';
 import { QueryAllPollsUseCase } from '../../../application/domain/poll/usecase/poll/query-all-polls.usecase';
 import { UpdatePollUseCase } from '../../../application/domain/poll/usecase/poll/update-poll.usecase';
+import { ToggleHiddenUseCase } from '../../../application/domain/poll/usecase/poll/toggle-hidden.usecase';
 import { PollTypeormEntity } from '../../domain/poll/persistence/entity/poll.entity';
 import { PollOptionMapper } from '../../domain/poll/persistence/mapper/poll-option.mapper';
 import { PollMapper } from '../../domain/poll/persistence/mapper/poll.mapper';
@@ -24,7 +25,8 @@ const POLL_REPOSITORY = TypeOrmModule.forFeature([PollTypeormEntity]);
         CreatePollUseCase,
         UpdatePollUseCase,
         DeletePollUseCase,
-        QueryAllPollsUseCase
+        QueryAllPollsUseCase,
+        ToggleHiddenUseCase
     ],
     exports: [POLL_PORT, POLL_REPOSITORY],
     controllers: [PollWebAdapter]

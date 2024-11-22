@@ -9,12 +9,17 @@ export class Poll {
     endDate: LocalDateTime;
     options: PollOption[];
     createdAt: LocalDateTime;
+    isHidden: boolean;
 
     public update(title: string, description: string, startDate: LocalDateTime, endDate: LocalDateTime) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public toggleHidden() {
+        this.isHidden = !this.isHidden;
     }
 
     constructor(
@@ -24,6 +29,7 @@ export class Poll {
         endDate: LocalDateTime,
         options: PollOption[],
         createdAt: LocalDateTime,
+        isHidden: boolean,
         id?: string
     ) {
         this.id = id;
@@ -33,5 +39,6 @@ export class Poll {
         this.endDate = endDate;
         this.options = options;
         this.createdAt = createdAt;
+        this.isHidden = isHidden;
     }
 }
