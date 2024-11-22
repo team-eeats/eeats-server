@@ -8,6 +8,7 @@ export class PollResponse {
     createdAt: LocalDateTime;
     startDate: LocalDateTime;
     endDate: LocalDateTime;
+    isActive: boolean;
     options: PollOptionWithResultsReponse[];
 }
 

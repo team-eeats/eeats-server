@@ -32,6 +32,6 @@ export class PollMapper {
     }
 
     async toEntity(domain: Poll): Promise<PollTypeormEntity> {
-        return new PollTypeormEntity(domain.title, domain.description, domain.startDate, domain.endDate, domain.id);
+        return new PollTypeormEntity(domain.title, domain.description, domain.startDate, domain.endDate, domain.isActive, domain.id);
     }
 }
