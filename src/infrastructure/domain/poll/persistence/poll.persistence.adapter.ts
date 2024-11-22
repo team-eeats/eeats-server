@@ -59,6 +59,11 @@ export class PollPersistenceAdapter implements PollPort {
                 } as PollOptionWithResultsReponse;
             });
 
+            const now = LocalDateTime.now();
+            const startDate = LocalDateTime.from(nativeJs(pollEntity.startDate));
+            const endDate = LocalDateTime.from(nativeJs(pollEntity.endDate));
+            const isActive = now.isAfter(startDate) && now.isBefore(endDate);
+
             return {
                 id: pollEntity.id,
                 title: pollEntity.title,
@@ -68,6 +73,7 @@ export class PollPersistenceAdapter implements PollPort {
                 createdAt: pollEntity.createdAt
                     ? LocalDateTime.from(nativeJs(pollEntity.createdAt))
                     : null,
+                isActive: isActive,
                 options: options
             } as PollResponse;
         });

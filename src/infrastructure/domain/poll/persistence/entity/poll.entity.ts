@@ -27,15 +27,11 @@ export class PollTypeormEntity {
     @CreateDateColumn()
     createdAt?: Date;
 
-    @Column({ type: 'boolean', nullable: false })
-    isActive: boolean;
-
-    constructor(title: string, description: string, startDate: LocalDateTime, endDate: LocalDateTime, isActive: boolean, id?: string) {
+    constructor(title: string, description: string, startDate: LocalDateTime, endDate: LocalDateTime, id?: string) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isActive = isActive;
     }
 }
