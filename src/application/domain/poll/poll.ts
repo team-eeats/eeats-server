@@ -9,6 +9,7 @@ export class Poll {
     endDate: LocalDateTime;
     options: PollOption[];
     createdAt: LocalDateTime;
+    isActive: boolean;
 
     public update(title: string, description: string, startDate: LocalDateTime, endDate: LocalDateTime) {
         this.title = title;
