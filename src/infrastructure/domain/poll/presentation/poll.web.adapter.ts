@@ -46,6 +46,7 @@ export class PollWebAdapter {
     }
 
     @Permission([Authority.MANAGER])
+    @HttpCode(204)
     @Patch('/hide/:pollId')
     async toggleHidden(@Param('pollId') pollId: string) {
         await this.toggleHiddenUseCase.execute(pollId);
