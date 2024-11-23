@@ -10,10 +10,12 @@ export class ToggleHiddenUseCase {
 
     async execute(id: string) {
         const poll = await this.pollPort.queryPollById(id);
+
         if (!poll) {
             throw new NotFoundException("Poll Not Found");
         }
 
         poll.toggleHidden();
+        await this.pollPort.savePoll(poll);
     }
 }
