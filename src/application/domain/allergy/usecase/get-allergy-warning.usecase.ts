@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { AllergyPort } from '../spi/allergy.spi';
 import { Allergy } from '../allergy';
 import { AxiosPort } from '../../../common/spi/axios.spi';
+import { AllergyType } from '../allergy.type';
 
 @Injectable()
 export class GetAllergyWarningsUseCase {
@@ -51,8 +52,12 @@ export class GetAllergyWarningsUseCase {
             return '알러지 성분이 포함된 메뉴가 없습니다.';
         }
 
-        const menuList = allergyWarnings.map(item => item.name).join(', ');
-        const allergyList = [...new Set(allergyWarnings.flatMap(item => item.allergies))].join(', ');
+        const menuList = allergyWarnings.map(item => item.name.replace(/\s*\(.*?\)/, '')).join(', ');
+
+        const allergyList = [...new Set(allergyWarnings.flatMap(item => item.allergies))]
+            .map(allergyNum => AllergyType[allergyNum])
+            .filter(Boolean)
+            .join(', ');
 
         return `${menuList}에 ${allergyList} 알레르기 성분이 있어요!`;
     }
