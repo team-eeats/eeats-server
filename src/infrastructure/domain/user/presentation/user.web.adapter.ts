@@ -5,16 +5,14 @@ import { CurrentUser } from '../../../global/decorator/current-user.decorator';
 import { User } from '../../../../application/domain/user/user';
 import { UpdateProfileUseCase } from '../../../../application/domain/user/usecase/update-profile.usecase';
 import { QueryMyInfoResponse, UpdateProfileRequest } from './dto/user.web.dto';
-import { QueryAllergyUseCase } from '../../../../application/domain/allergy/usecase/query-allergy.usecase';
-import { ToggleAllergyUseCase } from '../../../../application/domain/allergy/usecase/toggle-allergy.usecase';
 import { AllergyType } from '../../../../application/domain/allergy/allergy.type';
+import { QueryAllergyUseCase } from '../../../../application/domain/allergy/usecase/query-allergy.usecase';
 
 @Controller('users')
 export class UserWebAdapter {
     constructor(
         private readonly updateProfileUseCase: UpdateProfileUseCase,
-        private readonly queryAllergyUseCase: QueryAllergyUseCase,
-        private readonly toggleAllergyUseCase: ToggleAllergyUseCase
+        private readonly queryAllergyUseCase: QueryAllergyUseCase
     ) {}
 
     @HttpCode(204)
@@ -38,23 +36,5 @@ export class UserWebAdapter {
                 }
             ]
         };
-    }
-
-    @Permission([Authority.USER])
-    @Get('/allergy')
-    async queryAllergy(@CurrentUser() user: User) {
-        const allergies = await this.queryAllergyUseCase.execute(user.id);
-        return {
-            allergies: allergies.map((allergy) => ({
-                id: allergy.id,
-                type: AllergyType[allergy.type]
-            }))
-        };
-    }
-
-    @Permission([Authority.USER, Authority.MANAGER])
-    @Patch('/allergy')
-    async toggleAllergy(@CurrentUser() user: User, @Body('type') type: AllergyType[]) {
-        await this.toggleAllergyUseCase.execute(user.id, type);
     }
 }
