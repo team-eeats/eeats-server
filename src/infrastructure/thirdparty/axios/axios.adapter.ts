@@ -19,11 +19,17 @@ export class AxiosAdapter implements MealPort {
         };
 
         const response = await axios.get(NEIS_API_BASE_URL, { params });
-        const mealData = response.data.mealServiceDietInfo[1].row;
 
-        const meals = this.parseMealData(mealData);
-
-        return meals;
+        if (response.data.mealServiceDietInfo && response.data.mealServiceDietInfo[1] && response.data.mealServiceDietInfo[1].row) {
+            const mealData = response.data.mealServiceDietInfo[1].row;
+            return this.parseMealData(mealData);
+        } else {
+            return {
+                breakfast: ['급식이 없습니다.'],
+                lunch: ['급식이 없습니다.'],
+                dinner: ['급식이 없습니다.']
+            };
+        }
     }
 
     private parseMealData(mealData: any[]): any {
