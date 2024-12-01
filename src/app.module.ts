@@ -14,6 +14,7 @@ import { PollOptionModule } from './infrastructure/global/module/poll.option.mod
 import { AxiosModule } from './infrastructure/global/module/axios.module';
 import { NotificationModule } from './infrastructure/global/module/notification.module';
 import { FCMModule } from './infrastructure/global/module/fcm.module';
+import { AllergyModule } from './infrastructure/global/module/allergy.module';
 
 @Module({
     imports: [
@@ -31,6 +32,7 @@ import { FCMModule } from './infrastructure/global/module/fcm.module';
         AxiosModule,
         NotificationModule,
         FCMModule,
+        AllergyModule,
         ConfigModule.forRoot({ isGlobal: true })
     ]
 })
