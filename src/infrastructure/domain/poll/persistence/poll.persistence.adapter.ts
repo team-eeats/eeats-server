@@ -63,8 +63,17 @@ export class PollPersistenceAdapter implements PollPort {
             });
 
             const now = LocalDateTime.now();
-            const startDate = LocalDateTime.from(nativeJs(pollEntity.startDate));
-            const endDate = LocalDateTime.from(nativeJs(pollEntity.endDate));
+            let startDate: LocalDateTime;
+            let endDate: LocalDateTime;
+
+            try {
+                startDate = LocalDateTime.from(nativeJs(pollEntity.startDate));
+                endDate = LocalDateTime.from(nativeJs(pollEntity.endDate));
+            } catch (error) {
+                console.error("Error converting start or end date:", error);
+                throw new Error("Invalid date format for start or end date.");
+            }
+
             const isActive = now.isAfter(startDate) && now.isBefore(endDate);
 
             return {
