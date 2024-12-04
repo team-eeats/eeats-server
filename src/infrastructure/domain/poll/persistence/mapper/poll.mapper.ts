@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LocalDateTime, nativeJs } from 'js-joda';
+import { convert, LocalDateTime, nativeJs } from 'js-joda';
 import { Poll } from '../../../../../application/domain/poll/poll';
 import { UserTypeormEntity } from '../../../../domain/user/persistence/user.entity';
 import { PollTypeormEntity } from '../entity/poll.entity';
@@ -23,8 +23,8 @@ export class PollMapper {
         return new Poll(
             entity.title,
             entity.description,
-            entity.startDate,
-            entity.endDate,
+            entity.startDate ? LocalDateTime.from(nativeJs(entity.startDate)) : null,
+            entity.endDate ? LocalDateTime.from(nativeJs(entity.endDate)) : null,
             options,
             entity.createdAt ? LocalDateTime.from(nativeJs(entity.createdAt)) : null,
             entity.isHidden,
@@ -36,8 +36,8 @@ export class PollMapper {
         return new PollTypeormEntity(
             domain.title,
             domain.description,
-            domain.startDate,
-            domain.endDate,
+            domain.startDate ? convert(domain.startDate).toDate() : null,
+            domain.endDate ? convert(domain.endDate).toDate() : null,
             domain.isHidden,
             domain.id
         );

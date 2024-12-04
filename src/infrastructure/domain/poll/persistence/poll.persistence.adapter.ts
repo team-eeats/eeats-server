@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Instant, LocalDateTime, nativeJs, ZoneId } from 'js-joda';
+import { LocalDateTime, nativeJs } from 'js-joda';
 import { PollOptionWithResultsReponse } from '../../../../application/domain/poll/dto/poll-option.dto';
 import { Repository } from 'typeorm';
 import { PollResponse } from '../../../../application/domain/poll/dto/poll.dto';
@@ -63,10 +63,8 @@ export class PollPersistenceAdapter implements PollPort {
             });
 
             const now = LocalDateTime.now();
-            const startDate = this.toLocalDateTime(pollEntity.startDate);
-            const endDate = this.toLocalDateTime(pollEntity.endDate);
-            const createdAt = this.toLocalDateTime(pollEntity.createdAt);
-
+            const startDate = pollEntity.startDate ? LocalDateTime.from(nativeJs(pollEntity.startDate)) : null;
+            const endDate = pollEntity.endDate ? LocalDateTime.from(nativeJs(pollEntity.endDate)) : null;
             const isActive = now.isAfter(startDate) && now.isBefore(endDate);
 
             return {
@@ -75,30 +73,14 @@ export class PollPersistenceAdapter implements PollPort {
                 description: pollEntity.description,
                 startDate: startDate,
                 endDate: endDate,
-                createdAt: createdAt,
+                createdAt: pollEntity.createdAt
+                    ? LocalDateTime.from(nativeJs(pollEntity.createdAt))
+                    : null,
                 isActive: isActive,
                 isHidden: pollEntity.isHidden,
                 options: options
             } as PollResponse;
         });
-    }
-
-    private toLocalDateTime(date: any): LocalDateTime {
-        if (!date) return null;
-
-        try {
-            if (date instanceof Date) {
-                return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.SYSTEM);
-            } else if (typeof date === 'string') {
-                return LocalDateTime.parse(date);
-            } else if (date && typeof date.toInstant === 'function') {
-                return LocalDateTime.ofInstant(Instant.from(nativeJs(date.toInstant())), ZoneId.SYSTEM);
-            }
-            throw new Error(`Unsupported date format: ${date}`);
-        } catch (error) {
-            console.error("Error converting date:", date, error);
-            throw new Error("Invalid date format.");
-        }
     }
 
     private calculateTotalVotes(options: PollOptionTypeormEntity[]): number {

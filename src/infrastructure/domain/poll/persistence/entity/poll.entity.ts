@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { PollOptionTypeormEntity } from './poll-option.entity';
-import { LocalDateTime } from 'js-joda';
 
 @Entity('tbl_poll')
 export class PollTypeormEntity {
@@ -19,10 +18,10 @@ export class PollTypeormEntity {
     description?: string;
 
     @Column({ type: 'timestamp', nullable: false })
-    startDate: LocalDateTime;
+    startDate: Date;
 
     @Column({ type: 'timestamp', nullable: false })
-    endDate: LocalDateTime;
+    endDate: Date;
 
     @CreateDateColumn()
     createdAt?: Date;
@@ -30,7 +29,7 @@ export class PollTypeormEntity {
     @Column({ type: 'boolean', default: false })
     isHidden: boolean;
 
-    constructor(title: string, description: string, startDate: LocalDateTime, endDate: LocalDateTime, isHidden: boolean, id?: string) {
+    constructor(title: string, description: string, startDate: Date, endDate: Date, isHidden: boolean, id?: string) {
         this.id = id;
         this.title = title;
         this.description = description;
